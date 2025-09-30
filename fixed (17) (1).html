@@ -86,6 +86,17 @@
       -moz-osx-font-smoothing: grayscale;
       position: relative;
     }
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
     body.loading, body.modal-open {
       overflow: hidden;
     }
@@ -245,6 +256,18 @@
     .btn-secondary:hover {
       background-color: var(--bg-card);
       border-color: var(--brand-accent);
+      box-shadow: var(--shadow-accent-glow);
+    }
+    .btn--ghost {
+      background: transparent;
+      color: var(--brand-accent);
+      border-color: rgba(212, 162, 118, 0.4);
+      box-shadow: none;
+    }
+    .btn--ghost:hover {
+      color: var(--bg-dark);
+      background: rgba(212, 162, 118, 0.2);
+      border-color: rgba(212, 162, 118, 0.75);
       box-shadow: var(--shadow-accent-glow);
     }
 
@@ -764,217 +787,615 @@
 
     
     /* --- Estimator Section --- */
-    #calculator { background-color: var(--bg-dark); }
-    .estimator-form {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem 1.5rem;
-        max-width: 1000px;
-        margin: 0 auto;
-        background-color: var(--bg-card);
-        padding: 2rem;
-        border-radius: var(--radius);
-        border: 1px solid var(--border-color);
+    #calculator {
+      position: relative;
+      background-color: var(--bg-dark);
+      padding: clamp(5rem, 8vw, 8rem) 0;
+      overflow: hidden;
     }
-    .estimator-form .full-width {
-        grid-column: 1 / -1;
+    #calculator .container {
+      position: relative;
+      z-index: 1;
+    }
+    .estimator-aurora {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .estimator-aurora__shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+      transform: translate(-30%, -20%);
+      animation: estimatorAurora 22s ease-in-out infinite alternate;
+    }
+    .estimator-aurora__shape--one {
+      width: 480px;
+      height: 480px;
+      background: var(--brand-accent);
+      top: 5%;
+      left: 10%;
+    }
+    .estimator-aurora__shape--two {
+      width: 420px;
+      height: 420px;
+      background: #6c4dd7;
+      bottom: 0;
+      right: 5%;
+      animation-direction: alternate-reverse;
+    }
+    @keyframes estimatorAurora {
+      from {
+        transform: translate(-30%, -20%) scale(0.95);
+      }
+      to {
+        transform: translate(15%, 10%) scale(1.1);
+      }
+    }
+    .estimator-stage {
+      --estimator-context-bg: none;
+      display: grid;
+      grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+      gap: clamp(2rem, 4vw, 3rem);
+      background: rgba(20, 20, 20, 0.65);
+      border: 1px solid rgba(212, 162, 118, 0.18);
+      border-radius: clamp(18px, 3vw, 24px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: clamp(1.75rem, 4vw, 2.75rem);
+      position: relative;
+      overflow: hidden;
+    }
+    .estimator-stage::before,
+    .estimator-stage::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .estimator-stage::before {
+      background: linear-gradient(145deg, rgba(212, 162, 118, 0.1), transparent 55%);
+      opacity: 0.6;
+    }
+    .estimator-stage::after {
+      background-image: var(--estimator-context-bg);
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      filter: blur(2px);
+    }
+    .estimator-stage.has-context::after {
+      opacity: 0.12;
+    }
+    .estimator-sidebar,
+    .estimator-main {
+      position: relative;
+      z-index: 1;
+    }
+    .estimator-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .estimator-sidebar .sidebar-header h3 {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      color: var(--text-light);
+      margin-bottom: 0.35rem;
+    }
+    .estimator-sidebar .sidebar-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .service-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .service-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: rgba(10, 10, 10, 0.35);
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, background 0.3s ease;
+    }
+    .service-nav-item svg {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      color: currentColor;
+    }
+    .service-nav-item:hover,
+    .service-nav-item:focus-visible {
+      outline: none;
+      border-color: rgba(212, 162, 118, 0.5);
+      color: var(--text-light);
+      background: rgba(212, 162, 118, 0.08);
+      transform: translateX(4px);
+    }
+    .service-nav-item.active {
+      border-color: rgba(212, 162, 118, 0.9);
+      color: var(--brand-accent);
+      background: rgba(212, 162, 118, 0.12);
+      box-shadow: 0 12px 28px rgba(212, 162, 118, 0.2);
+    }
+    .estimator-main {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .estimator-headline {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .estimator-headline h2 {
+      font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+      background: linear-gradient(135deg, #fdfdfd, #c9c9c9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+    .estimator-headline p {
+      color: var(--text-muted);
+      margin: 0;
+      max-width: 60ch;
+    }
+    .estimator-form {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.75rem, 3vw, 2.5rem);
+    }
+    .estimator-form__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(260px, 320px);
+      gap: clamp(1.75rem, 3vw, 2.5rem);
+      align-items: start;
+    }
+    .estimator-panels {
+      position: relative;
+      min-height: 420px;
     }
     .estimator-fields-group {
       display: none;
+      background: rgba(12, 12, 12, 0.6);
+      border: 1px solid rgba(212, 162, 118, 0.12);
+      border-radius: 18px;
+      padding: clamp(1.5rem, 3vw, 2.25rem);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      animation: estimatorFade 0.45s ease both;
     }
     .estimator-fields-group.active {
-      display: contents;
+      display: grid;
     }
-    .estimator-form label {
-        display: flex;
-        flex-direction: column;
-        gap: .35rem;
+    @keyframes estimatorFade {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-     .estimator-form .checkbox-label {
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    .estimator-form input,
-    .estimator-form select {
-        background: var(--bg-dark);
-        border: 1px solid var(--border-color);
-        color: var(--text-light);
-        padding: .7rem;
-        border-radius: var(--radius);
-        transition: box-shadow 0.3s, border-color 0.3s;
-    }
-     .estimator-form input:focus,
-    .estimator-form select:focus {
-        outline: none;
-        border-color: var(--brand-accent);
-        box-shadow: 0 0 10px var(--accent-glow);
-    }
-
-    .estimator-output {
-        grid-column: 1 / -1;
-        margin: 1.5rem 0;
-        padding: 1.5rem;
-        font-weight: 700;
-        font-family: var(--font-heading);
-        font-size: 1.2rem;
-        color: var(--text-light);
-        text-align: center;
-        border: 1px dashed var(--border-color);
-        border-radius: var(--radius);
-    }
-    .estimator-output strong {
-        font-size: 1.8rem;
-        color: var(--brand-accent);
-        display: block;
-    }
-    .estimator-output small {
-        display: block;
-        font-size: 0.9rem;
-        font-family: var(--font-body);
-        color: var(--text-muted);
-        font-weight: 400;
-        margin-top: 0.5rem;
-    }
-    .estimator-output .output-note {
-        font-size: 0.9rem;
-        margin-top: 1rem;
-        color: var(--text-light);
-    }
-    .estimator-form .form-note {
-        grid-column: 1 / -1;
-        text-align: center;
-    }
-    .estimator-form .btn {
-        grid-column: 1 / -1;
-        justify-self: center;
-        margin: 0.5rem 0;
-    }
-
-    /* --- Calculator Design Enhancements (Professional UI Overhaul) --- */
-    /* Lighten and modernize the estimator form container */
-    #calculator .estimator-form {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(212, 162, 118, 0.15);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      padding: 2.5rem;
-      gap: 1.2rem 1.5rem;
-    }
-
-    /* Refine individual calculator cards within the estimator */
-    #calculator .calculator-card {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(212, 162, 118, 0.2);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      border-radius: calc(var(--radius) + 2px);
-      padding: 1.75rem;
-    }
-
-    /* Stylize section headings with an accent bar and larger type */
-    #calculator .estimator-fields-group .calculator-heading {
-      font-size: 1.6rem;
-      margin-bottom: 1.25rem;
-      position: relative;
-      padding-left: 0.75rem;
+    .calculator-heading {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
       color: var(--text-light);
     }
-    #calculator .estimator-fields-group .calculator-heading::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.2rem;
-      bottom: 0.2rem;
-      width: 4px;
-      border-radius: 2px;
-      background: var(--brand-accent);
-    }
-
-    /* Enhance form field appearance and interaction */
-    #calculator .estimator-form input,
-    #calculator .estimator-form select {
-      background: var(--bg-dark);
-      border: 1px solid rgba(212, 162, 118, 0.15);
-      color: var(--text-light);
-      padding: 0.8rem 0.9rem;
-      border-radius: var(--radius);
+    .estimator-fields-group label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
       font-size: 0.95rem;
+      color: var(--text-muted);
     }
-    #calculator .estimator-form input:focus,
-    #calculator .estimator-form select:focus {
+    .estimator-fields-group .checkbox-label {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      gap: 1rem;
+    }
+    .estimator-fields-group .checkbox-label span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .estimator-fields-group input,
+    .estimator-fields-group select {
+      background: rgba(12, 12, 12, 0.9);
+      border: 1px solid rgba(212, 162, 118, 0.25);
+      color: var(--text-light);
+      border-radius: 12px;
+      padding: 0.75rem 0.85rem;
+      font-family: var(--font-body);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+    .estimator-fields-group input:focus,
+    .estimator-fields-group select:focus {
       outline: none;
-      border-color: var(--brand-accent);
+      border-color: rgba(212, 162, 118, 0.8);
       box-shadow: 0 0 0 3px rgba(212, 162, 118, 0.3);
+      background: rgba(24, 24, 24, 0.95);
+      color: var(--text-light);
     }
-
-    /* Improve output styling with subtle backgrounds and shadows */
-    #calculator .estimator-output {
-      border: 1px dashed rgba(212, 162, 118, 0.3);
-      box-shadow: inset 0 0 10px rgba(212, 162, 118, 0.1);
-      background: rgba(255, 255, 255, 0.02);
-      padding: 2rem;
+    .estimator-fields-group input[type='checkbox'] {
+      width: 1.1rem;
+      height: 1.1rem;
+      accent-color: var(--brand-accent);
+      margin: 0;
     }
-
-    /* Apply the new info icon to both small and large variants using SVG masks.
-       The icon itself is defined in `information-info.svg`. The background colour fills the
-       visible parts of the mask, producing a crisp monochrome information icon. */
-    /*
-     * Harmonise the appearance of the small info icons used beside form fields and
-     * the larger info icons used in section headings. Each icon is displayed
-     * inside a circular container with a subtle tinted background and an accent
-     * coloured border. A pseudo‑element draws the actual “i” symbol using our
-     * custom outline SVG so that the icon remains crisp at any size.
-     */
     .info-small-icon,
     .info-icon-wrapper {
       position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 22px;
-      height: 22px;
-      margin-left: 0.5rem;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      /* fill the circle with the brand accent colour so the white “i” contrasts well */
       background: var(--brand-accent);
       border: 1px solid rgba(212, 162, 118, 0.7);
-      /* hide the fallback emoji within the span */
+      margin-left: 0.4rem;
+      cursor: pointer;
       color: transparent;
       font-size: 0;
-      cursor: pointer;
       flex-shrink: 0;
     }
     .info-small-icon::before,
     .info-icon-wrapper::before {
-      content: '';
-      width: 14px;
-      height: 14px;
-      /* Use the white variant of the outline icon so it stands out against the coloured background */
-      background-image: url('information-info-outline-white.svg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      /* position the pseudo element centrally within the circle */
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      content: 'i';
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--bg-dark);
+      line-height: 1;
     }
-
-    /* The larger heading icons are slightly bigger for better hierarchy */
     .info-icon-wrapper {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
+    }
+    .info-icon-wrapper::before {
+      font-size: 0.88rem;
     }
 
-    /* Refine popover appearance for better readability */
     #calculator .info-small-popover,
-    #calculator .info-icon-wrapper .info-icon-popover {
-      background: rgba(0, 0, 0, 0.92);
-      border-color: rgba(212, 162, 118, 0.2);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    #calculator .info-icon-popover {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      max-width: min(320px, 70vw);
+      background: rgba(10, 10, 10, 0.92);
+      border: 1px solid rgba(212, 162, 118, 0.25);
+      border-radius: 14px;
+      padding: 1rem 1.35rem;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 10;
+    }
+    #calculator .info-small-popover.visible,
+    #calculator .info-icon-popover.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    #calculator .info-icon-popover .close-popover,
+    #calculator .info-small-popover .close-popover {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    .summary-card {
+      background: rgba(5, 5, 5, 0.55);
+      border-radius: 20px;
+      border: 1px solid rgba(212, 162, 118, 0.2);
+      padding: clamp(1.5rem, 3vw, 2.2rem);
+      display: grid;
+      gap: 1.5rem;
+      position: sticky;
+      top: clamp(1.5rem, 5vw, 2.5rem);
+    }
+    .summary-card header {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .summary-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(212, 162, 118, 0.2);
+      color: var(--brand-accent);
+      box-shadow: inset 0 0 0 1px rgba(212, 162, 118, 0.35), 0 14px 30px rgba(212, 162, 118, 0.22);
+    }
+    .summary-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+    }
+    .summary-card h3 {
+      margin: 0;
+      font-size: 1.45rem;
+    }
+    .summary-card p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .summary-metrics {
+      display: grid;
+      gap: 1.1rem;
+    }
+    .summary-metric {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      border-bottom: 1px dashed rgba(212, 162, 118, 0.2);
+      padding-bottom: 0.75rem;
+    }
+    .summary-metric:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .summary-metric dt {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(245, 245, 245, 0.7);
+    }
+    .summary-metric dd {
+      margin: 0;
+      font-weight: 600;
+      color: var(--text-light);
+      font-size: 1.05rem;
+    }
+    .summary-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 162, 118, 0.45), transparent);
+    }
+    .summary-tips {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+    .summary-tips li {
+      position: relative;
+      padding-left: 1.3rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .summary-tips li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand-accent);
+      box-shadow: 0 0 0 3px rgba(212, 162, 118, 0.25);
+    }
+    .summary-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .summary-reset {
+      background: transparent;
+      border: 1px solid rgba(212, 162, 118, 0.4);
+      color: var(--text-light);
+      border-radius: 999px;
+      padding: 0.55rem 1.4rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .summary-reset:hover,
+    .summary-reset:focus-visible {
+      outline: none;
+      border-color: rgba(212, 162, 118, 0.7);
+      background: rgba(212, 162, 118, 0.12);
+    }
+    .summary-footnote {
+      font-size: 0.75rem;
+      color: rgba(176, 176, 176, 0.85);
+      line-height: 1.5;
+    }
+    .estimator-output {
+      background: rgba(5, 5, 5, 0.55);
+      border: 1px solid rgba(212, 162, 118, 0.18);
+      border-radius: 20px;
+      padding: clamp(1.5rem, 3vw, 2.2rem);
+      display: grid;
+      gap: 1rem;
+      color: var(--text-light);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+    .estimator-output::before {
+      content: '';
+      position: absolute;
+      inset: -40% 40% 40% -40%;
+      background: radial-gradient(circle at top, rgba(212, 162, 118, 0.18), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .estimator-output .output-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      z-index: 1;
+    }
+    .estimator-output h4 {
+      margin: 0;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .estimator-output .output-headline {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+      color: var(--brand-accent);
+      z-index: 1;
+    }
+    .estimator-output .output-budget {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-light);
+      z-index: 1;
+    }
+    .estimator-output .output-coverage,
+    .estimator-output .output-narrative {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      z-index: 1;
+    }
+    .estimator-output .output-error {
+      color: var(--error-color);
+      font-weight: 600;
+      margin: 0;
+    }
+    #estimator-cta {
+      align-self: flex-start;
+      padding: 0.85rem 2.2rem;
+      border-radius: 14px;
+      background: linear-gradient(140deg, var(--brand-accent), var(--brand-accent) 55%, #f3d7b4);
+      color: var(--bg-dark);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    #estimator-cta::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: 0 15px 35px rgba(212, 162, 118, 0.45);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #estimator-cta:hover,
+    #estimator-cta:focus-visible {
+      outline: none;
+      transform: translateY(-2px);
+    }
+    #estimator-cta:hover::after,
+    #estimator-cta:focus-visible::after {
+      opacity: 1;
+    }
+    #calculator .btn.btn-accent.btn--ghost {
+      border-radius: 999px;
+      border: 1px solid rgba(212, 162, 118, 0.45);
+      padding: 0.55rem 1.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      background: transparent;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    #calculator .btn.btn-accent.btn--ghost:hover,
+    #calculator .btn.btn-accent.btn--ghost:focus-visible {
+      outline: none;
+      border-color: rgba(212, 162, 118, 0.8);
+      background: rgba(212, 162, 118, 0.1);
+    }
+    @media (max-width: 1100px) {
+      .estimator-stage {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .estimator-sidebar {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        gap: 1.25rem;
+      }
+      .estimator-sidebar .sidebar-header {
+        min-width: 220px;
+      }
+      .service-nav {
+        flex-direction: row;
+        gap: 0.8rem;
+      }
+      .service-nav-item {
+        min-width: 200px;
+      }
+      .estimator-form__grid {
+        grid-template-columns: 1fr;
+      }
+      .summary-card {
+        position: static;
+      }
+    }
+    @media (max-width: 720px) {
+      .estimator-sidebar {
+        flex-direction: column;
+      }
+      .service-nav {
+        flex-wrap: wrap;
+      }
+      .estimator-fields-group {
+        grid-template-columns: 1fr;
+      }
+      #estimator-cta {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
-
+    /* --- FAQ Section --- */
     /* --- FAQ Section --- */
     #faq { background-color: var(--bg-dark); }
 
@@ -2008,407 +2429,385 @@ small {
 
 
      <!-- ESTIMATOR SECTION -->
-    <section id="calculator" class="section" style="background-color:var(--bg-dark);">
+    <section id="calculator" class="section">
+      <div class="estimator-aurora" aria-hidden="true">
+        <div class="estimator-aurora__shape estimator-aurora__shape--one"></div>
+        <div class="estimator-aurora__shape estimator-aurora__shape--two"></div>
+      </div>
       <div class="container">
-        <div class="section-header">
-          <h2 data-animate-text>Inteligentní plánovač bezpečnosti</h2>
-          <p>Tento orientační návrh vám pomůže získat představu. Přesný plán navrhneme po úvodním kontaktu a detailní analýze vašich potřeb.</p>
+        <div class="estimator-stage" id="estimator-stage">
+          <aside class="estimator-sidebar">
+            <div class="sidebar-header">
+              <h3>Služby</h3>
+              <p>Vyberte oblast, která se vás týká.</p>
+            </div>
+            <nav class="service-nav" role="tablist" aria-label="Zvolte typ služby">
+              <button type="button" class="service-nav-item service-pill active" data-service-pill="object" id="service-pill-object" aria-selected="true" aria-controls="service-panel-object" data-bg="https://images.unsplash.com/photo-1581092446347-a8b2f1597a1d?auto=format&fit=crop&w=1200&q=60" role="tab">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M54 57H10C8.89543 57 8 56.1046 8 55V15C8 13.8954 8.89543 13 10 13H54C55.1046 13 56 13.8954 56 15V55C56 56.1046 55.1046 57 54 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13V9C18 7.89543 18.8954 7 20 7H44C45.1046 7 46 7.89543 46 9V13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 23H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 33H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 43H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 23H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 33H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 43H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Ostraha objektu</span>
+              </button>
+              <button type="button" class="service-nav-item service-pill" data-service-pill="vip" id="service-pill-vip" aria-selected="false" aria-controls="service-panel-vip" data-bg="https://images.unsplash.com/photo-1621601433342-23736822b311?auto=format&fit=crop&w=1200&q=60" role="tab" tabindex="-1">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 30C37.5228 30 42 25.5228 42 20C42 14.4772 37.5228 10 32 10C26.4772 10 22 14.4772 22 20C22 25.5228 26.4772 30 32 30Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48.61 54C48.61 47.9 41.1 43 32 43C22.9 43 15.39 47.9 15.39 54" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M51 7L57 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13L13 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Osobní ochrana</span>
+              </button>
+              <button type="button" class="service-nav-item service-pill" data-service-pill="event" id="service-pill-event" aria-selected="false" aria-controls="service-panel-event" data-bg="https://images.unsplash.com/photo-1511795409834-ef04bbd51622?auto=format&fit=crop&w=1200&q=60" role="tab" tabindex="-1">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 26L32 12L50 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 32V52H46V32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 52V40C26 37.7909 27.7909 36 30 36H34C36.2091 36 38 37.7909 38 40V52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M55 42L50 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 42L14 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 30L56 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 30L8 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Event security</span>
+              </button>
+              <button type="button" class="service-nav-item service-pill" data-service-pill="sport" id="service-pill-sport" aria-selected="false" aria-controls="service-panel-sport" data-bg="https://images.unsplash.com/photo-1541250848049-b9f71a6e8e88?auto=format&fit=crop&w=1200&q=60" role="tab" tabindex="-1">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 57C45.8071 57 57 45.8071 57 32C57 18.1929 45.8071 7 32 7C18.1929 7 7 18.1929 7 32C7 45.8071 18.1929 57 32 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7C27.5 16.5 27.5 22.5 32 32C36.5 22.5 36.5 16.5 32 7Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M57 32C47.5 36.5 41.5 36.5 32 32C41.5 27.5 47.5 27.5 57 32Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 32H57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7V57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Sportovní utkání</span>
+              </button>
+              <button type="button" class="service-nav-item service-pill" data-service-pill="club" id="service-pill-club" aria-selected="false" aria-controls="service-panel-club" data-bg="https://images.unsplash.com/photo-1582220107107-590426d242c8?auto=format&fit=crop&w=1200&q=60" role="tab" tabindex="-1">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 20C32 15.5817 28.4183 12 24 12C19.5817 12 16 15.5817 16 20C16 23.5 18.5 26.3 21.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48 20C48 15.5817 44.4183 12 40 12C35.5817 12 32 15.5817 32 20C32 23.5 34.5 26.3 37.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20H10C8.89543 20 8 20.8954 8 22V50C8 51.1046 8.89543 52 10 52H54C55.1046 52 56 51.1046 56 50V22C56 20.8954 55.1046 20 54 20H48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 28V38L40 43" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Noční podniky</span>
+              </button>
+            </nav>
+          </aside>
+          <div class="estimator-main">
+            <div class="estimator-headline">
+              <h2>Plánovač bezpečnosti</h2>
+              <p>Začněte výběrem služby vlevo a upravte parametry pro orientační odhad týmu, směn i rozpočtu.</p>
+            </div>
+            <form id="estimator-form" class="estimator-form" onsubmit="event.preventDefault();">
+              <label class="visually-hidden" for="service-type-select">Typ služby</label>
+              <select name="service_type" id="service-type-select" hidden>
+                <option value="object">Ostraha objektu</option>
+                <option value="vip">Osobní ochrana</option>
+                <option value="event">Event security</option>
+                <option value="sport">Sportovní utkání</option>
+                <option value="club">Ostraha nočních podniků</option>
+              </select>
+              <div class="estimator-form__grid">
+                <div class="estimator-panels">
+                  <div class="estimator-fields-group active" data-service="object" id="service-panel-object" aria-hidden="false">
+                    <div class="calculator-heading">
+                      <span>Ostraha objektu</span>
+                      <span class="info-icon-wrapper">ℹ️
+                        <div class="info-icon-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Zadejte plochu objektu, počet vstupů, podlaží, parkovacích míst a technických místností. Základní odhad vychází z jednoho pracovníka na každých 2&nbsp;000&nbsp;m² plochy a jednoho na každý vstup. Další patra, parkoviště a technické místnosti zvyšují potřebu personálu. Kamerový systém může snížit počet pracovníků, zatímco noční provoz ho zvyšuje.</p>
+                        </div>
+                      </span>
+                    </div>
+                    <label>Typ objektu
+                      <select name="object_type">
+                        <option value="office">Kanceláře</option>
+                        <option value="warehouse">Sklad</option>
+                        <option value="construction">Stavba</option>
+                        <option value="mall">Obchodní centrum</option>
+                      </select>
+                    </label>
+                    <label>Rozloha (m²)
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Celková plocha objektu. Odhad začíná u jednoho strážného na každých 2&nbsp;000&nbsp;m².</p>
+                        </div>
+                      </span>
+                      <input type="number" name="area" min="50" value="1000" placeholder="např. 1000">
+                    </label>
+                    <label>Počet vstupů
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Každý samostatný vstup vyžaduje jednoho pracovníka.</p>
+                        </div>
+                      </span>
+                      <input type="number" name="entrances_object" min="1" value="1" placeholder="např. 1">
+                    </label>
+                    <label>Provoz
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Výběr "24/7" znamená nepřetržitý provoz a vyžaduje více směn. U denního provozu se počítá pouze jedna směna.</p>
+                        </div>
+                      </span>
+                      <select name="operation_time">
+                        <option value="day">Denní</option>
+                        <option value="247">24/7</option>
+                      </select>
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Má kamerový systém?
+                        <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                          <div class="info-small-popover">
+                            <button class="close-popover" aria-label="Zavřít">×</button>
+                            <p>Kamerový systém může snížit potřebný počet pracovníků přibližně o 20&nbsp;%.</p>
+                          </div>
+                        </span>
+                      </span>
+                      <input type="checkbox" name="cctv">
+                    </label>
+                    <label>Počet podlaží
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Každé podlaží přidává jednoho pracovníka.</p>
+                        </div>
+                      </span>
+                      <input type="number" name="floors_object" min="1" value="1">
+                    </label>
+                    <label>Parkovací místa
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Každých 100 parkovacích míst přidává jednoho pracovníka.</p>
+                        </div>
+                      </span>
+                      <input type="number" name="parking_object" min="0" value="0">
+                    </label>
+                    <label>Sklady / technické místnosti
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Každých 10 technických místností přidává jednoho pracovníka.</p>
+                        </div>
+                      </span>
+                      <input type="number" name="technical_object" min="0" value="0">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Noční provoz
+                        <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                          <div class="info-small-popover">
+                            <button class="close-popover" aria-label="Zavřít">×</button>
+                            <p>Pokud je objekt hlídán přes noc, navýší se celkový počet pracovníků o 20&nbsp;%.</p>
+                          </div>
+                        </span>
+                      </span>
+                      <input type="checkbox" name="night_object">
+                    </label>
+                  </div>
+                  <div class="estimator-fields-group" data-service="vip" id="service-panel-vip" hidden aria-hidden="true">
+                    <div class="calculator-heading">
+                      <span>Osobní ochrana</span>
+                      <span class="info-icon-wrapper">ℹ️
+                        <div class="info-icon-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Zadejte počet chráněných osob a zvolte rizikovost. Minimální odhad je jeden bodyguard na každou osobu. Cestování a požadavek na řidiče‑bodyguarda navyšují počet; vyšší riziko znamená vyšší potřebu personálu.</p>
+                        </div>
+                      </span>
+                    </div>
+                    <label>Počet chráněných osob
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Každá chráněná osoba vyžaduje minimálně jednoho bodyguarda. Vyšší riziko, cestování nebo řidič‑bodyguard mohou zvýšit potřebu personálu.</p>
+                        </div>
+                      </span>
+                      <input type="number" name="vip_count" min="1" value="1">
+                    </label>
+                    <label>Rizikovost
+                      <select name="risk_vip">
+                        <option value="1">Nízká</option>
+                        <option value="1.5">Střední</option>
+                        <option value="2">Vysoká</option>
+                      </select>
+                    </label>
+                    <label>Pohyb
+                      <select name="movement">
+                        <option value="static">Pevná lokalita</option>
+                        <option value="travel">Cestování</option>
+                      </select>
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Potřebujete řidiče-bodyguarda?</span>
+                      <input type="checkbox" name="driver">
+                    </label>
+                  </div>
+                  <div class="estimator-fields-group" data-service="event" id="service-panel-event" hidden aria-hidden="true">
+                    <div class="calculator-heading">
+                      <span>Event security</span>
+                      <span class="info-icon-wrapper">ℹ️
+                        <div class="info-icon-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Zadejte očekávaný počet návštěvníků, délku akce, rozmístění vstupů a další specifika. Odhad kombinuje pořadatele, supervizory a posily podle rizikovosti a logistiky akce.</p>
+                        </div>
+                      </span>
+                    </div>
+                    <label>Očekávaný počet návštěvníků
+                      <input type="number" name="attendees_event" min="10" value="500" placeholder="např. 500">
+                    </label>
+                    <label>Trvání akce (hodiny)
+                      <input type="number" name="duration_event" min="1" value="8">
+                    </label>
+                    <label>Rozloha areálu (m²)
+                      <input type="number" name="area_event" min="0" value="0">
+                    </label>
+                    <label>Průměrná hustota osob (m² na osobu)
+                      <input type="number" name="usage_event" min="0" step="0.1" value="0">
+                    </label>
+                    <label>Počet vstupů
+                      <input type="number" name="gates_event" min="0" value="2">
+                    </label>
+                    <label>Kontrolní koridory
+                      <input type="number" name="lanes_event" min="0" value="2">
+                    </label>
+                    <label>Zóny a sektory
+                      <input type="number" name="zones_event" min="0" value="1">
+                    </label>
+                    <label>Rizikovost
+                      <select name="risk_event">
+                        <option value="1">Nízká</option>
+                        <option value="1.3">Střední</option>
+                        <option value="1.6">Vysoká</option>
+                      </select>
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Podává se alkohol?</span>
+                      <input type="checkbox" name="alcohol">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>VIP zóna</span>
+                      <input type="checkbox" name="vip_event">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Backstage</span>
+                      <input type="checkbox" name="backstage_event">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Stanové městečko</span>
+                      <input type="checkbox" name="camp_event">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Kontrola parkoviště</span>
+                      <input type="checkbox" name="parking_event">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Venkovní akce</span>
+                      <input type="checkbox" name="outdoor_event">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Noční program</span>
+                      <input type="checkbox" name="night_event">
+                    </label>
+                  </div>
+                  <div class="estimator-fields-group" data-service="sport" id="service-panel-sport" hidden aria-hidden="true">
+                    <div class="calculator-heading">
+                      <span>Sportovní utkání</span>
+                      <span class="info-icon-wrapper">ℹ️
+                        <div class="info-icon-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Počet pořadatelů se odvíjí od kapacity stadionu, rizikovosti utkání a logistiky vstupů. Oddělený sektor hostů, VIP nebo noční režim navýší potřebný tým.</p>
+                        </div>
+                      </span>
+                    </div>
+                    <label>Očekávaný počet diváků
+                      <input type="number" name="attendees_sport" min="10" value="500">
+                    </label>
+                    <label>Trvání akce (hodiny)
+                      <input type="number" name="duration_sport" min="1" value="4">
+                    </label>
+                    <label>Počet vstupů
+                      <input type="number" name="gates_sport" min="0" value="2">
+                    </label>
+                    <label>Kontrolní koridory
+                      <input type="number" name="lanes_sport" min="0" value="2">
+                    </label>
+                    <label>Zóny / sektory
+                      <input type="number" name="zones_sport" min="0" value="1">
+                    </label>
+                    <label>Rizikovost
+                      <select name="risk_sport">
+                        <option value="1">Běžné</option>
+                        <option value="1.5">Derby</option>
+                        <option value="2">Vysoké riziko</option>
+                      </select>
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Oddělený sektor hostů?</span>
+                      <input type="checkbox" name="guest_sector">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>VIP tribuny</span>
+                      <input type="checkbox" name="vip_sport">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Kontrola parkoviště</span>
+                      <input type="checkbox" name="parking_sport">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Venkovní stadion</span>
+                      <input type="checkbox" name="outdoor_sport">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Noční utkání</span>
+                      <input type="checkbox" name="night_sport">
+                    </label>
+                  </div>
+                  <div class="estimator-fields-group" data-service="club" id="service-panel-club" hidden aria-hidden="true">
+                    <div class="calculator-heading">
+                      <span>Noční podniky</span>
+                      <span class="info-icon-wrapper">ℹ️
+                        <div class="info-icon-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Zadejte kapacitu, počet vstupů a rizikovost lokality. Odhad zahrnuje tým pro vstup, patrolu uvnitř a supervizora.</p>
+                        </div>
+                      </span>
+                    </div>
+                    <label>Kapacita podniku
+                      <input type="number" name="club_capacity" value="150" min="20">
+                    </label>
+                    <label>Počet vstupů
+                      <input type="number" name="entrances_club" value="1" min="1">
+                    </label>
+                    <label>Rizikovost lokality
+                      <select name="risk_club">
+                        <option value="1">Nízká</option>
+                        <option value="1.3">Střední</option>
+                        <option value="1.6">Vysoká</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+                <aside class="summary-card" aria-live="polite" aria-atomic="true">
+                  <header>
+                    <div class="summary-icon" id="summary-icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l3 3" /></svg>
+                    </div>
+                    <h3 id="summary-title">Vyberte službu</h3>
+                    <p id="summary-description">Zadejte parametry na levé straně a získáte okamžitý odhad týmu, směn i rozpočtu.</p>
+                  </header>
+                  <dl class="summary-metrics">
+                    <div class="summary-metric">
+                      <dt>Doporučený tým</dt>
+                      <dd id="summary-team">–</dd>
+                    </div>
+                    <div class="summary-metric">
+                      <dt>Pokrytí</dt>
+                      <dd id="summary-coverage">–</dd>
+                    </div>
+                    <div class="summary-metric">
+                      <dt>Rozpočet</dt>
+                      <dd id="summary-budget">–</dd>
+                    </div>
+                  </dl>
+                  <div class="summary-divider" aria-hidden="true"></div>
+                  <ul class="summary-tips" id="summary-tips">
+                    <li>Tipy a doporučení se zobrazí po výpočtu.</li>
+                  </ul>
+                  <div class="summary-actions">
+                    <button type="button" class="summary-reset" id="summary-reset">Vymazat vstupy</button>
+                    <a href="#cta" class="btn btn-accent btn--ghost" id="summary-cta-shortcut">Odeslat návrh</a>
+                  </div>
+                  <p class="summary-footnote" id="summary-footnote">Uvedené částky jsou orientační a nezahrnují techniku ani DPH. Přesnou nabídku připravíme po konzultaci.</p>
+                </aside>
+              </div>
+              <div class="estimator-output" aria-live="polite">
+                <div class="output-header">
+                  <h4>Orientační návrh</h4>
+                  <p class="output-headline">Doporučený počet: –</p>
+                </div>
+                <p class="output-budget"><strong>–</strong></p>
+                <p class="output-coverage">Výsledky se zobrazí po zadání parametrů.</p>
+                <p class="output-narrative">Zadejte informace o projektu a okamžitě uvidíte doporučení.</p>
+              </div>
+              <a href="#cta" id="estimator-cta" class="btn btn-accent">Poptat službu</a>
+            </form>
+          </div>
         </div>
-        <form id="estimator-form" class="estimator-form" onsubmit="event.preventDefault();">
-          <label class="full-width">Typ služby
-            <select name="service_type" id="service-type-select">
-              <option value="object">Ostraha objektu</option>
-              <option value="vip">Osobní ochrana</option>
-              <option value="event">Event security</option>
-              <option value="sport">Sportovní utkání</option>
-              <option value="club">Ostraha nočních podniků</option>
-            </select>
-          </label>
-
-          <div class="estimator-fields-group calculator-card" data-service="object">
-            <div class="calculator-heading">Ostraha objektu 
-              <span class="info-icon-wrapper">ℹ️
-                <div class="info-icon-popover">
-                  <button class="close-popover" aria-label="Zavřít">×</button>
-                  <p>Zadejte plochu objektu, počet vstupů, podlaží, parkovacích míst a technických místností. Základní odhad vychází z jednoho pracovníka na každých 2 000 m² plochy a jednoho na každý vstup. Další patra, parkoviště a technické místnosti zvyšují potřebu personálu. Kamerový systém může snížit počet pracovníků, zatímco noční provoz ho zvyšuje.</p>
-                </div>
-              </span>
-            </div>
-              <label>Typ objektu <select name="object_type"><option value="office">Kanceláře</option><option value="warehouse">Sklad</option><option value="construction">Stavba</option><option value="mall">Obchodní centrum</option></select></label>
-              <label>Rozloha (m²)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Celková plocha objektu. Odhad začíná u jednoho strážného na každých 2 000 m².</p>
-                  </div>
-                </span>
-                <input type="number" name="area" min="50" value="1000" placeholder="např. 1000">
-              </label>
-              <label>Počet vstupů
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý samostatný vstup vyžaduje jednoho pracovníka.</p>
-                  </div>
-                </span>
-                <input type="number" name="entrances_object" min="1" value="1" placeholder="např. 1">
-              </label>
-              <label>Provoz
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Výběr "24/7" znamená nepřetržitý provoz a vyžaduje více směn. U denního provozu se počítá pouze jedna směna.</p>
-                  </div>
-                </span>
-                <select name="operation_time"><option value="day">Denní</option><option value="247">24/7</option></select>
-              </label>
-              <label class="checkbox-label">Má kamerový systém?
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Kamerový systém může snížit potřebný počet pracovníků přibližně o 20 %.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="cctv">
-              </label>
-
-              <!-- Rozšířené parametry pro objekty -->
-              <label>Počet podlaží
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každé podlaží přidává jednoho pracovníka.</p>
-                  </div>
-                </span>
-                <input type="number" name="floors_object" min="1" value="1">
-              </label>
-              <!-- Inline explanation removed; see info popover for details. -->
-              <label>Parkovací místa
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každých 100 parkovacích míst přidává jednoho pracovníka.</p>
-                  </div>
-                </span>
-                <input type="number" name="parking_object" min="0" value="0">
-              </label>
-              <!-- Inline explanation removed; see info popover for details. -->
-              <label>Sklady / technické místnosti
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každých 10 technických místností přidává jednoho pracovníka.</p>
-                  </div>
-                </span>
-                <input type="number" name="technical_object" min="0" value="0">
-              </label>
-              <!-- Inline explanation removed; see info popover for details. -->
-              <label class="checkbox-label">Noční provoz
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Pokud je objekt hlídán přes noc, navýší se celkový počet pracovníků o 20 %.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="night_object">
-              </label>
-              <!-- Inline explanation removed; see info popover for details. -->
-          </div>
-          
-          <div class="estimator-fields-group calculator-card" data-service="vip">
-            <div class="calculator-heading">Osobní ochrana 
-              <span class="info-icon-wrapper">ℹ️
-                <div class="info-icon-popover">
-                  <button class="close-popover" aria-label="Zavřít">×</button>
-                  <p>Zadejte počet chráněných osob a zvolte rizikovost. Minimální odhad je jeden bodyguard na každou osobu. Cestování a požadavek na řidiče‑bodyguarda navyšují počet; vyšší riziko znamená vyšší potřebu personálu.</p>
-                </div>
-              </span>
-            </div>
-              <label>Počet chráněných osob
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každá chráněná osoba vyžaduje minimálně jednoho bodyguarda. Vyšší riziko, cestování nebo řidič‑bodyguard mohou zvýšit potřebu personálu.</p>
-                  </div>
-                </span>
-                <input type="number" name="vip_count" min="1" value="1">
-              </label>
-              <label>Rizikovost <select name="risk_vip"><option value="1">Nízká</option><option value="1.5">Střední</option><option value="2">Vysoká</option></select></label>
-              <label>Pohyb <select name="movement"><option value="static">Pevná lokalita</option><option value="travel">Cestování</option></select></label>
-              <label class="checkbox-label"><input type="checkbox" name="driver"> Potřebujete řidiče-bodyguarda?</label>
-          </div>
-          
-          <div class="estimator-fields-group calculator-card" data-service="event">
-            <div class="calculator-heading">Event security 
-              <span class="info-icon-wrapper">ℹ️
-                <div class="info-icon-popover">
-                  <button class="close-popover" aria-label="Zavřít">×</button>
-                  <p>Počet návštěvníků můžete zadat přímo, nebo se vypočítá z plochy a typu využití (pro stání se používá cca 0,65 m² na osobu). Výchozí poměr je 1 strážný na 100 návštěvníků (nízké riziko), 1 na 75 (střední) a 1 na 50 (vysoké riziko). U velkých akcí se tento poměr uvolňuje. Každý koridor a vstup vyžaduje samostatnou obsluhu; další zóny, backstage, parkoviště a stanové městečko přidávají pracovníky. Délka akce určuje počet směn (8 hodin na směnu).</p>
-                </div>
-              </span>
-            </div>
-              <label>Počet návštěvníků
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Zadejte očekávaný počet návštěvníků. Výchozí poměr je 1 strážný na 100 lidí (nízké riziko), 1 na 75 (střední) a 1 na 50 (vysoké).</p>
-                  </div>
-                </span>
-                <input type="number" name="attendees_event" min="10" value="500">
-              </label>
-              <!-- Alternativně: zadejte plochu a typ využití, pokud počet návštěvníků není znám. Obsaditeli se spočítá dle norem NFPA/IBC (stání 0,65 m²/os., židle 0,65 m²/os., stoly a židle 1,39 m²/os.)【807808575927764†L111-L119】. -->
-              <label>Plocha (m²)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Pokud počet návštěvníků není znám, lze ho odhadnout vydělením plochy normou 0,65 m² na osobu.</p>
-                  </div>
-                </span>
-                <input type="number" name="area_event" min="0" value="">
-              </label>
-              <label>Typ využití
-                <select name="usage_event">
-                  <option value="0.65">Stání</option>
-                  <option value="0.65">Pouze židle</option>
-                  <option value="1.39">Stoly a židle</option>
-                </select>
-              </label>
-              <!-- Distinguish between entry lanes and separate gates. A lane (koridor) represents a single turnstile or channel within a gate.
-                   A gate (samostatný vstup) is a separate entry point requiring its own dedicated staff. -->
-              <label>Počet vstupních koridorů (pruhů)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý koridor (pruh) vyžaduje vlastní pracovníky pro kontrolu a screening.</p>
-                  </div>
-                </span>
-                <input type="number" name="lanes_event" min="0" value="2">
-              </label>
-              <label>Počet samostatných vstupů
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý samostatný vstup vyžaduje vlastní tým strážných.</p>
-                  </div>
-                </span>
-                <input type="number" name="gates_event" min="0" value="0">
-              </label>
-              <label>Rizikovost <select name="risk_event"><option value="1">Nízká</option><option value="1.3">Střední</option><option value="1.6">Vysoká</option></select></label>
-              <label class="checkbox-label"><input type="checkbox" name="alcohol"> Podává se alkohol?</label>
-
-              <!-- Doplňující parametry pro event security -->
-              <label>Trvání akce (hodiny)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Délka akce v hodinách. Každých 8 hodin představuje jednu směnu.</p>
-                  </div>
-                </span>
-                <input type="number" name="duration_event" min="1" value="8">
-              </label>
-              <!-- Inline explanation removed; see info popover for details. -->
-              <label>Počet pódií / zón
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každá další zóna nebo pódium vyžaduje dva pracovníky navíc.</p>
-                  </div>
-                </span>
-                <input type="number" name="zones_event" min="0" value="0">
-              </label>
-              <!-- Inline explanation removed; see info popover for details. -->
-              <label class="checkbox-label">Hlídání backstage
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Přidává dva pracovníky pro dohled do zákulisí.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="backstage_event">
-              </label>
-              <label class="checkbox-label">Hlídání parkoviště
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Přidává dva pracovníky pro kontrolu parkoviště.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="parking_event">
-              </label>
-              <label class="checkbox-label">Stanové městečko
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Přidává tři pracovníky pro dohled nad stanovým městečkem.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="camp_event">
-              </label>
-              <label class="checkbox-label">VIP hosté na akci
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Navýší celkový počet pracovníků o 15 %.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="vip_event">
-              </label>
-              <label class="checkbox-label">Venkovní akce
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Navýší celkový počet pracovníků o 15 %, protože venkovní prostory vyžadují více dohledových bodů.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="outdoor_event">
-              </label>
-              <label class="checkbox-label">Noční provoz
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Navýší celkový počet pracovníků o 20 %, kvůli zhoršeným podmínkám a zvýšenému riziku.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="night_event">
-              </label>
-          </div>
-
-          <div class="estimator-fields-group calculator-card" data-service="sport">
-            <div class="calculator-heading">Sportovní utkání 
-              <span class="info-icon-wrapper">ℹ️
-                <div class="info-icon-popover">
-                  <button class="close-popover" aria-label="Zavřít">×</button>
-                  <p>Zadejte počet diváků, počet koridorů a vstupů, případně další zóny. Pro sportovní akce do 10 000 diváků se počítá 1 pořadatel na 100 diváků při běžném riziku, 1 na 75 při derby a 1 na 50 při vysokém riziku. U větších utkání se poměr uvolňuje. Každý koridor a vstup vyžaduje samostatnou obsluhu a další zóny nebo parkoviště navyšují potřebu personálu. Délka utkání ovlivňuje počet směn.</p>
-                </div>
-              </span>
-            </div>
-              <label>Počet diváků
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Zadejte očekávaný počet diváků. Základní poměr je 1 pořadatel na 100 diváků (běžné riziko), 1 na 75 (derby) a 1 na 50 (vyšší riziko).</p>
-                  </div>
-                </span>
-                <input type="number" name="attendees_sport" min="10" value="500">
-              </label>
-              <!-- Distinguish between entry lanes and separate gates for sports events. -->
-              <label>Počet vstupních koridorů (pruhů)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý koridor vyžaduje vlastní pracovníky pro kontrolu.</p>
-                  </div>
-                </span>
-                <input type="number" name="lanes_sport" min="0" value="2">
-              </label>
-              <label>Počet samostatných vstupů
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý samostatný vstup vyžaduje vlastní tým pořadatelů.</p>
-                  </div>
-                </span>
-                <input type="number" name="gates_sport" min="0" value="0">
-              </label>
-              <label>Rizikovost <select name="risk_sport"><option value="1">Běžné</option><option value="1.5">Derby</option><option value="2">Vysoké riziko</option></select></label>
-              <label class="checkbox-label"><input type="checkbox" name="guest_sector"> Oddělený sektor hostů?</label>
-
-              <!-- Doplňující parametry pro sportovní akce -->
-              <label>Trvání akce (hodiny)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Délka utkání v hodinách. Každých 8 hodin představuje jednu směnu.</p>
-                  </div>
-                </span>
-                <input type="number" name="duration_sport" min="1" value="4">
-              </label>
-              <!-- Inline explanation removed; see info popover for details. -->
-              <label>Počet zón / areálů
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každá zóna nebo areál přidává dva pracovníky navíc.</p>
-                  </div>
-                </span>
-                <input type="number" name="zones_sport" min="0" value="0">
-              </label>
-              <!-- Inline explanation removed; see info popover for details. -->
-              <label class="checkbox-label">Hlídání parkoviště
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Přidává dva pracovníky navíc.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="parking_sport">
-              </label>
-              <label class="checkbox-label">VIP hosté
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Navýší celkový počet pracovníků o 15 %.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="vip_sport">
-              </label>
-              <label class="checkbox-label">Venkovní akce
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Navýší celkový počet pracovníků o 15 %.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="outdoor_sport">
-              </label>
-              <label class="checkbox-label">Noční provoz
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Navýší celkový počet pracovníků o 20 %.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="night_sport">
-              </label>
-          </div>
-          
-          <div class="estimator-fields-group calculator-card" data-service="club">
-            <div class="calculator-heading">Noční podniky 
-              <span class="info-icon-wrapper">ℹ️
-                <div class="info-icon-popover">
-                  <button class="close-popover" aria-label="Zavřít">×</button>
-                  <p>Zadejte kapacitu podniku a počet vstupů. Pro noční podniky se obvykle používá poměr 1 strážný na 75 návštěvníků (nízké riziko), 1 na 50 (střední riziko) a 1 na 40 (vyšší riziko) plus samostatný pracovník pro každý vstup. Další faktory jako velikost podniku a provozní doba mohou tyto počty navýšit.</p>
-                </div>
-              </span>
-            </div>
-              <label>Kapacita podniku
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Celková kapacita v počtu osob. Obvykle se počítá 1 strážný na 75 osob (nízké riziko), 1 na 50 (střední) a 1 na 40 (vysoké).</p>
-                  </div>
-                </span>
-                <input type="number" name="club_capacity" value="150">
-              </label>
-              <label>Počet vstupů
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý samostatný vstup nebo východ vyžaduje jednoho strážného.</p>
-                  </div>
-                </span>
-                <input type="number" name="entrances_club" value="1">
-              </label>
-              <label>Rizikovost lokality <select name="risk_club"><option value="1">Nízká</option><option value="1.3">Střední</option><option value="1.6">Vysoká</option></select></label>
-          </div>
-
-          <div class="estimator-output full-width" aria-live="polite">Doporučený počet: –</div>
-          <!-- Button to contact form: when clicked, it transfers the current estimator result into the CTA form below -->
-          <a href="#cta" id="estimator-cta" class="btn btn-accent full-width" style="justify-self: center;">Poptat službu</a>
-        </form>
       </div>
     </section>
-
     <!-- SECTION TRANSITION -->
     <div class="section-transition" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none" style="fill: var(--bg-dark);">
@@ -2761,342 +3160,698 @@ small {
       
       // --- Estimator (Smart & Live) ---
       const estimatorForm = document.getElementById('estimator-form');
-      if(estimatorForm) {
+      if (estimatorForm) {
         const serviceTypeSelect = document.getElementById('service-type-select');
         const outputEl = estimatorForm.querySelector('.estimator-output');
-        // this selects the first .btn inside the estimator (our CTA button) and updates its text based on estimation
-        const estimatorBtn = estimatorForm.querySelector('.btn');
-        // we keep the last computed estimate and detail so it can be transferred into the CTA form
-        let lastEstimate = '';
+        const estimatorStage = document.getElementById('estimator-stage');
+        const estimatorCtaBtn = document.getElementById('estimator-cta');
+        const ctaEstimateField = document.getElementById('cta-estimate');
+        const ctaDetailsField = document.getElementById('cta-details');
+        const ctaDisplay = document.getElementById('cta-estimate-display');
+        const ctaServiceSelect = document.getElementById('cta-service-select');
+        const summaryCard = document.querySelector('.summary-card');
+        const summaryIcon = document.getElementById('summary-icon');
+        const summaryTitle = document.getElementById('summary-title');
+        const summaryDescription = document.getElementById('summary-description');
+        const summaryTeam = document.getElementById('summary-team');
+        const summaryCoverage = document.getElementById('summary-coverage');
+        const summaryBudget = document.getElementById('summary-budget');
+        const summaryTips = document.getElementById('summary-tips');
+        const summaryFootnote = document.getElementById('summary-footnote');
+        const summaryReset = document.getElementById('summary-reset');
+        const summaryCtaShortcut = document.getElementById('summary-cta-shortcut');
+        const servicePills = Array.from(document.querySelectorAll('[data-service-pill]'));
 
-        function toggleEstimatorFields() {
-          const selectedService = serviceTypeSelect.value;
-          estimatorForm.querySelectorAll('.estimator-fields-group').forEach(group => {
-            const isActive = group.dataset.service === selectedService;
-            group.classList.toggle('active', isActive);
+        const serviceMap = {
+          object: 'Ostraha objektu',
+          vip: 'Osobní ochrana',
+          event: 'Event security',
+          sport: 'Sportovní utkání',
+          club: 'Ostraha nočních podniků'
+        };
+
+        const SERVICE_CONFIG = {
+          object: {
+            label: 'Ostraha objektu',
+            summaryTitle: 'Strategická ostraha objektu',
+            description: 'Vyvážený tým pro recepce, obchůzky a dohled nad technikou i logistikou.',
+            footnote: 'Odhad zahrnuje mzdové náklady bezpečnostního týmu bez technologií a DPH.',
+            rates: { low: 230, high: 280 },
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 10.5h15M4.5 6h15m-13.5 4.5V21m4.5-10.5V21m4.5-10.5V21m4.5-10.5V21" /></svg>',
+            defaultTips: [
+              'Ujistěte se, že patrola zahrnuje i technické prostory a logistické zázemí.',
+              'Pro nepřetržitý provoz doporučujeme plánování rotačních směn minimálně 2 týdny dopředu.'
+            ]
+          },
+          vip: {
+            label: 'Osobní ochrana',
+            summaryTitle: 'Ochrana VIP osob',
+            description: 'Tým bodyguardů koordinuje bezpečí, logistiku přesunů i krizovou komunikaci.',
+            footnote: 'Výsledná cena nezahrnuje doprovodná vozidla ani speciální vybavení.',
+            rates: { low: 550, high: 780 },
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 21a7.5 7.5 0 0 1 15 0" /></svg>',
+            defaultTips: [
+              'Pro cestovní itineráře počítejte s advance týmem a průzkumem tras.',
+              'Zvažte kombinaci viditelných a nenápadných členů pro lepší krizové scénáře.'
+            ]
+          },
+          event: {
+            label: 'Event security',
+            summaryTitle: 'Zabezpečení eventu',
+            description: 'Průchodnost vstupů, koordinace zón a práce s davem v reálném čase.',
+            footnote: 'Cena je orientační pro jednodenní akci a zahrnuje směny pořadatelského týmu.',
+            rates: { low: 210, high: 260 },
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 9h15l-2.25 12h-10.5L4.5 9Zm3-5.25 1.5 3m6-3 1.5 3" /></svg>',
+            defaultTips: [
+              'Vyčleňte briefing 30 minut před otevřením bran pro sladění komunikace.',
+              'Nezapomeňte na jasně definované evakuační zóny a krizové hlášení.'
+            ]
+          },
+          sport: {
+            label: 'Sportovní utkání',
+            summaryTitle: 'Zabezpečení sportovní akce',
+            description: 'Segmentované týmy pro tribuny, koridory, VIP a hostující fanoušky.',
+            footnote: 'Odhad počítá s pořadatelským týmem a supervizory na každou směnu.',
+            rates: { low: 220, high: 270 },
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 3-12 4.5 3 7.5-6-3 12-4.5-3-7.5 6Z" /></svg>',
+            defaultTips: [
+              'Pro derby zvažte rozšíření týmu o mobilní zásahovou skupinu.',
+              'Komunikaci na stadiónu sjednoťte pomocí sdílených rádiových kanálů.'
+            ]
+          },
+          club: {
+            label: 'Ostraha nočních podniků',
+            summaryTitle: 'Ostraha nočního podniku',
+            description: 'Kontrola vstupu, práce s VIP hosty i prevence incidentů uvnitř provozu.',
+            footnote: 'Rozpočet předpokládá provoz 4–5 nocí v týdnu a nezahrnuje technické prvky.',
+            rates: { low: 210, high: 260 },
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.556 0 8.25-3.694 8.25-8.25S16.556 3.75 12 3.75 3.75 7.444 3.75 12 7.444 20.25 12 20.25Z" /><path stroke-linecap="round" stroke-linejoin="round" d="m9 10.5 3 3 7.5-7.5" /></svg>',
+            defaultTips: [
+              'Koordinujte tým s personálem baru kvůli signálům při přetížení.',
+              'Při vyšší návštěvnosti přidejte člena na patro nebo VIP salonek.'
+            ]
+          }
+        };
+
+        let currentService = serviceTypeSelect.value;
+        let lastEstimate = '';
+        let lastEstimateDetail = '';
+
+        function formatNumber(value) {
+          return Number(value || 0).toLocaleString('cs-CZ');
+        }
+
+        function formatCurrency(value) {
+          return new Intl.NumberFormat('cs-CZ', {
+            style: 'currency',
+            currency: 'CZK',
+            maximumFractionDigits: 0
+          }).format(Math.max(0, Math.round(value)));
+        }
+
+        function pluralize(count, single, few, many) {
+          const mod10 = count % 10;
+          const mod100 = count % 100;
+          if (mod10 === 1 && mod100 !== 11) return single;
+          if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+          return many;
+        }
+
+        function animateOutput() {
+          if (typeof gsap !== 'undefined') {
+            gsap.fromTo(outputEl, { opacity: 0.35, y: 6 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
+            if (summaryCard) {
+              gsap.fromTo(summaryCard, { boxShadow: '0 25px 60px -42px rgba(0,0,0,0.85)' }, {
+                boxShadow: '0 25px 60px -28px rgba(0,0,0,0.78)',
+                duration: 0.6,
+                ease: 'power2.out'
+              });
+            }
+          }
+        }
+
+        function renderTips(tips, fallback) {
+          const items = (tips && tips.length) ? tips : (fallback || ['Tipy a doporučení se zobrazí po výpočtu.']);
+          summaryTips.innerHTML = '';
+          items.forEach(text => {
+            const li = document.createElement('li');
+            li.textContent = text;
+            summaryTips.appendChild(li);
           });
-          calculateEstimate();
+        }
+
+        function calculateObject(form) {
+          const type = form.object_type.value;
+          const area = Number(form.area.value) || 0;
+          const entrances = Math.max(1, Number(form.entrances_object.value) || 1);
+          const time = form.operation_time.value;
+          const cctv = form.cctv.checked;
+          const floors = Math.max(1, Number(form.floors_object.value) || 1);
+          const parking = Math.max(0, Number(form.parking_object.value) || 0);
+          const technical = Math.max(0, Number(form.technical_object.value) || 0);
+          const nightFlag = form.night_object && form.night_object.checked;
+
+          const typeFactor = { construction: 1.3, mall: 1.45, warehouse: 1.12, office: 1 }[type] || 1;
+          let base = (area / 2000) + entrances;
+          base *= typeFactor;
+          if (cctv) base *= 0.82;
+          base += Math.max(0, floors - 1);
+          base += parking / 120;
+          base += technical / 12;
+          if (nightFlag) base *= 1.18;
+
+          const guards = Math.max(1, Math.ceil(base));
+          const supervisors = Math.max(1, Math.round(guards / 6));
+          const perShift = guards + supervisors;
+          const shifts = time === '247' ? 3 : 1;
+          const totalMin = perShift * shifts;
+          const totalMax = totalMin + (time === '247' ? supervisors : 1);
+
+          const coverage = time === '247'
+            ? 'Nepřetržitá služba ve třech směnách s dohledem recepce i patrolou.'
+            : 'Denní směna se zaměřením na recepci, pochůzky a uzavření objektu.';
+
+          const hoursPerPeriod = time === '247'
+            ? perShift * 24 * 30
+            : perShift * 10 * 22;
+          const config = SERVICE_CONFIG.object;
+          const budgetLow = hoursPerPeriod * config.rates.low;
+          const budgetHigh = hoursPerPeriod * config.rates.high;
+          const budgetText = `${formatCurrency(budgetLow)} – ${formatCurrency(budgetHigh)} / měsíc`;
+
+          const typeText = form.object_type.options[form.object_type.selectedIndex]?.text || 'objekt';
+          const detail = `Rozloha ${formatNumber(area)} m², ${floors} ${pluralize(floors, 'podlaží', 'podlaží', 'podlaží')}, ${entrances} ${pluralize(entrances, 'vstup', 'vstupy', 'vstupů')}${parking ? `, ${formatNumber(parking)} parkovacích míst` : ''}${technical ? `, ${formatNumber(technical)} technických místností` : ''}${cctv ? ', kamerový systém' : ''}${nightFlag ? ', noční provoz' : ''}.`;
+
+          const tips = [];
+          if (!cctv) tips.push('Instalace kamer nebo PCO může snížit potřebu fyzické ostrahy až o 20 %.');
+          if (nightFlag) tips.push('Noční provoz posilujte dvojicí pracovníků kvůli bezpečnosti při výjezdech.');
+          if (floors > 4) tips.push('Rozdělte patrolu na horní a spodní blok pro rychlejší reakci.');
+
+          return {
+            teamHeadline: `${perShift} ${pluralize(perShift, 'osoba', 'osoby', 'osob')} na směnu · ${totalMin}–${totalMax} lidí pro pokrytí směn`,
+            summaryTeam: `${perShift} os. / směna`,
+            coverage,
+            budgetText,
+            detail: `${config.label}: ${detail}`,
+            narrative: `Objekt „${typeText}“ vyžaduje ${perShift} člen${perShift > 1 ? 'y' : 'a'} na směnu včetně ${supervisors} ${pluralize(supervisors, 'supervizora', 'supervizory', 'supervizorů')}.`,
+            tips,
+            ctaLabel: 'Poptat navržené řešení'
+          };
+        }
+
+        function calculateVip(form) {
+          const count = Math.max(1, Number(form.vip_count.value) || 1);
+          const risk = parseFloat(form.risk_vip.value) || 1;
+          const movement = form.movement.value;
+          const driver = form.driver.checked;
+
+          let base = Math.max(1, Math.ceil(count * risk));
+          let advanceTeam = 0;
+          if (movement === 'travel') {
+            base += 1;
+            advanceTeam = 1;
+          }
+          if (driver) base += 1;
+
+          const perShift = base;
+          const shifts = movement === 'travel' ? 2 : 1;
+          const totalMin = perShift * shifts + advanceTeam;
+          const totalMax = totalMin + 1;
+
+          const riskText = risk === 1 ? 'nízké' : risk === 1.5 ? 'střední' : 'vysoké';
+          const coverage = movement === 'travel'
+            ? 'Dynamická ochrana při přesunech s průzkumem tras a záložním vozidlem.'
+            : 'Stálá blízká ochrana v jedné lokalitě se střídáním stráží.';
+
+          const hoursPerPeriod = perShift * (movement === 'travel' ? 12 : 8) * 22;
+          const config = SERVICE_CONFIG.vip;
+          const budgetLow = hoursPerPeriod * config.rates.low;
+          const budgetHigh = hoursPerPeriod * config.rates.high;
+          const budgetText = `${formatCurrency(budgetLow)} – ${formatCurrency(budgetHigh)} / měsíc`;
+
+          const detail = `${count} VIP osob, riziko ${riskText}${movement === 'travel' ? ', cestování' : ', pevné místo'}${driver ? ', řidič-bodyguard' : ''}.`;
+
+          const tips = [];
+          if (movement === 'travel') tips.push('Připravte si záložní trasu a kontakty na lokální složky IZS.');
+          if (risk > 1.4) tips.push('Vyhodnoťte potřebu balistických prvků a specializovaného školení.');
+          if (!driver) tips.push('Samostatný řidič zvyšuje bezpečnost nastupování a evakuace.');
+
+          const bodyguardWord = pluralize(perShift, 'bodyguard', 'bodyguardi', 'bodyguardů');
+
+          return {
+            teamHeadline: `${perShift} ${bodyguardWord}${advanceTeam ? ` + ${advanceTeam} advance tým` : ''} · ${totalMin}–${totalMax} osob`,
+            summaryTeam: `${perShift}${advanceTeam ? ` + ${advanceTeam}` : ''} os.`,
+            coverage,
+            budgetText,
+            detail: `${config.label}: ${detail}`,
+            narrative: `Tým pro ${count} VIP (${riskText} riziko) tvoří ${perShift} ${bodyguardWord}${advanceTeam ? ' a advance tým pro trasu' : ''}${driver ? ' včetně specializovaného řidiče' : ''}.`,
+            tips,
+            ctaLabel: 'Zarezervovat ochranný tým'
+          };
+        }
+
+        function calculateEvent(form) {
+          let attendees = Math.max(0, Number(form.attendees_event.value) || 0);
+          const area = Math.max(0, Number(form.area_event.value) || 0);
+          const usage = Math.max(0, parseFloat(form.usage_event.value) || 0);
+          let attendeesSource = 'zadané';
+          if (!attendees && area && usage) {
+            attendees = Math.ceil(area / usage);
+            attendeesSource = `odvozené z plochy ${formatNumber(area)} m²`;
+          }
+          const lanes = Math.max(0, Number(form.lanes_event.value) || 0);
+          const gates = Math.max(0, Number(form.gates_event.value) || 0);
+          const risk = parseFloat(form.risk_event.value) || 1;
+          const alcohol = form.alcohol.checked;
+          const duration = Math.max(1, Number(form.duration_event.value) || 8);
+          const zones = Math.max(0, Number(form.zones_event.value) || 0);
+          const backstage = form.backstage_event && form.backstage_event.checked;
+          const parking = form.parking_event && form.parking_event.checked;
+          const camp = form.camp_event && form.camp_event.checked;
+          const vipFlag = form.vip_event && form.vip_event.checked;
+          const outdoor = form.outdoor_event && form.outdoor_event.checked;
+          const nightFlag = form.night_event && form.night_event.checked;
+
+          let ratio;
+          if (attendees <= 1000) {
+            ratio = risk === 1 ? 100 : risk === 1.3 ? 70 : 45;
+          } else if (attendees <= 5000) {
+            ratio = risk === 1 ? 120 : risk === 1.3 ? 80 : 50;
+          } else {
+            ratio = risk === 1 ? 150 : risk === 1.3 ? 110 : 70;
+          }
+          let base = attendees / Math.max(1, ratio);
+          base += gates;
+          base += lanes * 0.75;
+          base += zones * 1.5;
+          if (backstage) base += 2;
+          if (parking) base += 2;
+          if (camp) base += 3;
+          if (vipFlag) base += 2;
+          if (alcohol) base *= 1.1;
+          if (outdoor) base *= 1.05;
+          if (nightFlag) base *= 1.12;
+
+          const stewards = Math.max(4, Math.ceil(base));
+          const supervisors = Math.max(1, Math.ceil(stewards / 8));
+          const perShift = stewards + supervisors;
+          const shifts = Math.max(1, Math.ceil(duration / 6));
+          const totalMin = perShift * shifts;
+          const totalMax = totalMin + Math.max(1, Math.ceil(perShift * 0.15));
+          const hoursPerShift = Math.max(3, Math.round((duration / shifts) * 2) / 2);
+
+          const config = SERVICE_CONFIG.event;
+          const hoursPerPeriod = perShift * duration;
+          const budgetLow = hoursPerPeriod * config.rates.low;
+          const budgetHigh = hoursPerPeriod * config.rates.high;
+          const budgetText = `${formatCurrency(budgetLow)} – ${formatCurrency(budgetHigh)} / akci`;
+
+          const coverage = `${formatNumber(attendees)} návštěvníků, ${shifts} ${pluralize(shifts, 'směna', 'směny', 'směn')} po ${hoursPerShift} h, vstupy ${gates}, koridory ${lanes}.`;
+          const detail = `Údaje ${attendeesSource}, riziko ${risk === 1 ? 'nízké' : risk === 1.3 ? 'střední' : 'vysoké'}${alcohol ? ', podává se alkohol' : ''}${vipFlag ? ', VIP zóna' : ''}${camp ? ', stanové městečko' : ''}${nightFlag ? ', noční program' : ''}.`;
+
+          const tips = [];
+          if (gates + lanes === 0) tips.push('Definujte alespoň jeden vstup nebo koridor pro řízení davu.');
+          if (vipFlag) tips.push('Vyčleňte dedikovaný tým pro VIP a rychlé přesuny mezi zónami.');
+          if (nightFlag) tips.push('Noční program doplňte o světelné značení a posílené patroly.');
+          if (alcohol) tips.push('Počítejte s vyšším důrazem na zdravotní dohled a práci s konflikty.');
+
+          return {
+            teamHeadline: `${perShift} ${pluralize(perShift, 'pořadatel', 'pořadatelé', 'pořadatelů')} na směnu · ${totalMin}–${totalMax} osob celkem`,
+            summaryTeam: `${perShift} os. / směna`,
+            coverage,
+            budgetText,
+            detail: `${config.label}: ${detail}`,
+            narrative: `Akci pro ${formatNumber(attendees)} návštěvníků zajistí ${perShift} osob na směnu včetně ${supervisors} ${pluralize(supervisors, 'supervizora', 'supervizory', 'supervizorů')}.`,
+            tips,
+            ctaLabel: 'Rezervovat tým pro event'
+          };
+        }
+
+        function calculateSport(form) {
+          const spectators = Math.max(0, Number(form.attendees_sport.value) || 0);
+          const lanes = Math.max(0, Number(form.lanes_sport.value) || 0);
+          const gates = Math.max(0, Number(form.gates_sport.value) || 0);
+          const risk = parseFloat(form.risk_sport.value) || 1;
+          const guestSector = form.guest_sector && form.guest_sector.checked;
+          const duration = Math.max(1, Number(form.duration_sport.value) || 4);
+          const zones = Math.max(0, Number(form.zones_sport.value) || 0);
+          const parking = form.parking_sport && form.parking_sport.checked;
+          const vip = form.vip_sport && form.vip_sport.checked;
+          const outdoor = form.outdoor_sport && form.outdoor_sport.checked;
+          const night = form.night_sport && form.night_sport.checked;
+
+          let ratio;
+          if (spectators <= 1000) {
+            ratio = risk === 1 ? 90 : risk === 1.5 ? 60 : 40;
+          } else if (spectators <= 10000) {
+            ratio = risk === 1 ? 110 : risk === 1.5 ? 75 : 50;
+          } else {
+            ratio = risk === 1 ? 160 : risk === 1.5 ? 110 : 70;
+          }
+
+          let base = spectators / Math.max(1, ratio);
+          base += gates;
+          base += lanes;
+          base += zones * 1.8;
+          if (parking) base += 2;
+          if (vip) base += 2;
+          if (guestSector) base += 4;
+          if (outdoor) base *= 1.05;
+          if (night) base *= 1.12;
+
+          const stewards = Math.max(6, Math.ceil(base));
+          const supervisors = Math.max(1, Math.ceil(stewards / 10));
+          const perShift = stewards + supervisors;
+          const shifts = Math.max(1, Math.ceil(duration / 4));
+          const totalMin = perShift * shifts;
+          const totalMax = totalMin + Math.max(2, Math.ceil(perShift * 0.2));
+
+          const config = SERVICE_CONFIG.sport;
+          const hoursPerPeriod = perShift * duration;
+          const budgetLow = hoursPerPeriod * config.rates.low;
+          const budgetHigh = hoursPerPeriod * config.rates.high;
+          const budgetText = `${formatCurrency(budgetLow)} – ${formatCurrency(budgetHigh)} / utkání`;
+
+          const coverage = `${formatNumber(spectators)} diváků, ${shifts} ${pluralize(shifts, 'směna', 'směny', 'směn')} po ${Math.max(2, Math.ceil(duration / shifts))} h, vstupy ${gates}, koridory ${lanes}.`;
+          const detail = `Riziko ${risk === 1 ? 'běžné' : risk === 1.5 ? 'derby' : 'vysoké'}${guestSector ? ', oddělený sektor hostů' : ''}${vip ? ', VIP zóna' : ''}${outdoor ? ', venkovní' : ''}${night ? ', noční' : ''}.`;
+
+          const tips = [];
+          if (guestSector) tips.push('Vyhraďte samostatnou kontrolní bránu pro hostující fanoušky.');
+          if (vip) tips.push('VIP tribuny obslouží dedikovaná dvojice pořadatelů a concierge.');
+          if (night) tips.push('Noční utkání posilujte o osvětlené koridory a mobilní hlídky.');
+          if (!parking) tips.push('Zvažte dohled nad parkovištěm pro hladký příjezd a odjezd fanoušků.');
+
+          return {
+            teamHeadline: `${perShift} ${pluralize(perShift, 'pořadatel', 'pořadatelé', 'pořadatelů')} na směnu · ${totalMin}–${totalMax} osob celkem`,
+            summaryTeam: `${perShift} os. / směna`,
+            coverage,
+            budgetText,
+            detail: `${config.label}: ${detail}`,
+            narrative: `Stadion s kapacitou ${formatNumber(spectators)} diváků pokryje ${perShift} osob na směnu, včetně ${supervisors} ${pluralize(supervisors, 'supervizora', 'supervizory', 'supervizorů')}.`,
+            tips,
+            ctaLabel: 'Naplánovat zabezpečení utkání'
+          };
+        }
+
+        function calculateClub(form) {
+          const capacity = Math.max(0, Number(form.club_capacity.value) || 0);
+          const entrances = Math.max(1, Number(form.entrances_club.value) || 1);
+          const risk = parseFloat(form.risk_club.value) || 1;
+
+          let ratio;
+          if (risk <= 1) ratio = 75;
+          else if (risk <= 1.3) ratio = 55;
+          else ratio = 40;
+
+          let base = capacity / ratio;
+          base += entrances * 0.6;
+          if (capacity > 300) base += 1;
+          if (capacity > 600) base += 1;
+
+          const guards = Math.max(2, Math.ceil(base));
+          const supervisors = Math.max(1, Math.ceil(guards / 5));
+          const perShift = guards + supervisors;
+          const shifts = 1;
+          const totalMin = perShift;
+          const totalMax = perShift + 2;
+
+          const config = SERVICE_CONFIG.club;
+          const hoursPerPeriod = perShift * 9 * 16; // průměr 4 noci v týdnu po 9h
+          const budgetLow = hoursPerPeriod * config.rates.low;
+          const budgetHigh = hoursPerPeriod * config.rates.high;
+          const budgetText = `${formatCurrency(budgetLow)} – ${formatCurrency(budgetHigh)} / měsíc`;
+
+          const coverage = `Kapacita ${formatNumber(capacity)} hostů, ${entrances} ${pluralize(entrances, 'vstup', 'vstupy', 'vstupů')}, ${perShift} ${pluralize(perShift, 'člen', 'členi', 'členů')} týmu na směnu.`;
+          const detail = `Riziko lokality ${risk === 1 ? 'nízké' : risk === 1.3 ? 'střední' : 'vysoké'}, důraz na vstupní filtr a patrolu uvnitř.`;
+
+          const tips = [];
+          if (capacity > 400) tips.push('Přidejte vnitřní patrolu pro taneční parket a toalety.');
+          if (entrances > 1) tips.push('Dedikujte člena na každý vstup kvůli kontrolám ID a VIP hostům.');
+          tips.push('Naplánujte závěrečný sweep a doprovod hostů při uzavírání provozu.');
+
+          return {
+            teamHeadline: `${perShift} ${pluralize(perShift, 'člen', 'členi', 'členů')} ostrahy · ${totalMin}–${totalMax} osob podle špiček`,
+            summaryTeam: `${perShift} os. / směna`,
+            coverage,
+            budgetText,
+            detail: `${config.label}: ${detail}`,
+            narrative: `Noční provoz s kapacitou ${formatNumber(capacity)} osob vyžaduje ${perShift} člen${perShift > 1 ? 'y' : 'a'} na směnu včetně ${supervisors} ${pluralize(supervisors, 'supervizora', 'supervizory', 'supervizorů')}.`,
+            tips,
+            ctaLabel: 'Domluvit ochranu podniku'
+          };
+        }
+
+        function updateSummary(result, config) {
+          if (!result || !config) return;
+          summaryTitle.textContent = config.summaryTitle;
+          summaryDescription.textContent = config.description;
+          summaryTeam.textContent = result.summaryTeam || result.teamHeadline;
+          summaryCoverage.textContent = result.coverage;
+          summaryBudget.textContent = result.budgetText;
+          summaryFootnote.textContent = config.footnote;
+          if (summaryIcon) {
+            summaryIcon.innerHTML = config.icon;
+          }
+          if (summaryCard) {
+            summaryCard.setAttribute('data-service', currentService);
+          }
+          renderTips(result.tips, config.defaultTips);
+        }
+
+        function updateOutput(result) {
+          if (!result) return;
+          outputEl.innerHTML = `
+            <div class="output-header">
+              <h4>Orientační návrh</h4>
+              <p class="output-headline">${result.teamHeadline}</p>
+            </div>
+            <p class="output-budget"><strong>${result.budgetText}</strong></p>
+            <p class="output-coverage">${result.coverage}</p>
+            <p class="output-narrative">${result.narrative}</p>
+          `;
+          const ctaLabel = result.ctaLabel || 'Poptat službu';
+          if (estimatorCtaBtn) estimatorCtaBtn.textContent = ctaLabel;
+          if (summaryCtaShortcut) summaryCtaShortcut.textContent = ctaLabel;
+        }
+
+        function handleCalculationError(error) {
+          console.error('Calculation error:', error);
+          outputEl.innerHTML = '<p class="output-error">Nepodařilo se vytvořit odhad. Zkuste prosím upravit vstupy.</p>';
+          summaryTeam.textContent = '–';
+          summaryCoverage.textContent = '–';
+          summaryBudget.textContent = '–';
+          renderTips(null, null);
         }
 
         function calculateEstimate() {
-            const f = estimatorForm;
-            const service = f.service_type.value;
-            let estimate = 'Nespecifikováno';
-            let detail = 'Doplňte prosím údaje pro odhad.';
+          const service = currentService;
+          const config = SERVICE_CONFIG[service];
+          if (!config) return;
 
-            try {
-                switch (service) {
-                    case 'object': {
-                        const type = f.object_type.value;
-                        const area = +f.area.value || 0;
-                        const entrances = +f.entrances_object.value || 1;
-                        const time = f.operation_time.value;
-                        const cctv = f.cctv.checked;
-                        // new extended parameters
-                        const floors = +f.floors_object.value || 1;
-                        const parking = +f.parking_object.value || 0;
-                        const technical = +f.technical_object.value || 0;
-                        const nightFlag = f.night_object && f.night_object.checked;
-                        // baseline: one guard per 2 000 m² plus one guard per entrance, adjusted by object type risk.
-                        let base = (area / 2000) + entrances;
-                        const typeFactor = { construction: 1.3, mall: 1.5, warehouse: 1.1, office: 1 }[type] || 1;
-                        base *= typeFactor;
-                        // CCTV monitoring reduces required manpower by ~20 %【864609086697014†L59-L60】.
-                        if (cctv) base *= 0.8;
-                        // Additional staff per floor beyond the first, per parking and technical rooms
-                        base += (floors); // treat each floor as requiring one guard
-                        base += (parking / 100);
-                        base += (technical / 10);
-                        // Night-time operation increases risk by ~20 %
-                        if (nightFlag) base *= 1.2;
-                        let final = Math.max(1, Math.ceil(base));
-                        // Compose estimate: day vs 24/7
-                        estimate = time === '247'
-                          ? `${final * 2} až ${final * 3} pracovníci ve směnách`
-                          : `${final} až ${final + 1} pracovník na směnu`;
-                        detail = `Pro objekt typu "${f.object_type.options[f.object_type.selectedIndex].text}" – plocha ${area} m², podlaží: ${floors}, parkoviště: ${parking} míst, sklady/technické místnosti: ${technical}, vstupy: ${entrances}${cctv ? ', kamerový systém' : ''}${nightFlag ? ', noční provoz' : ''}.`;
-                        break;
-                    }
-                    case 'vip': {
-                        const count = +f.vip_count.value || 1;
-                        const risk = +f.risk_vip.value || 1; // 1=nízká, 1.5=střední, 2=vysoká
-                        const movement = f.movement.value;
-                        const driver = f.driver.checked;
-                        // baseline: one bodyguard per VIP multiplied by risk factor
-                        let base = Math.ceil(count * risk);
-                        if (movement === 'travel') base += 1; // extra for travel coordination
-                        if (driver) base += 1; // dedicated driver-bodyguard
-                        const lower = Math.max(1, base);
-                        const upper = lower + 1;
-                        estimate = lower === upper
-                          ? `${lower} bodyguard`
-                          : `${lower} až ${upper} bodyguardi`;
-                        const riskText = risk === 1 ? 'nízké' : risk === 1.5 ? 'střední' : 'vysoké';
-                        detail = `Pro ${count} osob(u), riziko: ${riskText}${movement === 'travel' ? ', cestování' : ', pevná lokalita'}${driver ? ', s řidičem-bodyguardem' : ''}.`;
-                        break;
-                    }
-                    case 'event': {
-                        // Determine number of attendees. If the explicit number is not provided, compute occupant load from area/usage.
-                        let attendees = +f.attendees_event.value || 0;
-                        let attendeesSource = '';
-                        if (!attendees) {
-                            const areaEv = +f.area_event.value || 0;
-                            const usageEv = parseFloat(f.usage_event.value) || 0;
-                            if (areaEv > 0 && usageEv > 0) {
-                                attendees = Math.ceil(areaEv / usageEv);
-                                attendeesSource = `(počítáno z plochy ${areaEv} m² a faktoru ${usageEv} m²/os.)`;
-                            }
-                        }
-                        // entry lanes and separate gates
-                        const lanes = +f.lanes_event.value || 0;
-                        const gates = +f.gates_event.value || 0;
-                        const risk = +f.risk_event.value || 1;
-                        const alcohol = f.alcohol.checked;
-                        // Extended parameters for event
-                        const duration = +f.duration_event.value || 8;
-                        const zones = +f.zones_event.value || 0;
-                        const backstage = f.backstage_event && f.backstage_event.checked;
-                        const parking = f.parking_event && f.parking_event.checked;
-                        const camp = f.camp_event && f.camp_event.checked;
-                        const vipFlag = f.vip_event && f.vip_event.checked;
-                        const outdoor = f.outdoor_event && f.outdoor_event.checked;
-                        const nightFlag = f.night_event && f.night_event.checked;
-                        /*
-                         * Base ratios: For small and medium events (≤ 1 000 attendees), we follow the common
-                         * guidelines of one guard per 100 (low risk), 1 per 50 (medium) or 1 per 25 (high) attendees【51107731880822†L203-L209】.
-                         * For large events (> 1 000 attendees), ratios are relaxed in line with crowd management
-                         * standards that require one crowd manager per 500 attendees【485102444532459†L31-L34】.
-                         * We scale the ratio based on risk: low (500), medium (250), high (150).
-                         */
-                        let ratio;
-                        if (attendees <= 1000) {
-                            if (risk <= 1) ratio = 100;
-                            else if (risk <= 1.4) ratio = 50;
-                            else ratio = 25;
-                        } else {
-                            ratio = risk <= 1 ? 500 : risk <= 1.4 ? 250 : 150;
-                        }
-                        let base = attendees / ratio;
-                        // staff for entry gates and lanes: each gate and each lane require a dedicated guard (1 guard per corridor)
-                        base += gates + lanes;
-                        // add zones and additional areas
-                        base += zones * 2;
-                        base += backstage ? 2 : 0;
-                        base += parking ? 2 : 0;
-                        base += camp ? 3 : 0;
-                        // apply risk multipliers
-                        if (alcohol) base *= 1.2;
-                        if (vipFlag) base *= 1.15;
-                        if (outdoor) base *= 1.15;
-                        if (nightFlag) base *= 1.2;
-                        // compute staff per shift and across entire event duration
-                        const shifts = Math.max(1, Math.ceil(duration / 8));
-                        const guards = Math.ceil(base);
-                        const supervisors = Math.max(1, Math.ceil(guards / 10));
-                        const totalPerShift = guards + supervisors;
-                        const totalAcross = totalPerShift * shifts;
-                        estimate = `cca ${totalPerShift} pracovníků na směnu (celkem ${shifts} směn ⇒ ${totalAcross} osob)`;
-                        const riskText = risk === 1 ? 'nízké' : risk === 1.3 ? 'střední' : 'vysoké';
-                        // compose detail
-                        detail = `Pro ${attendees} návštěvníků ${attendeesSource}, koridory: ${lanes}, vstupy: ${gates}, zóny/pódia: ${zones}${backstage ? ', backstage' : ''}${parking ? ', parkoviště' : ''}${camp ? ', stanové městečko' : ''}, riziko: ${riskText}${alcohol ? ', alkohol' : ''}${vipFlag ? ', VIP' : ''}${outdoor ? ', venkovní' : ''}${nightFlag ? ', noční' : ''}. Každý koridor i samostatný vstup vyžaduje vlastní obsluhu.`;
-                        break;
-                    }
-                    case 'sport': {
-                        const spectators = +f.attendees_sport.value || 0;
-                        // number of entry lanes (corridors) and separate gates for sport
-                        const lanes = +f.lanes_sport.value || 0;
-                        const gates = +f.gates_sport.value || 0;
-                        const risk = +f.risk_sport.value || 1;
-                        const guestSector = f.guest_sector.checked;
-                        /*
-                         * For sporting events up to 10 000 spectators, use ratios of 1 guard per 100 (běžné),
-                         * 1 per 75 (derby) or 1 per 50 (vysoké). For very large crowds over 10 000, crowd
-                         * management standards suggest one security officer per ~250 attendees【485102444532459†L31-L34】,
-                         * so we scale the ratio: low risk 250, medium 180, high 120.
-                         */
-                        let ratio;
-                        if (spectators <= 10000) {
-                            ratio = risk === 1 ? 100 : risk === 1.5 ? 75 : 50;
-                        } else {
-                            ratio = risk === 1 ? 250 : risk === 1.5 ? 180 : 120;
-                        }
-                        let base = spectators / ratio;
-                        /*
-                         * Allocate staff for entry management: each gate and each lane require a dedicated
-                         * guard. Any additional zones or parking areas add extra staff (2 per zone, 2 for
-                         * parking). These adjustments ensure that each corridor and gate is manned by
-                         * one person. Additional risk factors (VIP hosté, venkovní akce, noční provoz) further
-                         * increase the staffing requirement.
-                         */
-                        base += gates + lanes;
-                        const duration = +f.duration_sport.value || 4;
-                        const zonesSport = +f.zones_sport.value || 0;
-                        const parkingSport = f.parking_sport && f.parking_sport.checked;
-                        const vipSport = f.vip_sport && f.vip_sport.checked;
-                        const outdoorSport = f.outdoor_sport && f.outdoor_sport.checked;
-                        const nightSport = f.night_sport && f.night_sport.checked;
-                        // add zones and parking
-                        base += zonesSport * 2;
-                        base += parkingSport ? 2 : 0;
-                        // risk modifiers
-                        if (guestSector) base += 10;
-                        if (vipSport) base *= 1.15;
-                        if (outdoorSport) base *= 1.15;
-                        if (nightSport) base *= 1.2;
-                        // compute shifts
-                        const shiftsSport = Math.max(1, Math.ceil(duration / 8));
-                        const guards = Math.ceil(base);
-                        // supervisors ratio for sport
-                        const supervisors = Math.max(1, Math.ceil(guards / 12));
-                        const totalPerShift = guards + supervisors;
-                        const totalAcross = totalPerShift * shiftsSport;
-                        estimate = `cca ${totalPerShift} pořadatelů na směnu (celkem ${shiftsSport} směn => ${totalAcross} osob)`;
-                        const riskText = risk === 1 ? 'běžné' : risk === 1.5 ? 'derby' : 'vysoké';
-                        detail = `Pro utkání s ${spectators} diváky, koridory: ${lanes}, vstupy: ${gates}, zóny: ${zonesSport}${parkingSport ? ', parkoviště' : ''}, riziko: ${riskText}${guestSector ? ', oddělený sektor hostů' : ''}${vipSport ? ', VIP' : ''}${outdoorSport ? ', venkovní' : ''}${nightSport ? ', noční' : ''}. Jeden hlídač na každý koridor i vstup.`;
-                        break;
-                    }
-                    case 'club': {
-                        const capacity = +f.club_capacity.value || 0;
-                        const entrances = +f.entrances_club.value || 1;
-                        const risk = +f.risk_club.value || 1;
-                        // ratio: 1 guard per 75 (low), 1 per 50 (medium), 1 per 40 (high)【241029094162811†L14-L18】.
-                        let ratio = risk === 1 ? 75 : risk === 1.3 ? 50 : 40;
-                        let base = capacity / ratio;
-                        base += entrances * 0.5;
-                        const guards = Math.ceil(base);
-                        estimate = `${guards} až ${guards + 1} pracovníci`;
-                        const riskText = risk === 1 ? 'nízká' : risk === 1.3 ? 'střední' : 'vysoká';
-                        detail = `Pro klub s kapacitou ${capacity} osob, vstupy: ${entrances}, riziko lokality: ${riskText}.`;
-                        break;
-                    }
-                }
-            } catch(e) { console.error("Calculation error:", e); estimate = 'Chyba'; detail = 'Při výpočtu nastala chyba.'; }
+          let result;
+          try {
+            switch (service) {
+              case 'object':
+                result = calculateObject(estimatorForm);
+                break;
+              case 'vip':
+                result = calculateVip(estimatorForm);
+                break;
+              case 'event':
+                result = calculateEvent(estimatorForm);
+                break;
+              case 'sport':
+                result = calculateSport(estimatorForm);
+                break;
+              case 'club':
+                result = calculateClub(estimatorForm);
+                break;
+              default:
+                result = null;
+            }
+          } catch (error) {
+            handleCalculationError(error);
+            return;
+          }
 
-            estimatorBtn.textContent = 'Poptat navržené řešení';
-            // store the current result for transfer
-            lastEstimate = `${estimate} – ${detail}`;
-            outputEl.innerHTML = `Orientační návrh: <strong>${estimate}</strong><br><small>${detail}</small><div class="output-note">Líbí se vám návrh? Pošlete nám ho jedním klikem a my se vám ozveme s detaily.</div>`;
-            gsap.fromTo(outputEl, {color: 'var(--brand-accent)'}, {color: '', duration: 0.5, delay: 0.2});
+          if (!result) return;
+
+          updateSummary(result, config);
+          updateOutput(result);
+
+          lastEstimate = `${config.label}: ${result.teamHeadline} | ${result.coverage} | Rozpočet ${result.budgetText}`;
+          lastEstimateDetail = result.detail || result.narrative;
+
+          if (ctaDisplay && lastEstimate) {
+            ctaDisplay.textContent = lastEstimate;
+            ctaDisplay.hidden = false;
+          }
+
+          animateOutput();
         }
-        
-        serviceTypeSelect.addEventListener('change', toggleEstimatorFields);
-        estimatorForm.querySelectorAll('input, select').forEach(el=>{
-          el.addEventListener('input', calculateEstimate);
-          el.addEventListener('change', calculateEstimate);
-        });
-        toggleEstimatorFields();
 
-        // when the estimator CTA button is clicked, propagate the last estimate into the CTA form
-        const estimatorCtaBtn = document.getElementById('estimator-cta');
-        const ctaEstimateField = document.getElementById('cta-estimate');
-        // Helper function that updates the hidden field, shows the estimate and preselects the service type
         function updateCTAEstimateDisplay() {
-          const ctaDisplay = document.getElementById('cta-estimate-display');
-          const ctaServiceSelect = document.getElementById('cta-service-select');
-          // mapping between internal keys and the CTA form option labels
-          const serviceMap = {
-            object: 'Ostraha objektu',
-            vip: 'Osobní ochrana',
-            event: 'Event security',
-            sport: 'Sportovní utkání',
-            club: 'Ostraha nočních podniků'
-          };
-          // update hidden field and visible notice
-          if (lastEstimate && ctaEstimateField) {
-            // lastEstimate contains both the estimate and detail separated by an em dash
-            ctaEstimateField.value = lastEstimate;
-            // also set the detailed parameters in a separate hidden field if present
-            const ctaDetailsField = document.getElementById('cta-details');
-            if (ctaDetailsField) {
-              const parts = lastEstimate.split(' – ');
-              // remove the estimate part and join the rest as the detail
-              const detailPart = parts.slice(1).join(' – ');
-              ctaDetailsField.value = detailPart;
-            }
-            if (ctaDisplay) {
-              ctaDisplay.textContent = lastEstimate;
-              ctaDisplay.hidden = false;
-            }
-          } else if (ctaDisplay) {
-            ctaDisplay.hidden = true;
+          if (!lastEstimate) {
+            if (ctaDisplay) ctaDisplay.hidden = true;
+            return;
           }
-          // Preselect appropriate service type in CTA form, if possible
-          const selectedServiceKey = estimatorForm.service_type.value;
-          if (ctaServiceSelect && serviceMap[selectedServiceKey]) {
-            ctaServiceSelect.value = serviceMap[selectedServiceKey];
+          if (ctaEstimateField) {
+            ctaEstimateField.value = lastEstimate;
+          }
+          if (ctaDetailsField) {
+            ctaDetailsField.value = lastEstimateDetail || '';
+          }
+          if (ctaDisplay) {
+            ctaDisplay.textContent = lastEstimate;
+            ctaDisplay.hidden = false;
+          }
+          if (ctaServiceSelect && serviceMap[currentService]) {
+            ctaServiceSelect.value = serviceMap[currentService];
           }
         }
-        if (estimatorCtaBtn) {
-          estimatorCtaBtn.addEventListener('click', () => {
-            updateCTAEstimateDisplay();
+
+        function activateService(serviceKey) {
+          if (!SERVICE_CONFIG[serviceKey]) return;
+          currentService = serviceKey;
+          if (serviceTypeSelect.value !== serviceKey) {
+            serviceTypeSelect.value = serviceKey;
+          }
+          estimatorForm.querySelectorAll('.estimator-fields-group').forEach(group => {
+            const isActive = group.dataset.service === serviceKey;
+            group.classList.toggle('active', isActive);
+            group.hidden = !isActive;
+            group.setAttribute('aria-hidden', String(!isActive));
+          });
+          servicePills.forEach(pill => {
+            const match = pill.dataset.servicePill === serviceKey;
+            pill.classList.toggle('active', match);
+            pill.setAttribute('aria-selected', String(match));
+            pill.setAttribute('tabindex', match ? '0' : '-1');
+          });
+          if (estimatorStage) {
+            const activePill = document.querySelector(`[data-service-pill="${serviceKey}"]`);
+            const bg = activePill && activePill.dataset.bg;
+            if (bg) {
+              estimatorStage.style.setProperty('--estimator-context-bg', `url(${bg})`);
+              estimatorStage.classList.add('has-context');
+            } else {
+              estimatorStage.classList.remove('has-context');
+              estimatorStage.style.removeProperty('--estimator-context-bg');
+            }
+          }
+          const config = SERVICE_CONFIG[serviceKey];
+          if (config && summaryIcon) {
+            summaryIcon.innerHTML = config.icon;
+          }
+          calculateEstimate();
+        }
+
+        serviceTypeSelect.addEventListener('change', () => {
+          activateService(serviceTypeSelect.value);
+        });
+
+        servicePills.forEach((pill, index) => {
+          pill.addEventListener('click', () => {
+            activateService(pill.dataset.servicePill);
+            pill.focus();
+          });
+          pill.addEventListener('keydown', (event) => {
+            const { key } = event;
+            if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(key)) return;
+            event.preventDefault();
+            let newIndex = index;
+            if (key === 'ArrowRight') newIndex = (index + 1) % servicePills.length;
+            if (key === 'ArrowLeft') newIndex = (index - 1 + servicePills.length) % servicePills.length;
+            if (key === 'Home') newIndex = 0;
+            if (key === 'End') newIndex = servicePills.length - 1;
+            servicePills[newIndex].focus();
+            activateService(servicePills[newIndex].dataset.servicePill);
+          });
+        });
+
+        const handleFieldChange = () => {
+          window.requestAnimationFrame(calculateEstimate);
+        };
+
+        estimatorForm.querySelectorAll('input, select').forEach(el => {
+          el.addEventListener('input', handleFieldChange);
+          el.addEventListener('change', handleFieldChange);
+        });
+
+        if (summaryReset) {
+          summaryReset.addEventListener('click', (event) => {
+            event.preventDefault();
+            const activeService = currentService;
+            estimatorForm.reset();
+            requestAnimationFrame(() => {
+              activateService(activeService);
+            });
           });
         }
 
+        [estimatorCtaBtn, summaryCtaShortcut].forEach(btn => {
+          if (!btn) return;
+          btn.addEventListener('click', () => {
+            updateCTAEstimateDisplay();
+          });
+        });
+
+        activateService(currentService);
+
         // --- Info popover toggle ---
-        // Toggle the visibility of information bubbles when clicking on the section info icons.
         document.querySelectorAll('.info-icon-wrapper').forEach(wrapper => {
           wrapper.addEventListener('click', (e) => {
             e.stopPropagation();
             const popover = wrapper.querySelector('.info-icon-popover');
             if (!popover) return;
-            // close other visible large popovers
             document.querySelectorAll('.info-icon-popover.visible').forEach(p => {
               if (p !== popover) p.classList.remove('visible');
             });
             popover.classList.toggle('visible');
           });
         });
-        // Close the large popover when its close button is clicked
         document.querySelectorAll('.info-icon-popover .close-popover').forEach(btn => {
           btn.addEventListener('click', (e) => {
             e.stopPropagation();
             btn.closest('.info-icon-popover').classList.remove('visible');
           });
         });
-        // Close any open large popover when clicking elsewhere on the document
         document.addEventListener('click', (e) => {
           document.querySelectorAll('.info-icon-popover.visible').forEach(p => {
-            const wrapper = p.parentElement; // .info-icon-wrapper
+            const wrapper = p.parentElement;
             if (!p.contains(e.target) && !wrapper.contains(e.target)) {
               p.classList.remove('visible');
             }
           });
         });
 
-        // --- Small info popovers on individual fields ---
-        // Toggle visibility for small info popovers when clicking on the small info icons.
         document.querySelectorAll('.info-small-icon').forEach(icon => {
           icon.addEventListener('click', (e) => {
-            // Prevent label click from focusing associated input
             e.preventDefault();
             e.stopPropagation();
             const popover = icon.querySelector('.info-small-popover');
             if (!popover) return;
-            // close other small popovers
             document.querySelectorAll('.info-small-popover.visible').forEach(p => {
               if (p !== popover) p.classList.remove('visible');
             });
             popover.classList.toggle('visible');
           });
         });
-        // Close the small popover when the close button is clicked
         document.querySelectorAll('.info-small-popover .close-popover').forEach(btn => {
           btn.addEventListener('click', (e) => {
             e.stopPropagation();
             btn.closest('.info-small-popover').classList.remove('visible');
           });
         });
-        // Close any open small popover when clicking elsewhere on the document
         document.addEventListener('click', (e) => {
           document.querySelectorAll('.info-small-popover.visible').forEach(p => {
-            const icon = p.parentElement; // the info-small-icon
+            const icon = p.parentElement;
             if (!p.contains(e.target) && !icon.contains(e.target)) {
               p.classList.remove('visible');
             }
           });
         });
       }
-
       // --- AJAX Form Submission ---
       const allForms = document.querySelectorAll('form[action*="formspree.io"]');
       const successOverlay = document.getElementById('form-success-overlay');
