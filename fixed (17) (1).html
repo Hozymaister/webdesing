@@ -787,355 +787,374 @@
 
     
     /* --- Estimator Section --- */
-    #calculator { background-color: var(--bg-dark); }
-    .estimator-form {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1.2rem 1.6rem;
-        width: 100%;
-        margin: 0;
-        background-color: var(--bg-card);
-        padding: 2rem;
-        border-radius: var(--radius);
-        border: 1px solid var(--border-color);
-    }
-    .estimator-form .full-width {
-        grid-column: 1 / -1;
-    }
-    .estimator-fields-group {
-      display: none;
-    }
-    .estimator-fields-group.active {
-      display: contents;
-    }
-    .estimator-form label {
-        display: flex;
-        flex-direction: column;
-        gap: .35rem;
-    }
-     .estimator-form .checkbox-label {
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    .estimator-form input,
-    .estimator-form select {
-        background: var(--bg-dark);
-        border: 1px solid var(--border-color);
-        color: var(--text-light);
-        padding: .7rem;
-        border-radius: var(--radius);
-        transition: box-shadow 0.3s, border-color 0.3s;
-    }
-     .estimator-form input:focus,
-    .estimator-form select:focus {
-        outline: none;
-        border-color: var(--brand-accent);
-        box-shadow: 0 0 10px var(--accent-glow);
-    }
-
-    .estimator-output {
-        grid-column: 1 / -1;
-        margin: 1.5rem 0;
-        padding: 1.75rem;
-        color: var(--text-light);
-        border: 1px dashed var(--border-color);
-        border-radius: var(--radius);
-        display: grid;
-        gap: 0.75rem;
-        text-align: left;
-        background: linear-gradient(180deg, rgba(212, 162, 118, 0.08), rgba(16, 16, 16, 0.35));
-    }
-    .estimator-output .output-header {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 0.75rem;
-    }
-    .estimator-output h4 {
-        margin: 0;
-        font-size: 0.85rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.7);
-    }
-    .estimator-output .output-headline {
-        margin: 0;
-        font-family: var(--font-heading);
-        font-size: 1.4rem;
-        font-weight: 600;
-        color: var(--text-light);
-    }
-    .estimator-output .output-budget {
-        margin: 0;
-        font-size: 1rem;
-        color: rgba(255, 255, 255, 0.75);
-    }
-    .estimator-output .output-budget strong {
-        font-size: 1.2rem;
-        color: var(--brand-accent);
-    }
-    .estimator-output .output-coverage {
-        margin: 0;
-        font-size: 0.95rem;
-        color: rgba(255, 255, 255, 0.7);
-    }
-    .estimator-output .output-narrative {
-        margin: 0;
-        font-size: 0.95rem;
-        color: var(--text-light);
-        line-height: 1.6;
-    }
-    .estimator-output .output-error {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #ff8a80;
-    }
-    .estimator-form .form-note {
-        grid-column: 1 / -1;
-        text-align: center;
-    }
-    .estimator-form .btn {
-        grid-column: 1 / -1;
-        justify-self: center;
-        margin: 0.5rem 0;
-    }
-
-    /* --- Calculator Design Enhancements (Professional UI Overhaul) --- */
-    /* Lighten and modernize the estimator form container */
-    #calculator .estimator-form {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(212, 162, 118, 0.15);
-      box-shadow: 0 18px 45px -20px rgba(0, 0, 0, 0.65);
-      padding: 2.75rem;
-      gap: 1.4rem 1.75rem;
-      backdrop-filter: blur(12px);
-    }
-
-    /* Refine individual calculator cards within the estimator */
-    #calculator .calculator-card {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(212, 162, 118, 0.2);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      border-radius: calc(var(--radius) + 2px);
-      padding: 1.75rem;
-    }
-
-    /* Stylize section headings with an accent bar and larger type */
-    #calculator .estimator-fields-group .calculator-heading {
-      font-size: 1.6rem;
-      margin-bottom: 1.25rem;
-      position: relative;
-      padding-left: 0.75rem;
-      color: var(--text-light);
-    }
-    #calculator .estimator-fields-group .calculator-heading::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.2rem;
-      bottom: 0.2rem;
-      width: 4px;
-      border-radius: 2px;
-      background: var(--brand-accent);
-    }
-
-    /* Enhance form field appearance and interaction */
-    #calculator .estimator-form input,
-    #calculator .estimator-form select {
-      background: var(--bg-dark);
-      border: 1px solid rgba(212, 162, 118, 0.15);
-      color: var(--text-light);
-      padding: 0.8rem 0.9rem;
-      border-radius: var(--radius);
-      font-size: 0.95rem;
-    }
-    #calculator .estimator-form input:focus,
-    #calculator .estimator-form select:focus {
-      outline: none;
-      border-color: var(--brand-accent);
-      box-shadow: 0 0 0 3px rgba(212, 162, 118, 0.3);
-    }
-
-    /* Improve output styling with subtle backgrounds and shadows */
-    #calculator .estimator-output {
-      border: 1px dashed rgba(212, 162, 118, 0.38);
-      box-shadow: 0 18px 40px -32px rgba(0, 0, 0, 0.75), inset 0 0 18px rgba(212, 162, 118, 0.08);
-      background: linear-gradient(180deg, rgba(212, 162, 118, 0.1), rgba(10, 10, 10, 0.55));
-      padding: clamp(1.75rem, 3vw, 2.35rem);
-    }
-
-    /* --- Estimator UX Overhaul --- */
     #calculator {
+      position: relative;
+      background-color: var(--bg-dark);
+      padding: clamp(5rem, 8vw, 8rem) 0;
+      overflow: hidden;
+    }
+    #calculator .container {
+      position: relative;
+      z-index: 1;
+    }
+    .estimator-aurora {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .estimator-aurora__shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+      transform: translate(-30%, -20%);
+      animation: estimatorAurora 22s ease-in-out infinite alternate;
+    }
+    .estimator-aurora__shape--one {
+      width: 480px;
+      height: 480px;
+      background: var(--brand-accent);
+      top: 5%;
+      left: 10%;
+    }
+    .estimator-aurora__shape--two {
+      width: 420px;
+      height: 420px;
+      background: #6c4dd7;
+      bottom: 0;
+      right: 5%;
+      animation-direction: alternate-reverse;
+    }
+    @keyframes estimatorAurora {
+      from {
+        transform: translate(-30%, -20%) scale(0.95);
+      }
+      to {
+        transform: translate(15%, 10%) scale(1.1);
+      }
+    }
+    .estimator-stage {
+      --estimator-context-bg: none;
+      display: grid;
+      grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+      gap: clamp(2rem, 4vw, 3rem);
+      background: rgba(20, 20, 20, 0.65);
+      border: 1px solid rgba(212, 162, 118, 0.18);
+      border-radius: clamp(18px, 3vw, 24px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: clamp(1.75rem, 4vw, 2.75rem);
       position: relative;
       overflow: hidden;
     }
-    #calculator::before {
+    .estimator-stage::before,
+    .estimator-stage::after {
       content: '';
       position: absolute;
-      inset: 10% auto -20% -30%;
-      width: 65%;
-      min-width: 420px;
-      aspect-ratio: 1 / 1;
-      background: radial-gradient(circle at top, rgba(212, 162, 118, 0.28), transparent 65%);
-      opacity: 0.8;
+      inset: 0;
+      border-radius: inherit;
       pointer-events: none;
-      transform: rotate(-8deg);
       z-index: 0;
     }
-    #calculator::after {
-      content: '';
-      position: absolute;
-      inset: auto -40% 15% 55%;
-      width: 55%;
-      min-width: 360px;
-      aspect-ratio: 1 / 1;
-      background: radial-gradient(circle at bottom, rgba(212, 162, 118, 0.2), transparent 70%);
-      opacity: 0.7;
-      pointer-events: none;
-      transform: rotate(12deg);
-      z-index: 0;
+    .estimator-stage::before {
+      background: linear-gradient(145deg, rgba(212, 162, 118, 0.1), transparent 55%);
+      opacity: 0.6;
     }
-    #calculator .container { position: relative; z-index: 1; }
-    .estimator-lead {
-      display: grid;
-      gap: 1.5rem;
-      margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    .estimator-stage::after {
+      background-image: var(--estimator-context-bg);
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      filter: blur(2px);
     }
-    .estimator-toolbar {
+    .estimator-stage.has-context::after {
+      opacity: 0.12;
+    }
+    .estimator-sidebar,
+    .estimator-main {
+      position: relative;
+      z-index: 1;
+    }
+    .estimator-sidebar {
       display: flex;
       flex-direction: column;
+      gap: 2rem;
+    }
+    .estimator-sidebar .sidebar-header h3 {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      color: var(--text-light);
+      margin-bottom: 0.35rem;
+    }
+    .estimator-sidebar .sidebar-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .service-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .service-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: rgba(10, 10, 10, 0.35);
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, background 0.3s ease;
+    }
+    .service-nav-item svg {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      color: currentColor;
+    }
+    .service-nav-item:hover,
+    .service-nav-item:focus-visible {
+      outline: none;
+      border-color: rgba(212, 162, 118, 0.5);
+      color: var(--text-light);
+      background: rgba(212, 162, 118, 0.08);
+      transform: translateX(4px);
+    }
+    .service-nav-item.active {
+      border-color: rgba(212, 162, 118, 0.9);
+      color: var(--brand-accent);
+      background: rgba(212, 162, 118, 0.12);
+      box-shadow: 0 12px 28px rgba(212, 162, 118, 0.2);
+    }
+    .estimator-main {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .estimator-headline {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .estimator-headline h2 {
+      font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+      background: linear-gradient(135deg, #fdfdfd, #c9c9c9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+    .estimator-headline p {
+      color: var(--text-muted);
+      margin: 0;
+      max-width: 60ch;
+    }
+    .estimator-form {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.75rem, 3vw, 2.5rem);
+    }
+    .estimator-form__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(260px, 320px);
+      gap: clamp(1.75rem, 3vw, 2.5rem);
+      align-items: start;
+    }
+    .estimator-panels {
+      position: relative;
+      min-height: 420px;
+    }
+    .estimator-fields-group {
+      display: none;
+      background: rgba(12, 12, 12, 0.6);
+      border: 1px solid rgba(212, 162, 118, 0.12);
+      border-radius: 18px;
+      padding: clamp(1.5rem, 3vw, 2.25rem);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      animation: estimatorFade 0.45s ease both;
+    }
+    .estimator-fields-group.active {
+      display: grid;
+    }
+    @keyframes estimatorFade {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .calculator-heading {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--text-light);
+    }
+    .estimator-fields-group label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .estimator-fields-group .checkbox-label {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
       gap: 1rem;
     }
-    .estimator-toolbar__hint {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-    .service-pillbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      row-gap: 0.8rem;
-      padding: 0.5rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(212, 162, 118, 0.12);
-      border-radius: calc(var(--radius) + 6px);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    }
-    .service-pillbar:focus-visible {
-      outline: 2px solid var(--brand-accent);
-      outline-offset: 4px;
-    }
-    .service-pill {
-      position: relative;
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text-muted);
-      border: 1px solid rgba(212, 162, 118, 0.12);
-      border-radius: 999px;
-      padding: 0.55rem 1.4rem;
-      font-size: 0.95rem;
-      letter-spacing: 0.01em;
+    .estimator-fields-group .checkbox-label span {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      cursor: pointer;
-      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
     }
-    .service-pill::after {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(212, 162, 118, 0.35);
-      box-shadow: 0 0 0 0 rgba(212, 162, 118, 0.45);
-      transition: box-shadow 0.3s ease, background 0.3s ease;
-    }
-    .service-pill:hover { transform: translateY(-2px); }
-    .service-pill:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px rgba(212, 162, 118, 0.4);
-    }
-    .service-pill.active {
-      background: linear-gradient(135deg, rgba(212, 162, 118, 0.26), rgba(212, 162, 118, 0.12));
+    .estimator-fields-group input,
+    .estimator-fields-group select {
+      background: rgba(12, 12, 12, 0.9);
+      border: 1px solid rgba(212, 162, 118, 0.25);
       color: var(--text-light);
-      border-color: rgba(212, 162, 118, 0.45);
-      font-weight: 600;
+      border-radius: 12px;
+      padding: 0.75rem 0.85rem;
+      font-family: var(--font-body);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     }
-    .service-pill.active::after {
-      background: var(--brand-accent);
-      box-shadow: 0 0 0 4px rgba(212, 162, 118, 0.35);
+    .estimator-fields-group input:focus,
+    .estimator-fields-group select:focus {
+      outline: none;
+      border-color: rgba(212, 162, 118, 0.8);
+      box-shadow: 0 0 0 3px rgba(212, 162, 118, 0.3);
+      background: rgba(24, 24, 24, 0.95);
+      color: var(--text-light);
     }
-    .estimator-shell {
-      display: grid;
-      gap: clamp(2rem, 5vw, 3rem);
-      grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
-      align-items: start;
+    .estimator-fields-group input[type='checkbox'] {
+      width: 1.1rem;
+      height: 1.1rem;
+      accent-color: var(--brand-accent);
+      margin: 0;
     }
-    .estimator-summary {
-      position: sticky;
-      top: 110px;
-      align-self: start;
-    }
-    .summary-card {
-      background: linear-gradient(145deg, rgba(18, 18, 18, 0.85), rgba(26, 26, 26, 0.9));
-      border-radius: clamp(var(--radius), 2vw, 18px);
-      border: 1px solid rgba(212, 162, 118, 0.2);
-      box-shadow: 0 25px 60px -30px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-      padding: clamp(1.75rem, 4vw, 2.5rem);
-      display: grid;
-      gap: 1.5rem;
-    }
-    .summary-card header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .summary-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 16px;
-      background: rgba(212, 162, 118, 0.18);
+    .info-small-icon,
+    .info-icon-wrapper {
+      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--brand-accent);
+      border: 1px solid rgba(212, 162, 118, 0.7);
+      margin-left: 0.4rem;
+      cursor: pointer;
+      color: transparent;
+      font-size: 0;
+      flex-shrink: 0;
+    }
+    .info-small-icon::before,
+    .info-icon-wrapper::before {
+      content: 'i';
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--bg-dark);
+      line-height: 1;
+    }
+    .info-icon-wrapper {
+      width: 28px;
+      height: 28px;
+    }
+    .info-icon-wrapper::before {
+      font-size: 0.88rem;
+    }
+
+    #calculator .info-small-popover,
+    #calculator .info-icon-popover {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      max-width: min(320px, 70vw);
+      background: rgba(10, 10, 10, 0.92);
+      border: 1px solid rgba(212, 162, 118, 0.25);
+      border-radius: 14px;
+      padding: 1rem 1.35rem;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 10;
+    }
+    #calculator .info-small-popover.visible,
+    #calculator .info-icon-popover.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    #calculator .info-icon-popover .close-popover,
+    #calculator .info-small-popover .close-popover {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    .summary-card {
+      background: rgba(5, 5, 5, 0.55);
+      border-radius: 20px;
+      border: 1px solid rgba(212, 162, 118, 0.2);
+      padding: clamp(1.5rem, 3vw, 2.2rem);
+      display: grid;
+      gap: 1.5rem;
+      position: sticky;
+      top: clamp(1.5rem, 5vw, 2.5rem);
+    }
+    .summary-card header {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .summary-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(212, 162, 118, 0.2);
       color: var(--brand-accent);
-      box-shadow: inset 0 0 0 1px rgba(212, 162, 118, 0.35), 0 12px 25px -18px rgba(212, 162, 118, 0.65);
-    }
-    .summary-card[data-service="object"] .summary-icon {
-      background: rgba(212, 162, 118, 0.22);
-      color: #f3d6b8;
-    }
-    .summary-card[data-service="vip"] .summary-icon {
-      background: rgba(148, 210, 255, 0.16);
-      color: #9ed6ff;
-      box-shadow: inset 0 0 0 1px rgba(148, 210, 255, 0.35), 0 12px 25px -18px rgba(148, 210, 255, 0.6);
-    }
-    .summary-card[data-service="event"] .summary-icon {
-      background: rgba(255, 196, 112, 0.18);
-      color: #ffc870;
-      box-shadow: inset 0 0 0 1px rgba(255, 196, 112, 0.35), 0 12px 25px -18px rgba(255, 196, 112, 0.55);
-    }
-    .summary-card[data-service="sport"] .summary-icon {
-      background: rgba(156, 248, 188, 0.16);
-      color: #9cf8bc;
-      box-shadow: inset 0 0 0 1px rgba(156, 248, 188, 0.35), 0 12px 25px -18px rgba(156, 248, 188, 0.55);
-    }
-    .summary-card[data-service="club"] .summary-icon {
-      background: rgba(255, 160, 210, 0.16);
-      color: #ffb1dc;
-      box-shadow: inset 0 0 0 1px rgba(255, 160, 210, 0.35), 0 12px 25px -18px rgba(255, 160, 210, 0.5);
+      box-shadow: inset 0 0 0 1px rgba(212, 162, 118, 0.35), 0 14px 30px rgba(212, 162, 118, 0.22);
     }
     .summary-icon svg {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       stroke: currentColor;
     }
     .summary-card h3 {
+      margin: 0;
       font-size: 1.45rem;
     }
     .summary-card p {
+      margin: 0;
       color: var(--text-muted);
       font-size: 0.95rem;
     }
@@ -1146,12 +1165,14 @@
     .summary-metric {
       display: flex;
       justify-content: space-between;
-      gap: 1rem;
-      align-items: baseline;
-      border-bottom: 1px dashed rgba(212, 162, 118, 0.18);
-      padding-bottom: 0.65rem;
+      gap: 0.75rem;
+      border-bottom: 1px dashed rgba(212, 162, 118, 0.2);
+      padding-bottom: 0.75rem;
     }
-    .summary-metric:last-of-type { border-bottom: none; padding-bottom: 0; }
+    .summary-metric:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
     .summary-metric dt {
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -1160,24 +1181,24 @@
     }
     .summary-metric dd {
       margin: 0;
-      font-size: 1.1rem;
       font-weight: 600;
       color: var(--text-light);
+      font-size: 1.05rem;
     }
     .summary-divider {
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(212, 162, 118, 0.35), transparent);
+      background: linear-gradient(90deg, transparent, rgba(212, 162, 118, 0.45), transparent);
     }
     .summary-tips {
       list-style: none;
-      display: grid;
-      gap: 0.75rem;
       padding: 0;
       margin: 0;
+      display: grid;
+      gap: 0.75rem;
     }
     .summary-tips li {
       position: relative;
-      padding-left: 1.35rem;
+      padding-left: 1.3rem;
       color: var(--text-muted);
       line-height: 1.6;
     }
@@ -1185,133 +1206,196 @@
       content: '';
       position: absolute;
       left: 0;
-      top: 0.55rem;
+      top: 0.5rem;
       width: 6px;
       height: 6px;
       border-radius: 50%;
       background: var(--brand-accent);
       box-shadow: 0 0 0 3px rgba(212, 162, 118, 0.25);
     }
-    .summary-footnote {
-      font-size: 0.75rem;
-      color: rgba(176, 176, 176, 0.8);
-      letter-spacing: 0.02em;
-      line-height: 1.5;
-    }
     .summary-actions {
       display: flex;
-      gap: 0.75rem;
       flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
     }
     .summary-reset {
       background: transparent;
-      border: 1px solid rgba(212, 162, 118, 0.35);
+      border: 1px solid rgba(212, 162, 118, 0.4);
       color: var(--text-light);
       border-radius: 999px;
-      padding: 0.5rem 1.25rem;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
+      padding: 0.55rem 1.4rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      transition: border-color 0.3s ease, background 0.3s ease;
     }
-    .summary-reset:hover {
-      background: rgba(212, 162, 118, 0.15);
-      border-color: rgba(212, 162, 118, 0.55);
-    }
+    .summary-reset:hover,
     .summary-reset:focus-visible {
       outline: none;
-      box-shadow: 0 0 0 2px rgba(212, 162, 118, 0.5);
+      border-color: rgba(212, 162, 118, 0.7);
+      background: rgba(212, 162, 118, 0.12);
     }
-    @media (max-width: 1080px) {
-      .estimator-shell {
-        grid-template-columns: 1fr;
-      }
-      .estimator-summary {
-        position: static;
-        order: -1;
-      }
+    .summary-footnote {
+      font-size: 0.75rem;
+      color: rgba(176, 176, 176, 0.85);
+      line-height: 1.5;
     }
-    @media (max-width: 640px) {
-      .service-pillbar {
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        scrollbar-width: thin;
-        gap: 0.5rem;
-      }
-      .service-pillbar::-webkit-scrollbar {
-        height: 6px;
-      }
-      .service-pillbar::-webkit-scrollbar-thumb {
-        background: rgba(212, 162, 118, 0.3);
-        border-radius: 999px;
-      }
-      .summary-card {
-        padding: 1.75rem;
-      }
-    }
-
-    /* Apply the new info icon to both small and large variants using SVG masks.
-       The icon itself is defined in `information-info.svg`. The background colour fills the
-       visible parts of the mask, producing a crisp monochrome information icon. */
-    /*
-     * Harmonise the appearance of the small info icons used beside form fields and
-     * the larger info icons used in section headings. Each icon is displayed
-     * inside a circular container with a subtle tinted background and an accent
-     * coloured border. A pseudo‑element draws the actual “i” symbol using our
-     * custom outline SVG so that the icon remains crisp at any size.
-     */
-    .info-small-icon,
-    .info-icon-wrapper {
+    .estimator-output {
+      background: rgba(5, 5, 5, 0.55);
+      border: 1px solid rgba(212, 162, 118, 0.18);
+      border-radius: 20px;
+      padding: clamp(1.5rem, 3vw, 2.2rem);
+      display: grid;
+      gap: 1rem;
+      color: var(--text-light);
+      text-align: left;
       position: relative;
+      overflow: hidden;
+    }
+    .estimator-output::before {
+      content: '';
+      position: absolute;
+      inset: -40% 40% 40% -40%;
+      background: radial-gradient(circle at top, rgba(212, 162, 118, 0.18), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .estimator-output .output-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      z-index: 1;
+    }
+    .estimator-output h4 {
+      margin: 0;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .estimator-output .output-headline {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+      color: var(--brand-accent);
+      z-index: 1;
+    }
+    .estimator-output .output-budget {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-light);
+      z-index: 1;
+    }
+    .estimator-output .output-coverage,
+    .estimator-output .output-narrative {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      z-index: 1;
+    }
+    .estimator-output .output-error {
+      color: var(--error-color);
+      font-weight: 600;
+      margin: 0;
+    }
+    #estimator-cta {
+      align-self: flex-start;
+      padding: 0.85rem 2.2rem;
+      border-radius: 14px;
+      background: linear-gradient(140deg, var(--brand-accent), var(--brand-accent) 55%, #f3d7b4);
+      color: var(--bg-dark);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      margin-left: 0.5rem;
-      border-radius: 50%;
-      /* fill the circle with the brand accent colour so the white “i” contrasts well */
-      background: var(--brand-accent);
-      border: 1px solid rgba(212, 162, 118, 0.7);
-      /* hide the fallback emoji within the span */
-      color: transparent;
-      font-size: 0;
-      cursor: pointer;
-      flex-shrink: 0;
+      gap: 0.65rem;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .info-small-icon::before,
-    .info-icon-wrapper::before {
+    #estimator-cta::after {
       content: '';
-      width: 14px;
-      height: 14px;
-      /* Use the white variant of the outline icon so it stands out against the coloured background */
-      background-image: url('information-info-outline-white.svg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      /* position the pseudo element centrally within the circle */
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: 0 15px 35px rgba(212, 162, 118, 0.45);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #estimator-cta:hover,
+    #estimator-cta:focus-visible {
+      outline: none;
+      transform: translateY(-2px);
+    }
+    #estimator-cta:hover::after,
+    #estimator-cta:focus-visible::after {
+      opacity: 1;
+    }
+    #calculator .btn.btn-accent.btn--ghost {
+      border-radius: 999px;
+      border: 1px solid rgba(212, 162, 118, 0.45);
+      padding: 0.55rem 1.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      background: transparent;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    #calculator .btn.btn-accent.btn--ghost:hover,
+    #calculator .btn.btn-accent.btn--ghost:focus-visible {
+      outline: none;
+      border-color: rgba(212, 162, 118, 0.8);
+      background: rgba(212, 162, 118, 0.1);
+    }
+    @media (max-width: 1100px) {
+      .estimator-stage {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .estimator-sidebar {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        gap: 1.25rem;
+      }
+      .estimator-sidebar .sidebar-header {
+        min-width: 220px;
+      }
+      .service-nav {
+        flex-direction: row;
+        gap: 0.8rem;
+      }
+      .service-nav-item {
+        min-width: 200px;
+      }
+      .estimator-form__grid {
+        grid-template-columns: 1fr;
+      }
+      .summary-card {
+        position: static;
+      }
+    }
+    @media (max-width: 720px) {
+      .estimator-sidebar {
+        flex-direction: column;
+      }
+      .service-nav {
+        flex-wrap: wrap;
+      }
+      .estimator-fields-group {
+        grid-template-columns: 1fr;
+      }
+      #estimator-cta {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
-    /* The larger heading icons are slightly bigger for better hierarchy */
-    .info-icon-wrapper {
-      width: 26px;
-      height: 26px;
-    }
-
-    /* Refine popover appearance for better readability */
-    #calculator .info-small-popover,
-    #calculator .info-icon-wrapper .info-icon-popover {
-      background: rgba(0, 0, 0, 0.92);
-      border-color: rgba(212, 162, 118, 0.2);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-    }
-
-
+    /* --- FAQ Section --- */
     /* --- FAQ Section --- */
     #faq { background-color: var(--bg-dark); }
 
@@ -2345,356 +2429,382 @@ small {
 
 
      <!-- ESTIMATOR SECTION -->
-    <section id="calculator" class="section" style="background-color:var(--bg-dark);">
+    <section id="calculator" class="section">
+      <div class="estimator-aurora" aria-hidden="true">
+        <div class="estimator-aurora__shape estimator-aurora__shape--one"></div>
+        <div class="estimator-aurora__shape estimator-aurora__shape--two"></div>
+      </div>
       <div class="container">
-        <div class="estimator-lead">
-          <div class="section-header">
-            <h2 data-animate-text>Inteligentní plánovač bezpečnosti</h2>
-            <p>Tento orientační návrh vám pomůže získat představu. Přesný plán navrhneme po úvodním kontaktu a detailní analýze vašich potřeb.</p>
-          </div>
-          <div class="estimator-toolbar">
-            <p class="estimator-toolbar__hint">Vyberte scénář, který nejlépe odpovídá vašemu projektu. Jednotlivé vstupy reagují okamžitě a výsledky můžete jedním klikem přeposlat do poptávky.</p>
-            <div class="service-pillbar" role="tablist" aria-label="Zvolte typ služby">
-              <button type="button" class="service-pill active" data-service-pill="object" role="tab" aria-selected="true" aria-controls="service-panel-object" id="service-pill-object">Ostraha objektu</button>
-              <button type="button" class="service-pill" data-service-pill="vip" role="tab" aria-selected="false" aria-controls="service-panel-vip" id="service-pill-vip" tabindex="-1">Osobní ochrana</button>
-              <button type="button" class="service-pill" data-service-pill="event" role="tab" aria-selected="false" aria-controls="service-panel-event" id="service-pill-event" tabindex="-1">Event security</button>
-              <button type="button" class="service-pill" data-service-pill="sport" role="tab" aria-selected="false" aria-controls="service-panel-sport" id="service-pill-sport" tabindex="-1">Sportovní utkání</button>
-              <button type="button" class="service-pill" data-service-pill="club" role="tab" aria-selected="false" aria-controls="service-panel-club" id="service-pill-club" tabindex="-1">Noční podniky</button>
+        <div class="estimator-stage" id="estimator-stage">
+          <aside class="estimator-sidebar">
+            <div class="sidebar-header">
+              <h3>Služby</h3>
+              <p>Vyberte oblast, která se vás týká.</p>
             </div>
-          </div>
-        </div>
-
-        <div class="estimator-shell">
-          <form id="estimator-form" class="estimator-form" onsubmit="event.preventDefault();">
-            <label class="full-width visually-hidden">Typ služby
-              <select name="service_type" id="service-type-select">
+            <nav class="service-nav" role="tablist" aria-label="Zvolte typ služby">
+              <button type="button" class="service-nav-item service-pill active" data-service-pill="object" id="service-pill-object" aria-selected="true" aria-controls="service-panel-object" data-bg="https://images.unsplash.com/photo-1581092446347-a8b2f1597a1d?auto=format&fit=crop&w=1200&q=60" role="tab">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M54 57H10C8.89543 57 8 56.1046 8 55V15C8 13.8954 8.89543 13 10 13H54C55.1046 13 56 13.8954 56 15V55C56 56.1046 55.1046 57 54 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13V9C18 7.89543 18.8954 7 20 7H44C45.1046 7 46 7.89543 46 9V13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 23H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 33H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 43H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 23H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 33H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 43H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Ostraha objektu</span>
+              </button>
+              <button type="button" class="service-nav-item service-pill" data-service-pill="vip" id="service-pill-vip" aria-selected="false" aria-controls="service-panel-vip" data-bg="https://images.unsplash.com/photo-1621601433342-23736822b311?auto=format&fit=crop&w=1200&q=60" role="tab" tabindex="-1">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 30C37.5228 30 42 25.5228 42 20C42 14.4772 37.5228 10 32 10C26.4772 10 22 14.4772 22 20C22 25.5228 26.4772 30 32 30Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48.61 54C48.61 47.9 41.1 43 32 43C22.9 43 15.39 47.9 15.39 54" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M51 7L57 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13L13 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Osobní ochrana</span>
+              </button>
+              <button type="button" class="service-nav-item service-pill" data-service-pill="event" id="service-pill-event" aria-selected="false" aria-controls="service-panel-event" data-bg="https://images.unsplash.com/photo-1511795409834-ef04bbd51622?auto=format&fit=crop&w=1200&q=60" role="tab" tabindex="-1">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 26L32 12L50 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 32V52H46V32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 52V40C26 37.7909 27.7909 36 30 36H34C36.2091 36 38 37.7909 38 40V52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M55 42L50 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 42L14 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 30L56 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 30L8 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Event security</span>
+              </button>
+              <button type="button" class="service-nav-item service-pill" data-service-pill="sport" id="service-pill-sport" aria-selected="false" aria-controls="service-panel-sport" data-bg="https://images.unsplash.com/photo-1541250848049-b9f71a6e8e88?auto=format&fit=crop&w=1200&q=60" role="tab" tabindex="-1">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 57C45.8071 57 57 45.8071 57 32C57 18.1929 45.8071 7 32 7C18.1929 7 7 18.1929 7 32C7 45.8071 18.1929 57 32 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7C27.5 16.5 27.5 22.5 32 32C36.5 22.5 36.5 16.5 32 7Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M57 32C47.5 36.5 41.5 36.5 32 32C41.5 27.5 47.5 27.5 57 32Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 32H57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7V57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Sportovní utkání</span>
+              </button>
+              <button type="button" class="service-nav-item service-pill" data-service-pill="club" id="service-pill-club" aria-selected="false" aria-controls="service-panel-club" data-bg="https://images.unsplash.com/photo-1582220107107-590426d242c8?auto=format&fit=crop&w=1200&q=60" role="tab" tabindex="-1">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 20C32 15.5817 28.4183 12 24 12C19.5817 12 16 15.5817 16 20C16 23.5 18.5 26.3 21.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48 20C48 15.5817 44.4183 12 40 12C35.5817 12 32 15.5817 32 20C32 23.5 34.5 26.3 37.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20H10C8.89543 20 8 20.8954 8 22V50C8 51.1046 8.89543 52 10 52H54C55.1046 52 56 51.1046 56 50V22C56 20.8954 55.1046 20 54 20H48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 28V38L40 43" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Noční podniky</span>
+              </button>
+            </nav>
+          </aside>
+          <div class="estimator-main">
+            <div class="estimator-headline">
+              <h2>Plánovač bezpečnosti</h2>
+              <p>Začněte výběrem služby vlevo a upravte parametry pro orientační odhad týmu, směn i rozpočtu.</p>
+            </div>
+            <form id="estimator-form" class="estimator-form" onsubmit="event.preventDefault();">
+              <label class="visually-hidden" for="service-type-select">Typ služby</label>
+              <select name="service_type" id="service-type-select" hidden>
                 <option value="object">Ostraha objektu</option>
                 <option value="vip">Osobní ochrana</option>
                 <option value="event">Event security</option>
                 <option value="sport">Sportovní utkání</option>
                 <option value="club">Ostraha nočních podniků</option>
               </select>
-            </label>
-            <div class="estimator-fields-group calculator-card" data-service="object" id="service-panel-object">
-              <div class="calculator-heading">Ostraha objektu
-                <span class="info-icon-wrapper">ℹ️
-                  <div class="info-icon-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Zadejte plochu objektu, počet vstupů, podlaží, parkovacích míst a technických místností. Základní odhad vychází z jednoho pracovníka na každých 2&nbsp;000&nbsp;m² plochy a jednoho na každý vstup. Další patra, parkoviště a technické místnosti zvyšují potřebu personálu. Kamerový systém může snížit počet pracovníků, zatímco noční provoz ho zvyšuje.</p>
+              <div class="estimator-form__grid">
+                <div class="estimator-panels">
+                  <div class="estimator-fields-group active" data-service="object" id="service-panel-object" aria-hidden="false">
+                    <div class="calculator-heading">
+                      <span>Ostraha objektu</span>
+                      <span class="info-icon-wrapper">ℹ️
+                        <div class="info-icon-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Zadejte plochu objektu, počet vstupů, podlaží, parkovacích míst a technických místností. Základní odhad vychází z jednoho pracovníka na každých 2&nbsp;000&nbsp;m² plochy a jednoho na každý vstup. Další patra, parkoviště a technické místnosti zvyšují potřebu personálu. Kamerový systém může snížit počet pracovníků, zatímco noční provoz ho zvyšuje.</p>
+                        </div>
+                      </span>
+                    </div>
+                    <label>Typ objektu
+                      <select name="object_type">
+                        <option value="office">Kanceláře</option>
+                        <option value="warehouse">Sklad</option>
+                        <option value="construction">Stavba</option>
+                        <option value="mall">Obchodní centrum</option>
+                      </select>
+                    </label>
+                    <label>Rozloha (m²)
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Celková plocha objektu. Odhad začíná u jednoho strážného na každých 2&nbsp;000&nbsp;m².</p>
+                        </div>
+                      </span>
+                      <input type="number" name="area" min="50" value="1000" placeholder="např. 1000">
+                    </label>
+                    <label>Počet vstupů
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Každý samostatný vstup vyžaduje jednoho pracovníka.</p>
+                        </div>
+                      </span>
+                      <input type="number" name="entrances_object" min="1" value="1" placeholder="např. 1">
+                    </label>
+                    <label>Provoz
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Výběr "24/7" znamená nepřetržitý provoz a vyžaduje více směn. U denního provozu se počítá pouze jedna směna.</p>
+                        </div>
+                      </span>
+                      <select name="operation_time">
+                        <option value="day">Denní</option>
+                        <option value="247">24/7</option>
+                      </select>
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Má kamerový systém?
+                        <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                          <div class="info-small-popover">
+                            <button class="close-popover" aria-label="Zavřít">×</button>
+                            <p>Kamerový systém může snížit potřebný počet pracovníků přibližně o 20&nbsp;%.</p>
+                          </div>
+                        </span>
+                      </span>
+                      <input type="checkbox" name="cctv">
+                    </label>
+                    <label>Počet podlaží
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Každé podlaží přidává jednoho pracovníka.</p>
+                        </div>
+                      </span>
+                      <input type="number" name="floors_object" min="1" value="1">
+                    </label>
+                    <label>Parkovací místa
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Každých 100 parkovacích míst přidává jednoho pracovníka.</p>
+                        </div>
+                      </span>
+                      <input type="number" name="parking_object" min="0" value="0">
+                    </label>
+                    <label>Sklady / technické místnosti
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Každých 10 technických místností přidává jednoho pracovníka.</p>
+                        </div>
+                      </span>
+                      <input type="number" name="technical_object" min="0" value="0">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Noční provoz
+                        <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                          <div class="info-small-popover">
+                            <button class="close-popover" aria-label="Zavřít">×</button>
+                            <p>Pokud je objekt hlídán přes noc, navýší se celkový počet pracovníků o 20&nbsp;%.</p>
+                          </div>
+                        </span>
+                      </span>
+                      <input type="checkbox" name="night_object">
+                    </label>
                   </div>
-                </span>
-              </div>
-              <label>Typ objektu <select name="object_type"><option value="office">Kanceláře</option><option value="warehouse">Sklad</option><option value="construction">Stavba</option><option value="mall">Obchodní centrum</option></select></label>
-              <label>Rozloha (m²)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Celková plocha objektu. Odhad začíná u jednoho strážného na každých 2&nbsp;000&nbsp;m².</p>
+                  <div class="estimator-fields-group" data-service="vip" id="service-panel-vip" hidden aria-hidden="true">
+                    <div class="calculator-heading">
+                      <span>Osobní ochrana</span>
+                      <span class="info-icon-wrapper">ℹ️
+                        <div class="info-icon-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Zadejte počet chráněných osob a zvolte rizikovost. Minimální odhad je jeden bodyguard na každou osobu. Cestování a požadavek na řidiče‑bodyguarda navyšují počet; vyšší riziko znamená vyšší potřebu personálu.</p>
+                        </div>
+                      </span>
+                    </div>
+                    <label>Počet chráněných osob
+                      <span class="info-small-icon" role="button" aria-label="Info">ℹ️
+                        <div class="info-small-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Každá chráněná osoba vyžaduje minimálně jednoho bodyguarda. Vyšší riziko, cestování nebo řidič‑bodyguard mohou zvýšit potřebu personálu.</p>
+                        </div>
+                      </span>
+                      <input type="number" name="vip_count" min="1" value="1">
+                    </label>
+                    <label>Rizikovost
+                      <select name="risk_vip">
+                        <option value="1">Nízká</option>
+                        <option value="1.5">Střední</option>
+                        <option value="2">Vysoká</option>
+                      </select>
+                    </label>
+                    <label>Pohyb
+                      <select name="movement">
+                        <option value="static">Pevná lokalita</option>
+                        <option value="travel">Cestování</option>
+                      </select>
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Potřebujete řidiče-bodyguarda?</span>
+                      <input type="checkbox" name="driver">
+                    </label>
                   </div>
-                </span>
-                <input type="number" name="area" min="50" value="1000" placeholder="např. 1000">
-              </label>
-              <label>Počet vstupů
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý samostatný vstup vyžaduje jednoho pracovníka.</p>
+                  <div class="estimator-fields-group" data-service="event" id="service-panel-event" hidden aria-hidden="true">
+                    <div class="calculator-heading">
+                      <span>Event security</span>
+                      <span class="info-icon-wrapper">ℹ️
+                        <div class="info-icon-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Zadejte očekávaný počet návštěvníků, délku akce, rozmístění vstupů a další specifika. Odhad kombinuje pořadatele, supervizory a posily podle rizikovosti a logistiky akce.</p>
+                        </div>
+                      </span>
+                    </div>
+                    <label>Očekávaný počet návštěvníků
+                      <input type="number" name="attendees_event" min="10" value="500" placeholder="např. 500">
+                    </label>
+                    <label>Trvání akce (hodiny)
+                      <input type="number" name="duration_event" min="1" value="8">
+                    </label>
+                    <label>Rozloha areálu (m²)
+                      <input type="number" name="area_event" min="0" value="0">
+                    </label>
+                    <label>Průměrná hustota osob (m² na osobu)
+                      <input type="number" name="usage_event" min="0" step="0.1" value="0">
+                    </label>
+                    <label>Počet vstupů
+                      <input type="number" name="gates_event" min="0" value="2">
+                    </label>
+                    <label>Kontrolní koridory
+                      <input type="number" name="lanes_event" min="0" value="2">
+                    </label>
+                    <label>Zóny a sektory
+                      <input type="number" name="zones_event" min="0" value="1">
+                    </label>
+                    <label>Rizikovost
+                      <select name="risk_event">
+                        <option value="1">Nízká</option>
+                        <option value="1.3">Střední</option>
+                        <option value="1.6">Vysoká</option>
+                      </select>
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Podává se alkohol?</span>
+                      <input type="checkbox" name="alcohol">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>VIP zóna</span>
+                      <input type="checkbox" name="vip_event">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Backstage</span>
+                      <input type="checkbox" name="backstage_event">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Stanové městečko</span>
+                      <input type="checkbox" name="camp_event">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Kontrola parkoviště</span>
+                      <input type="checkbox" name="parking_event">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Venkovní akce</span>
+                      <input type="checkbox" name="outdoor_event">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Noční program</span>
+                      <input type="checkbox" name="night_event">
+                    </label>
                   </div>
-                </span>
-                <input type="number" name="entrances_object" min="1" value="1" placeholder="např. 1">
-              </label>
-              <label>Provoz
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Výběr "24/7" znamená nepřetržitý provoz a vyžaduje více směn. U denního provozu se počítá pouze jedna směna.</p>
+                  <div class="estimator-fields-group" data-service="sport" id="service-panel-sport" hidden aria-hidden="true">
+                    <div class="calculator-heading">
+                      <span>Sportovní utkání</span>
+                      <span class="info-icon-wrapper">ℹ️
+                        <div class="info-icon-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Počet pořadatelů se odvíjí od kapacity stadionu, rizikovosti utkání a logistiky vstupů. Oddělený sektor hostů, VIP nebo noční režim navýší potřebný tým.</p>
+                        </div>
+                      </span>
+                    </div>
+                    <label>Očekávaný počet diváků
+                      <input type="number" name="attendees_sport" min="10" value="500">
+                    </label>
+                    <label>Trvání akce (hodiny)
+                      <input type="number" name="duration_sport" min="1" value="4">
+                    </label>
+                    <label>Počet vstupů
+                      <input type="number" name="gates_sport" min="0" value="2">
+                    </label>
+                    <label>Kontrolní koridory
+                      <input type="number" name="lanes_sport" min="0" value="2">
+                    </label>
+                    <label>Zóny / sektory
+                      <input type="number" name="zones_sport" min="0" value="1">
+                    </label>
+                    <label>Rizikovost
+                      <select name="risk_sport">
+                        <option value="1">Běžné</option>
+                        <option value="1.5">Derby</option>
+                        <option value="2">Vysoké riziko</option>
+                      </select>
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Oddělený sektor hostů?</span>
+                      <input type="checkbox" name="guest_sector">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>VIP tribuny</span>
+                      <input type="checkbox" name="vip_sport">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Kontrola parkoviště</span>
+                      <input type="checkbox" name="parking_sport">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Venkovní stadion</span>
+                      <input type="checkbox" name="outdoor_sport">
+                    </label>
+                    <label class="checkbox-label">
+                      <span>Noční utkání</span>
+                      <input type="checkbox" name="night_sport">
+                    </label>
                   </div>
-                </span>
-                <select name="operation_time"><option value="day">Denní</option><option value="247">24/7</option></select>
-              </label>
-              <label class="checkbox-label">Má kamerový systém?
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Kamerový systém může snížit potřebný počet pracovníků přibližně o 20&nbsp;%.</p>
+                  <div class="estimator-fields-group" data-service="club" id="service-panel-club" hidden aria-hidden="true">
+                    <div class="calculator-heading">
+                      <span>Noční podniky</span>
+                      <span class="info-icon-wrapper">ℹ️
+                        <div class="info-icon-popover">
+                          <button class="close-popover" aria-label="Zavřít">×</button>
+                          <p>Zadejte kapacitu, počet vstupů a rizikovost lokality. Odhad zahrnuje tým pro vstup, patrolu uvnitř a supervizora.</p>
+                        </div>
+                      </span>
+                    </div>
+                    <label>Kapacita podniku
+                      <input type="number" name="club_capacity" value="150" min="20">
+                    </label>
+                    <label>Počet vstupů
+                      <input type="number" name="entrances_club" value="1" min="1">
+                    </label>
+                    <label>Rizikovost lokality
+                      <select name="risk_club">
+                        <option value="1">Nízká</option>
+                        <option value="1.3">Střední</option>
+                        <option value="1.6">Vysoká</option>
+                      </select>
+                    </label>
                   </div>
-                </span>
-                <input type="checkbox" name="cctv">
-              </label>
-
-              <label>Počet podlaží
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každé podlaží přidává jednoho pracovníka.</p>
-                  </div>
-                </span>
-                <input type="number" name="floors_object" min="1" value="1">
-              </label>
-              <label>Parkovací místa
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každých 100 parkovacích míst přidává jednoho pracovníka.</p>
-                  </div>
-                </span>
-                <input type="number" name="parking_object" min="0" value="0">
-              </label>
-              <label>Sklady / technické místnosti
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každých 10 technických místností přidává jednoho pracovníka.</p>
-                  </div>
-                </span>
-                <input type="number" name="technical_object" min="0" value="0">
-              </label>
-              <label class="checkbox-label">Noční provoz
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Pokud je objekt hlídán přes noc, navýší se celkový počet pracovníků o 20&nbsp;%.</p>
-                  </div>
-                </span>
-                <input type="checkbox" name="night_object">
-              </label>
-            </div>
-
-            <div class="estimator-fields-group calculator-card" data-service="vip" id="service-panel-vip">
-              <div class="calculator-heading">Osobní ochrana
-                <span class="info-icon-wrapper">ℹ️
-                  <div class="info-icon-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Zadejte počet chráněných osob a zvolte rizikovost. Minimální odhad je jeden bodyguard na každou osobu. Cestování a požadavek na řidiče‑bodyguarda navyšují počet; vyšší riziko znamená vyšší potřebu personálu.</p>
-                  </div>
-                </span>
-              </div>
-              <label>Počet chráněných osob
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každá chráněná osoba vyžaduje minimálně jednoho bodyguarda. Vyšší riziko, cestování nebo řidič‑bodyguard mohou zvýšit potřebu personálu.</p>
-                  </div>
-                </span>
-                <input type="number" name="vip_count" min="1" value="1">
-              </label>
-              <label>Rizikovost <select name="risk_vip"><option value="1">Nízká</option><option value="1.5">Střední</option><option value="2">Vysoká</option></select></label>
-              <label>Pohyb <select name="movement"><option value="static">Pevná lokalita</option><option value="travel">Cestování</option></select></label>
-              <label class="checkbox-label"><input type="checkbox" name="driver"> Potřebujete řidiče-bodyguarda?</label>
-            </div>
-
-            <div class="estimator-fields-group calculator-card" data-service="event" id="service-panel-event">
-              <div class="calculator-heading">Event security
-                <span class="info-icon-wrapper">ℹ️
-                  <div class="info-icon-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Zadejte očekávaný počet návštěvníků nebo využijte plochu a faktor zaplnění. Každý vstupní koridor a samostatná brána vyžadují vlastní obsluhu. Riziko, alkohol, VIP, venkovní prostředí nebo noční režim navýší počet pracovníků.</p>
-                  </div>
-                </span>
-              </div>
-              <label>Počet návštěvníků
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Zadejte očekávaný počet návštěvníků. Výchozí poměr je 1 strážný na 100 lidí (nízké riziko), 1 na 75 (střední) a 1 na 50 (vysoké).</p>
-                  </div>
-                </span>
-                <input type="number" name="attendees_event" min="10" value="500">
-              </label>
-              <label>Plocha (m²)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Pokud počet návštěvníků není znám, lze ho odhadnout vydělením plochy normou 0,65&nbsp;m² na osobu.</p>
-                  </div>
-                </span>
-                <input type="number" name="area_event" min="0" value="">
-              </label>
-              <label>Typ využití
-                <select name="usage_event">
-                  <option value="0.65">Stání</option>
-                  <option value="0.65">Pouze židle</option>
-                  <option value="1.39">Stoly a židle</option>
-                </select>
-              </label>
-              <label>Počet vstupních koridorů (pruhů)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý koridor vyžaduje vlastní pracovníky pro kontrolu.</p>
-                  </div>
-                </span>
-                <input type="number" name="lanes_event" min="0" value="2">
-              </label>
-              <label>Počet samostatných vstupů
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý samostatný vstup vyžaduje vlastní tým pořadatelů.</p>
-                  </div>
-                </span>
-                <input type="number" name="gates_event" min="0" value="1">
-              </label>
-              <label>Rizikovost <select name="risk_event"><option value="1">Nízké</option><option value="1.3">Střední</option><option value="1.6">Vysoké</option></select></label>
-              <label class="checkbox-label"><input type="checkbox" name="alcohol"> Podává se alkohol?</label>
-
-              <label>Délka akce (hodiny)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každých 8 hodin představuje jednu směnu. U delších akcí se tým střídá.</p>
-                  </div>
-                </span>
-                <input type="number" name="duration_event" min="1" value="8">
-              </label>
-              <label>Počet zón / pódií
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každá zóna vyžaduje vlastní dozor. Přidává dva pracovníky.</p>
-                  </div>
-                </span>
-                <input type="number" name="zones_event" min="0" value="0">
-              </label>
-              <label class="checkbox-label"><input type="checkbox" name="backstage_event"> Backstage / produkční zázemí</label>
-              <label class="checkbox-label"><input type="checkbox" name="parking_event"> Parkoviště pro návštěvníky</label>
-              <label class="checkbox-label"><input type="checkbox" name="camp_event"> Stanové městečko</label>
-              <label class="checkbox-label"><input type="checkbox" name="vip_event"> VIP hosté</label>
-              <label class="checkbox-label"><input type="checkbox" name="outdoor_event"> Venkovní akce</label>
-              <label class="checkbox-label"><input type="checkbox" name="night_event"> Noční provoz</label>
-            </div>
-
-            <div class="estimator-fields-group calculator-card" data-service="sport" id="service-panel-sport">
-              <div class="calculator-heading">Sportovní utkání
-                <span class="info-icon-wrapper">ℹ️
-                  <div class="info-icon-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Zadejte počet diváků, koridorů a samostatných vstupů. Derby nebo utkání s vysokým rizikem potřebují více pracovníků. Oddělené sektory, VIP hosté, parkoviště nebo noční režim odhad navýší.</p>
-                  </div>
-                </span>
-              </div>
-              <label>Počet diváků
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Zadejte očekávanou návštěvnost. U běžných utkání počítáme s poměrem 1 pořadatel na 100 diváků.</p>
-                  </div>
-                </span>
-                <input type="number" name="attendees_sport" min="10" value="500">
-              </label>
-              <label>Počet vstupních koridorů (pruhů)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý koridor vyžaduje vlastní pracovníky pro kontrolu.</p>
-                  </div>
-                </span>
-                <input type="number" name="lanes_sport" min="0" value="2">
-              </label>
-              <label>Počet samostatných vstupů
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý samostatný vstup vyžaduje vlastní tým pořadatelů.</p>
-                  </div>
-                </span>
-                <input type="number" name="gates_sport" min="0" value="0">
-              </label>
-              <label>Rizikovost <select name="risk_sport"><option value="1">Běžné</option><option value="1.5">Derby</option><option value="2">Vysoké riziko</option></select></label>
-              <label class="checkbox-label"><input type="checkbox" name="guest_sector"> Oddělený sektor hostů?</label>
-
-              <label>Trvání akce (hodiny)
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Délka utkání v hodinách. Každých 8&nbsp;hodin představuje jednu směnu.</p>
-                  </div>
-                </span>
-                <input type="number" name="duration_sport" min="1" value="4">
-              </label>
-              <label>Počet zón / areálů
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každá zóna nebo areál přidává dva pracovníky navíc.</p>
-                  </div>
-                </span>
-                <input type="number" name="zones_sport" min="0" value="0">
-              </label>
-              <label class="checkbox-label"><input type="checkbox" name="parking_sport"> Hlídání parkoviště</label>
-              <label class="checkbox-label"><input type="checkbox" name="vip_sport"> VIP hosté</label>
-              <label class="checkbox-label"><input type="checkbox" name="outdoor_sport"> Venkovní akce</label>
-              <label class="checkbox-label"><input type="checkbox" name="night_sport"> Noční provoz</label>
-            </div>
-
-            <div class="estimator-fields-group calculator-card" data-service="club" id="service-panel-club">
-              <div class="calculator-heading">Noční podniky
-                <span class="info-icon-wrapper">ℹ️
-                  <div class="info-icon-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Zadejte kapacitu podniku a počet vstupů. Pro noční podniky se obvykle používá poměr 1 strážný na 75 návštěvníků (nízké riziko), 1 na 50 (střední riziko) a 1 na 40 (vyšší riziko) plus samostatný pracovník pro každý vstup. Další faktory jako velikost podniku a provozní doba mohou tyto počty navýšit.</p>
-                  </div>
-                </span>
-              </div>
-              <label>Kapacita podniku
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Celková kapacita v počtu osob. Obvykle se počítá 1 strážný na 75 osob (nízké riziko), 1 na 50 (střední) a 1 na 40 (vysoké).</p>
-                  </div>
-                </span>
-                <input type="number" name="club_capacity" value="150">
-              </label>
-              <label>Počet vstupů
-                <span class="info-small-icon" role="button" aria-label="Info">ℹ️
-                  <div class="info-small-popover">
-                    <button class="close-popover" aria-label="Zavřít">×</button>
-                    <p>Každý samostatný vstup nebo východ vyžaduje jednoho strážného.</p>
-                  </div>
-                </span>
-                <input type="number" name="entrances_club" value="1">
-              </label>
-              <label>Rizikovost lokality <select name="risk_club"><option value="1">Nízká</option><option value="1.3">Střední</option><option value="1.6">Vysoká</option></select></label>
-            </div>
-
-            <div class="estimator-output full-width" aria-live="polite">Doporučený počet: –</div>
-            <a href="#cta" id="estimator-cta" class="btn btn-accent full-width" style="justify-self: center;">Poptat službu</a>
-          </form>
-
-          <aside class="estimator-summary" aria-live="polite" aria-atomic="true">
-            <div class="summary-card">
-              <header>
-                <div class="summary-icon" id="summary-icon" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l3 3" /></svg>
                 </div>
-                <h3 id="summary-title">Vyberte službu</h3>
-                <p id="summary-description">Zadejte parametry na levé straně a získáte okamžitý odhad týmu, směn i rozpočtu.</p>
-              </header>
-              <dl class="summary-metrics">
-                <div class="summary-metric">
-                  <dt>Doporučený tým</dt>
-                  <dd id="summary-team">–</dd>
-                </div>
-                <div class="summary-metric">
-                  <dt>Pokrytí</dt>
-                  <dd id="summary-coverage">–</dd>
-                </div>
-                <div class="summary-metric">
-                  <dt>Rozpočet</dt>
-                  <dd id="summary-budget">–</dd>
-                </div>
-              </dl>
-              <div class="summary-divider" aria-hidden="true"></div>
-              <ul class="summary-tips" id="summary-tips">
-                <li>Tipy a doporučení se zobrazí po výpočtu.</li>
-              </ul>
-              <div class="summary-actions">
-                <button type="button" class="summary-reset" id="summary-reset">Vymazat vstupy</button>
-                <a href="#cta" class="btn btn-accent btn--ghost" id="summary-cta-shortcut">Odeslat návrh</a>
+                <aside class="summary-card" aria-live="polite" aria-atomic="true">
+                  <header>
+                    <div class="summary-icon" id="summary-icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l3 3" /></svg>
+                    </div>
+                    <h3 id="summary-title">Vyberte službu</h3>
+                    <p id="summary-description">Zadejte parametry na levé straně a získáte okamžitý odhad týmu, směn i rozpočtu.</p>
+                  </header>
+                  <dl class="summary-metrics">
+                    <div class="summary-metric">
+                      <dt>Doporučený tým</dt>
+                      <dd id="summary-team">–</dd>
+                    </div>
+                    <div class="summary-metric">
+                      <dt>Pokrytí</dt>
+                      <dd id="summary-coverage">–</dd>
+                    </div>
+                    <div class="summary-metric">
+                      <dt>Rozpočet</dt>
+                      <dd id="summary-budget">–</dd>
+                    </div>
+                  </dl>
+                  <div class="summary-divider" aria-hidden="true"></div>
+                  <ul class="summary-tips" id="summary-tips">
+                    <li>Tipy a doporučení se zobrazí po výpočtu.</li>
+                  </ul>
+                  <div class="summary-actions">
+                    <button type="button" class="summary-reset" id="summary-reset">Vymazat vstupy</button>
+                    <a href="#cta" class="btn btn-accent btn--ghost" id="summary-cta-shortcut">Odeslat návrh</a>
+                  </div>
+                  <p class="summary-footnote" id="summary-footnote">Uvedené částky jsou orientační a nezahrnují techniku ani DPH. Přesnou nabídku připravíme po konzultaci.</p>
+                </aside>
               </div>
-              <p class="summary-footnote" id="summary-footnote">Uvedené částky jsou orientační a nezahrnují techniku ani DPH. Přesnou nabídku připravíme po konzultaci.</p>
-            </div>
-          </aside>
+              <div class="estimator-output" aria-live="polite">
+                <div class="output-header">
+                  <h4>Orientační návrh</h4>
+                  <p class="output-headline">Doporučený počet: –</p>
+                </div>
+                <p class="output-budget"><strong>–</strong></p>
+                <p class="output-coverage">Výsledky se zobrazí po zadání parametrů.</p>
+                <p class="output-narrative">Zadejte informace o projektu a okamžitě uvidíte doporučení.</p>
+              </div>
+              <a href="#cta" id="estimator-cta" class="btn btn-accent">Poptat službu</a>
+            </form>
+          </div>
         </div>
       </div>
     </section>
@@ -3053,7 +3163,7 @@ small {
       if (estimatorForm) {
         const serviceTypeSelect = document.getElementById('service-type-select');
         const outputEl = estimatorForm.querySelector('.estimator-output');
-        const estimatorBtn = estimatorForm.querySelector('.btn');
+        const estimatorStage = document.getElementById('estimator-stage');
         const estimatorCtaBtn = document.getElementById('estimator-cta');
         const ctaEstimateField = document.getElementById('cta-estimate');
         const ctaDetailsField = document.getElementById('cta-details');
@@ -3519,7 +3629,9 @@ small {
             <p class="output-coverage">${result.coverage}</p>
             <p class="output-narrative">${result.narrative}</p>
           `;
-          estimatorBtn.textContent = result.ctaLabel || 'Poptat službu';
+          const ctaLabel = result.ctaLabel || 'Poptat službu';
+          if (estimatorCtaBtn) estimatorCtaBtn.textContent = ctaLabel;
+          if (summaryCtaShortcut) summaryCtaShortcut.textContent = ctaLabel;
         }
 
         function handleCalculationError(error) {
@@ -3616,6 +3728,17 @@ small {
             pill.setAttribute('aria-selected', String(match));
             pill.setAttribute('tabindex', match ? '0' : '-1');
           });
+          if (estimatorStage) {
+            const activePill = document.querySelector(`[data-service-pill="${serviceKey}"]`);
+            const bg = activePill && activePill.dataset.bg;
+            if (bg) {
+              estimatorStage.style.setProperty('--estimator-context-bg', `url(${bg})`);
+              estimatorStage.classList.add('has-context');
+            } else {
+              estimatorStage.classList.remove('has-context');
+              estimatorStage.style.removeProperty('--estimator-context-bg');
+            }
+          }
           const config = SERVICE_CONFIG[serviceKey];
           if (config && summaryIcon) {
             summaryIcon.innerHTML = config.icon;
