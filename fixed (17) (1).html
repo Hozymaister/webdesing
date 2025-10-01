@@ -18,7 +18,7 @@
 
   <style>
     #preloader { display: none; }
-    .js .has-preloader #preloader { display: flex; }
+    .js.has-preloader #preloader { display: flex; }
   </style>
   <script>document.documentElement.classList.add('js');</script>
 
@@ -213,7 +213,7 @@
         height: 3px;
         background: var(--brand-accent);
         transform-origin: 0 50%;
-        z-index: 9999;
+        z-index: 3000;
         transform: scaleX(0);
     }
     
@@ -619,7 +619,7 @@
         background-color: rgba(0,0,0,0.8);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        z-index: 9990;
+        z-index: 11000;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -731,7 +731,7 @@
         width: 100%;
         height: 100%;
         background: rgba(0,0,0,0.9);
-        z-index: 10000;
+        z-index: 11000;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -844,7 +844,6 @@
     }
     #calculator .calculator-shell {
       position: relative;
-      z-index: 1;
       display: flex;
       justify-content: center;
     }
@@ -1521,7 +1520,7 @@
         background-color: rgba(0,0,0,0.8);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        z-index: 9995; /* Higher than team modal */
+        z-index: 11000; /* Higher than team modal */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1579,7 +1578,7 @@
     .section { padding: var(--section-padding) 0; position: relative; content-visibility: auto; contain-intrinsic-size: 800px; }
 
     /* --- ZVEDNOUT MODAL NAD PROGRESS BAR --- */
-    #team-modal-overlay { z-index: 10050; }
+    #team-modal-overlay { z-index: 11000; }
 
     /* --- CTA: vlastní název animace (ať se nebije s kalkulačkou) --- */
     @keyframes pulse-glow-cta {
@@ -1912,6 +1911,7 @@ small {
         const modal = document.querySelector(contentSel);
         if (!overlay || !modal) return;
         lastOpener = opener || document.activeElement;
+        overlay.removeAttribute('hidden');
         overlay.classList.add('visible');
         document.body.classList.add('modal-open');
 
@@ -1957,6 +1957,9 @@ small {
         if (lastOpener && typeof lastOpener.focus === 'function') {
           lastOpener.focus();
         }
+        window.setTimeout(() => {
+          overlay.setAttribute('hidden', '');
+        }, 400);
       }
 
       window.a11yModal = { open: openModal, close: closeModal };
@@ -2885,9 +2888,14 @@ small {
   <script>
 /* ============ PRELOADER & BOOT ============ */
 (() => {
-  document.documentElement.classList.add('has-preloader');
   const body = document.body;
   const pre = document.getElementById('preloader');
+  if (pre) {
+    document.documentElement.classList.add('has-preloader');
+  } else {
+    body.classList.remove('loading');
+    return;
+  }
   const hide = () => {
     pre?.classList.add('hidden');
     body.classList.remove('loading');
@@ -3010,9 +3018,6 @@ small {
     const id = card.getAttribute('data-member-id');
     card.addEventListener('click', ()=>{
       if (members[id]) fill(members[id]);
-      overlay.hidden = false;
-      overlay.classList.add('visible');
-      document.body.classList.add('modal-open');
       window.a11yModal?.open?.('#team-modal-overlay','#team-modal-content', card);
     });
     card.addEventListener('keydown', (e)=>{ if (e.key==='Enter' || e.key===' ') { e.preventDefault(); card.click(); }});
@@ -3020,8 +3025,6 @@ small {
 
   const close = () => {
     window.a11yModal?.close?.('#team-modal-overlay','#team-modal-content');
-    overlay.classList.remove('visible');
-    setTimeout(()=>overlay.hidden = true, 200);
   };
   closeBtn?.addEventListener('click', close);
   overlay.addEventListener('click', (e)=>{ if(e.target===overlay) close(); });
@@ -3604,6 +3607,7 @@ small {
 
     if (pop.parentNode !== document.body) document.body.appendChild(pop);
     pop.classList.add(FLOAT);
+    pop.hidden = false;
 
     pop.style.visibility = 'hidden';
     pop.style.display = 'block';
@@ -3611,6 +3615,7 @@ small {
   }
   function closeFloating(pop){
     pop.classList.remove(OPEN, FLOAT);
+    pop.hidden = true;
     const meta = back.get(pop);
     if (meta?.parent) meta.parent.insertBefore(pop, meta.next || null);
   }
@@ -3738,6 +3743,16 @@ small {
     if (ctaDetailsField) ctaDetailsField.value = details || '';
   };
 })();
+  </script>
+
+  <script>
+    window.addEventListener('load', () => {
+      document.body.classList.remove('loading');
+      const preloader = document.getElementById('preloader');
+      if (preloader && !preloader.classList.contains('hidden')) {
+        preloader.classList.add('hidden');
+      }
+    });
   </script>
 </body>
 </html>
