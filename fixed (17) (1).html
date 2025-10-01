@@ -2069,12 +2069,36 @@ small {
     #calculator .calculator-step,
     #calculator .form-grid,
     #calculator .form-group {
-      overflow: visible;
+      overflow: visible !important;
     }
 
     .info-small-popover,
-    .info-icon-popover {
+    .info-icon-popover,
+    .info-popover {
       z-index: 100000;
+    }
+
+    /* --- FIX: info bubliny vždy nad vším, bez ořezání --- */
+    .info-small-popover.floating,
+    .info-icon-popover.floating,
+    .info-popover.floating {
+      position: fixed !important;
+      max-width: min(320px, 92vw);
+      max-height: calc(100vh - 24px);
+      overflow: auto;
+      z-index: 2147483647;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      pointer-events: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #calculator,
+    #calculator .calculator-container,
+    #calculator .calculator-main,
+    #calculator .form-grid {
+      overflow: visible !important;
     }
 
   </style>
@@ -4178,19 +4202,35 @@ small {
       const scope = document.getElementById('calculator') || document;
       let openPopover = null;
 
+      function ensurePopoverReference(popover, button) {
+        if (!popover) return popover;
+        if (!popover.id) {
+          popover.id = `calc-popover-${Math.random().toString(36).slice(2, 9)}`;
+        }
+        if (button) {
+          if (!button.getAttribute('data-popover-id')) {
+            button.setAttribute('data-popover-id', popover.id);
+          }
+          if (!button.getAttribute('aria-controls')) {
+            button.setAttribute('aria-controls', popover.id);
+          }
+        }
+        return popover;
+      }
+
       function findPopover(button) {
         if (!button) return null;
-        const direct = button.querySelector('.info-popover, .info-small-popover, .info-icon-popover');
-        if (direct) return direct;
-        const controlsId = button.getAttribute('aria-controls');
-        if (controlsId) {
-          const controlled = document.getElementById(controlsId);
-          if (controlled) return controlled;
+        const storedId = button.getAttribute('data-popover-id') || button.getAttribute('aria-controls');
+        if (storedId) {
+          const stored = document.getElementById(storedId);
+          if (stored) return ensurePopoverReference(stored, button);
         }
+        const direct = button.querySelector('.info-popover, .info-small-popover, .info-icon-popover');
+        if (direct) return ensurePopoverReference(direct, button);
         const wrapper = button.closest('.form-group, .info-icon-wrapper, .info-chip-wrapper');
         if (wrapper) {
           const fallback = wrapper.querySelector('.info-popover, .info-small-popover, .info-icon-popover');
-          if (fallback) return fallback;
+          if (fallback) return ensurePopoverReference(fallback, button);
         }
         return null;
       }
@@ -4201,6 +4241,9 @@ small {
         if (pop) {
           pop.classList.remove('visible', 'is-visible');
           pop.setAttribute('hidden', '');
+          if (typeof window.__calculatorRestorePopover === 'function') {
+            window.__calculatorRestorePopover(pop);
+          }
         }
         if (btn) {
           btn.setAttribute('aria-expanded', 'false');
@@ -4245,6 +4288,158 @@ small {
       });
 
       window.closeCalculatorPopovers = closeOpenPopover;
+    })();
+  </script>
+  <script>
+    /* --- FIX: portál pro info bubliny, aby se nevrtaly pod kalkulačku --- */
+    (() => {
+      const OPEN_CLASS = 'visible';
+      const ALT_OPEN_CLASS = 'is-visible';
+      const FLOAT_CLASS = 'floating';
+      const POP_SELECTOR = '.info-popover, .info-small-popover, .info-icon-popover';
+      const TRIGGER_SELECTOR = '.info-chip, .info-small-icon, .info-icon-wrapper, .info-icon';
+
+      const backmap = new WeakMap();
+
+      function restore(pop) {
+        if (!pop) return;
+        const meta = backmap.get(pop);
+        if (meta?.parent && pop.parentNode !== meta.parent) {
+          meta.parent.insertBefore(pop, meta.next || null);
+        }
+        pop.classList.remove(FLOAT_CLASS);
+        pop.style.removeProperty('top');
+        pop.style.removeProperty('left');
+        pop.style.removeProperty('display');
+        pop.style.removeProperty('visibility');
+      }
+
+      window.__calculatorRestorePopover = (pop) => {
+        if (pop && pop.classList?.contains(FLOAT_CLASS)) {
+          restore(pop);
+        }
+      };
+
+      function place(pop, trigger) {
+        if (!pop || !trigger) return;
+        pop.style.top = '0px';
+        pop.style.left = '0px';
+
+        const triggerRect = trigger.getBoundingClientRect();
+        const popRect = pop.getBoundingClientRect();
+        const padding = 8;
+
+        let top = triggerRect.bottom + padding;
+        let left = triggerRect.left + (triggerRect.width - popRect.width) / 2;
+
+        if (left + popRect.width + padding > window.innerWidth) {
+          left = window.innerWidth - popRect.width - padding;
+        }
+        if (left < padding) {
+          left = padding;
+        }
+
+        if (top + popRect.height + padding > window.innerHeight) {
+          top = triggerRect.top - popRect.height - padding;
+          if (top < padding) {
+            top = Math.min(window.innerHeight - popRect.height - padding, Math.max(padding, triggerRect.bottom + padding));
+          }
+        }
+
+        pop.style.top = `${Math.round(top)}px`;
+        pop.style.left = `${Math.round(left)}px`;
+      }
+
+      function openFloating(pop, trigger) {
+        if (!pop || !trigger) return;
+        if (!pop.classList.contains(OPEN_CLASS) && !pop.classList.contains(ALT_OPEN_CLASS)) return;
+
+        const currentParent = pop.parentNode;
+        if (!backmap.has(pop)) {
+          backmap.set(pop, {
+            parent: currentParent,
+            next: pop.nextSibling,
+            trigger
+          });
+        } else {
+          const meta = backmap.get(pop);
+          meta.parent = meta.parent || currentParent;
+          meta.next = meta.next || pop.nextSibling;
+          meta.trigger = trigger;
+        }
+
+        if (pop.parentNode !== document.body) {
+          document.body.appendChild(pop);
+        }
+
+        pop.classList.add(FLOAT_CLASS);
+        pop.style.visibility = 'hidden';
+        pop.style.display = 'block';
+
+        requestAnimationFrame(() => {
+          place(pop, trigger);
+          pop.style.removeProperty('visibility');
+        });
+      }
+
+      document.addEventListener('click', (event) => {
+        const trigger = event.target.closest(TRIGGER_SELECTOR);
+        if (!trigger) return;
+
+        setTimeout(() => {
+          const storedId = trigger.getAttribute('data-popover-id') || trigger.getAttribute('aria-controls');
+          let pop = storedId ? document.getElementById(storedId) : null;
+          if (!pop) {
+            pop = trigger.querySelector(POP_SELECTOR) || trigger.closest('.form-group')?.querySelector(POP_SELECTOR);
+          }
+          if (!pop) return;
+          if (pop.classList.contains(OPEN_CLASS) || pop.classList.contains(ALT_OPEN_CLASS)) {
+            openFloating(pop, trigger);
+          }
+        }, 0);
+      }, true);
+
+      function closeAllFloating() {
+        const floatingPops = Array.from(document.querySelectorAll(`${POP_SELECTOR}.${FLOAT_CLASS}`));
+        if (!floatingPops.length) return;
+        if (typeof window.closeCalculatorPopovers === 'function') {
+          window.closeCalculatorPopovers();
+          floatingPops.forEach(restore);
+        } else {
+          floatingPops.forEach(pop => {
+            pop.classList.remove(OPEN_CLASS, ALT_OPEN_CLASS, FLOAT_CLASS);
+            pop.setAttribute('hidden', '');
+            restore(pop);
+          });
+        }
+      }
+
+      document.addEventListener('click', (event) => {
+        if (event.target.closest(POP_SELECTOR) || event.target.closest(TRIGGER_SELECTOR)) {
+          return;
+        }
+        if (document.querySelector(`${POP_SELECTOR}.${FLOAT_CLASS}`)) {
+          closeAllFloating();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeAllFloating();
+        }
+      });
+
+      const reflow = () => {
+        document.querySelectorAll(`${POP_SELECTOR}.${FLOAT_CLASS}`).forEach(pop => {
+          const meta = backmap.get(pop);
+          if (meta?.trigger && document.body.contains(meta.trigger)) {
+            place(pop, meta.trigger);
+          }
+        });
+      };
+
+      window.addEventListener('resize', reflow, { passive: true });
+      window.addEventListener('scroll', reflow, { passive: true });
     })();
   </script>
   <script>
