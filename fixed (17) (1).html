@@ -1578,37 +1578,6 @@
     .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
     .section { padding: var(--section-padding) 0; position: relative; content-visibility: auto; contain-intrinsic-size: 800px; }
 
-    /* === FIX: popovery/rozbalovačky překrývá kalkulačka === */
-    #calculator.section,
-    #cta.section,
-    #faq.section,
-    #services.section {
-      content-visibility: visible;
-      contain-intrinsic-size: auto;
-    }
-
-    #calculator,
-    #calculator .calculator-shell {
-      position: relative;
-      z-index: initial;
-    }
-
-    #cta { position: relative; z-index: 10; }
-    #faq { position: relative; z-index: 5; }
-
-    #calculator .calculator-main,
-    #calculator .calculator-steps,
-    #calculator .calculator-step,
-    #calculator .form-grid,
-    #calculator .form-group {
-      overflow: visible;
-    }
-
-    .info-small-popover,
-    .info-icon-popover {
-      z-index: 100000;
-    }
-
     /* --- ZVEDNOUT MODAL NAD PROGRESS BAR --- */
     #team-modal-overlay { z-index: 10050; }
 
@@ -1853,33 +1822,53 @@ small {
 
     /* === FIX: popovery/rozbalovačky překrývá kalkulačka === */
 
-    /* 1) Interaktivním sekcím vypnout paint containment, aby nic nebylo oříznuté */
+    /* 0) Interaktivním sekcím vypínáme paint containment */
     #calculator.section,
     #cta.section,
     #faq.section,
     #services.section {
-      content-visibility: visible;
-      contain-intrinsic-size: auto;
+      content-visibility: visible !important;
+      contain-intrinsic-size: auto !important;
     }
 
-    /* 2) Kalkulačka nesmí sedět „nad vším“ */
-    #calculator,
-    #calculator .calculator-shell {
-      position: relative;
-      z-index: initial;
+    /* 1) Sekce pod kalkulačkou nepřekrývají kalkulačku */
+    #cta,
+    #faq {
+      position: static !important;
+      z-index: auto !important;
     }
 
-    /* 3) Sekcím pod kalkulačkou dej vyšší prioritu, když se jejich UI rozbalí přes ni */
-    #cta { position: relative; z-index: 10; }
-    #faq { position: relative; z-index: 5; }
+    /* 2) Kroky kalkulačky běží v normálním toku stránky */
+    #calculator .calculator-steps {
+      min-height: 0 !important;
+      height: auto !important;
+    }
+    #calculator .calculator-step {
+      position: static !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
+      display: none;
+    }
+    #calculator .calculator-step.active {
+      display: block;
+    }
 
-    /* 4) Popovery uvnitř kalkulačky – jistota, že budou nad okolím a nebudou ořezané */
+    /* 3) Nic neořezáváme uvnitř kalkulačky */
+    #calculator .calculator-container,
     #calculator .calculator-main,
     #calculator .calculator-steps,
     #calculator .calculator-step,
     #calculator .form-grid,
     #calculator .form-group {
       overflow: visible !important;
+    }
+
+    /* 4) Popovery držíme nad ostatními prvky */
+    .info-popover,
+    .info-small-popover,
+    .info-icon-popover {
+      z-index: 200000 !important;
     }
 
     /* --- FIX: info bubliny vždy nad vším, bez ořezání --- */
