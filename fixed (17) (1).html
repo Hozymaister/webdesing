@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
   
   <!-- SEO & Core Meta Tags -->
   <title>Bezpečnostní agentura Brno – Ostraha majetku, Osobní ochrana, Event Security | Bravion</title>
@@ -37,11 +38,11 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Bravion Security – event security, ostraha objektů a osobní ochrana">
   
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://www.bravion.cz/">
-  <meta property="twitter:title" content="Bezpečnostní agentura Brno – Ostraha majetku, Osobní ochrana | Bravion">
-  <meta property="twitter:description" content="Profesionální bezpečnostní služby v Brně a po celé ČR. Specializujeme se na ostrahu majetku, osobní ochranu (bodyguard) a event security.">
-  <meta property="twitter:image" content="https://bravion.cz/wp-content/uploads/2025/09/Bravion-OG.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://www.bravion.cz/">
+  <meta name="twitter:title" content="Bezpečnostní agentura Brno – Ostraha majetku, Osobní ochrana | Bravion">
+  <meta name="twitter:description" content="Profesionální bezpečnostní služby v Brně a po celé ČR. Specializujeme se na ostrahu majetku, osobní ochranu (bodyguard) a event security.">
+  <meta name="twitter:image" content="https://bravion.cz/wp-content/uploads/2025/09/Bravion-OG.png">
   <!-- Additional Open Graph and Twitter metadata -->
   <meta property="og:site_name" content="Bravion Security">
   <meta property="og:locale" content="cs_CZ">
@@ -52,6 +53,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="preconnect" href="https://scontent.fprg4-1.fna.fbcdn.net" crossorigin>
+  <link rel="preconnect" href="https://bravion.cz" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -168,7 +173,7 @@
         width: 100vw;
         height: 100vh;
         background: var(--bg-dark);
-        z-index: 10000;
+        z-index: 2147483647;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -830,9 +835,12 @@
     }
     #calculator .calculator-container {
       display: grid;
-      grid-template-columns: minmax(240px, 290px) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
       gap: 0;
-      background: rgba(18, 18, 18, 0.78);
+      width: min(100%, 1040px);
+      min-height: 60vh;
+      margin: 0 auto;
+      background: rgba(18, 18, 18, 0.8);
       border-radius: 24px;
       border: 1px solid rgba(212, 162, 118, 0.28);
       box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65);
@@ -856,11 +864,11 @@
       opacity: 0.18;
     }
     #calculator .calculator-sidebar {
-      padding: 2.75rem 2rem;
+      padding: 2.25rem 1.75rem;
       border-right: 1px solid rgba(212, 162, 118, 0.25);
       display: flex;
       flex-direction: column;
-      gap: 2.5rem;
+      gap: 2rem;
       background: radial-gradient(circle at top left, rgba(212, 162, 118, 0.1), transparent 55%);
     }
     #calculator .sidebar-header h3 {
@@ -873,9 +881,9 @@
       color: var(--text-muted);
     }
     #calculator .service-nav {
-      display: flex;
-      flex-direction: column;
+      display: grid;
       gap: 0.75rem;
+      grid-template-columns: 1fr;
     }
     #calculator .service-nav-item {
       display: flex;
@@ -1190,24 +1198,6 @@
       border-color: rgba(212, 162, 118, 0.55);
       transform: translateY(-1px);
     }
-    #calculator .info-popover {
-      display: none;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(212, 162, 118, 0.25);
-      border-radius: 14px;
-      padding: 1rem 1.15rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    #calculator .info-popover.is-visible {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    #calculator .info-popover strong {
-      color: var(--text-light);
-    }
     #calculator .info-close {
       align-self: flex-start;
       background: none;
@@ -1492,9 +1482,8 @@
         border-bottom: 1px solid rgba(212, 162, 118, 0.25);
       }
       #calculator .service-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        justify-items: stretch;
       }
       #calculator .calculator-progress {
         padding: 0.25rem 0;
@@ -1891,34 +1880,45 @@ small {
       flex-shrink: 0;
     }
 
-    .info-small-popover {
+    .info-popover,
+    .info-small-popover,
+    .info-icon-popover {
       position: absolute;
       top: calc(100% + 6px);
-      left: 50%;
-      transform: translateX(-50%) translateY(8px);
-      width: 260px;
-      max-width: 80vw;
+      left: 0;
       background-color: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1rem;
       box-shadow: var(--shadow-dark);
-      z-index: 10000;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      width: min(300px, 92vw);
+      z-index: 1000;
+      pointer-events: none;
     }
 
-    .info-small-popover.visible {
+    .info-small-popover {
+      width: min(260px, 90vw);
+    }
+
+    .info-popover.visible,
+    .info-small-popover.visible,
+    .info-icon-popover.visible {
       opacity: 1;
       visibility: visible;
-      transform: translateX(-50%) translateY(0);
+      transform: translateY(0);
+      pointer-events: auto;
     }
 
-    .info-small-popover button.close-popover {
+    .info-popover button.close-popover,
+    .info-small-popover button.close-popover,
+    .info-icon-popover button.close-popover {
       position: absolute;
-      top: 4px;
-      right: 6px;
+      top: 6px;
+      right: 8px;
       background: none;
       border: none;
       color: var(--text-muted);
@@ -1944,38 +1944,8 @@ small {
     }
 
     .info-icon-wrapper .info-icon-popover {
-      position: absolute;
-      top: calc(100% + 6px);
-      left: 0;
-      width: 300px;
-      max-width: 90vw;
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
+      width: min(320px, 92vw);
       padding: 1rem 1.5rem;
-      box-shadow: var(--shadow-dark);
-      z-index: 10000;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(8px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .info-icon-wrapper .info-icon-popover.visible {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .info-icon-wrapper .info-icon-popover .close-popover {
-      position: absolute;
-      top: 4px;
-      right: 6px;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1rem;
-      cursor: pointer;
     }
 
     .calculator-heading {
@@ -2000,41 +1970,6 @@ small {
       cursor: pointer;
       position: relative;
       flex-shrink: 0;
-    }
-
-    .info-popover {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 300px;
-      max-width: 90vw;
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      padding: 1rem 1.5rem;
-      box-shadow: var(--shadow-dark);
-      z-index: 10000;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(10px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .info-popover.visible {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .info-popover button.close-popover {
-      position: absolute;
-      top: 6px;
-      right: 8px;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.2rem;
-      cursor: pointer;
     }
 
     /* Ensure headings span across all columns within estimator grid */
@@ -2078,12 +2013,6 @@ small {
       overflow: visible !important;
     }
 
-    .info-small-popover,
-    .info-icon-popover,
-    .info-popover {
-      z-index: 100000;
-    }
-
     /* --- FIX: info bubliny vždy nad vším, bez ořezání --- */
     .info-small-popover.floating,
     .info-icon-popover.floating,
@@ -2092,7 +2021,7 @@ small {
       max-width: min(320px, 92vw);
       max-height: calc(100vh - 24px);
       overflow: auto;
-      z-index: 10000;
+      z-index: 2147483646;
       opacity: 1;
       visibility: visible;
       transform: none;
@@ -2356,7 +2285,7 @@ small {
   </script>
 
 </head>
-<body class="loading">
+<body class="loading has-preloader">
   <a href="#main" class="skip-link">Přeskočit na hlavní obsah</a>
   <!-- Sitemap and robots.txt will be handled by the production environment. -->
   <div id="preloader">
@@ -3063,7 +2992,7 @@ small {
   <a href="#cta" id="sticky-cta" class="btn btn-accent" data-magnetic aria-label="Přejít na poptávkový formulář">Poptat službu</a>
 
   <!-- Team Member Modal -->
-  <div id="team-modal-overlay">
+  <div id="team-modal-overlay" hidden>
       <div id="team-modal-content" role="dialog" aria-modal="true" tabindex="-1" aria-hidden="true" aria-labelledby="modal-name" aria-describedby="modal-bio">
           <button id="team-modal-close" aria-label="Zavřít detail">&times;</button>
           <div class="modal-grid">
@@ -3079,13 +3008,13 @@ small {
   </div>
   
   <!-- Lightbox Container -->
-  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" hidden>
       <button class="lightbox-close" aria-label="Zavřít galerii">&times;</button>
       <img src="" alt="Zvětšený obrázek z galerie">
   </div>
 
   <!-- Form Success Modal -->
-  <div id="form-success-overlay">
+  <div id="form-success-overlay" hidden>
       <div id="form-success-content" role="alertdialog" aria-modal="true" tabindex="-1" aria-hidden="true" aria-labelledby="form-success-title">
           <button id="form-success-close" aria-label="Zavřít zprávu">&times;</button>
           <div class="success-icon">
@@ -3102,11 +3031,12 @@ small {
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const preloader = document.getElementById('preloader');
-      document.body.classList.remove('loading');
+      document.body.classList.remove('loading', 'has-preloader');
       document.documentElement.classList.remove('has-preloader');
       preloader?.classList.add('hidden');
       setTimeout(() => {
         preloader?.classList.add('hidden');
+        document.body.classList.remove('has-preloader');
         document.documentElement.classList.remove('has-preloader');
       }, 1500);
     });
@@ -4352,7 +4282,7 @@ small {
         if (!openPopover) return;
         const { btn, pop } = openPopover;
         if (pop) {
-          pop.classList.remove('visible', 'is-visible');
+          pop.classList.remove('visible');
           pop.setAttribute('hidden', '');
           if (typeof window.__calculatorRestorePopover === 'function') {
             window.__calculatorRestorePopover(pop);
@@ -4383,10 +4313,10 @@ small {
           event.preventDefault();
           const pop = findPopover(btn);
           if (!pop) return;
-          const isOpen = pop.classList.contains('visible') || pop.classList.contains('is-visible');
+          const isOpen = pop.classList.contains('visible');
           closeOpenPopover();
           if (!isOpen) {
-            pop.classList.add('visible', 'is-visible');
+            pop.classList.add('visible');
             pop.removeAttribute('hidden');
             btn.setAttribute('aria-expanded', 'true');
             openPopover = { btn, pop };
@@ -4407,7 +4337,6 @@ small {
     /* --- FIX: portál pro info bubliny, aby se nevrtaly pod kalkulačku --- */
     (() => {
       const OPEN_CLASS = 'visible';
-      const ALT_OPEN_CLASS = 'is-visible';
       const FLOAT_CLASS = 'floating';
       const POP_SELECTOR = '.info-popover, .info-small-popover, .info-icon-popover';
       const TRIGGER_SELECTOR = '.info-chip, .info-small-icon, .info-icon-wrapper, .info-icon';
@@ -4465,7 +4394,7 @@ small {
 
       function openFloating(pop, trigger) {
         if (!pop || !trigger) return;
-        if (!pop.classList.contains(OPEN_CLASS) && !pop.classList.contains(ALT_OPEN_CLASS)) return;
+        if (!pop.classList.contains(OPEN_CLASS)) return;
 
         const currentParent = pop.parentNode;
         if (!backmap.has(pop)) {
@@ -4506,7 +4435,7 @@ small {
             pop = trigger.querySelector(POP_SELECTOR) || trigger.closest('.form-group')?.querySelector(POP_SELECTOR);
           }
           if (!pop) return;
-          if (pop.classList.contains(OPEN_CLASS) || pop.classList.contains(ALT_OPEN_CLASS)) {
+          if (pop.classList.contains(OPEN_CLASS)) {
             openFloating(pop, trigger);
           }
         }, 0);
@@ -4520,7 +4449,7 @@ small {
           floatingPops.forEach(restore);
         } else {
           floatingPops.forEach(pop => {
-            pop.classList.remove(OPEN_CLASS, ALT_OPEN_CLASS, FLOAT_CLASS);
+            pop.classList.remove(OPEN_CLASS, FLOAT_CLASS);
             pop.setAttribute('hidden', '');
             restore(pop);
           });
