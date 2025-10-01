@@ -11,9 +11,15 @@
   
   <!-- LCP Preload -->
   <link rel="preload" as="image"
-      href="https://images.unsplash.com/photo-1511559405634-b43d3f946ff0?q=80&w=1920&auto=format&fit=crop"
-      imagesrcset="https://images.unsplash.com/photo-1511559405634-b43d3f946ff0?q=80&w=1280&auto=format&fit=crop 1280w, https://images.unsplash.com/photo-1511559405634-b43d3f946ff0?q=80&w=1920&auto=format&fit=crop 1920w"
+      href="https://bravion.cz/wp-content/uploads/2025/08/d9fd1e7a-056d-493d-bea8-af7a2165f87a-e1759008703118.jpg"
+      imagesrcset="https://bravion.cz/wp-content/uploads/2025/08/d9fd1e7a-056d-493d-bea8-af7a2165f87a-e1759008703118.jpg 1280w, https://bravion.cz/wp-content/uploads/2025/08/d9fd1e7a-056d-493d-bea8-af7a2165f87a-e1759008703118.jpg 1920w"
       imagesizes="100vw" fetchpriority="high">
+
+  <style>
+    #preloader { display: none; }
+    .js .has-preloader #preloader { display: flex; }
+  </style>
+  <script>document.documentElement.classList.add('js');</script>
 
   <!-- Favicon & Manifest -->
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -2086,7 +2092,7 @@ small {
       max-width: min(320px, 92vw);
       max-height: calc(100vh - 24px);
       overflow: auto;
-      z-index: 2147483647;
+      z-index: 10000;
       opacity: 1;
       visibility: visible;
       transform: none;
@@ -2107,6 +2113,68 @@ small {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.3/umd/index.min.js" defer></script>
+
+  <script>
+    // A11y modal utils (trap & restore focus)
+    (() => {
+      const FOCUSABLE = 'a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])';
+      let lastOpener = null;
+
+      function openModal(overlaySel, contentSel, opener) {
+        const overlay = document.querySelector(overlaySel);
+        const modal = document.querySelector(contentSel);
+        if (!overlay || !modal) return;
+        lastOpener = opener || document.activeElement;
+        overlay.classList.add('visible');
+        document.body.classList.add('modal-open');
+
+        const focusables = modal.querySelectorAll(FOCUSABLE);
+        const first = focusables[0] || modal;
+        const last = focusables[focusables.length - 1] || modal;
+
+        function onKey(event) {
+          if (event.key === 'Escape') {
+            event.preventDefault();
+            closeModal(overlaySel, contentSel);
+          }
+          if (event.key === 'Tab' && focusables.length) {
+            if (event.shiftKey && document.activeElement === first) {
+              event.preventDefault();
+              last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+              event.preventDefault();
+              first.focus();
+            }
+          }
+        }
+
+        overlay._modalKey = onKey;
+        document.addEventListener('keydown', onKey);
+        modal.setAttribute('aria-hidden', 'false');
+        requestAnimationFrame(() => {
+          (first || modal).focus();
+        });
+      }
+
+      function closeModal(overlaySel, contentSel) {
+        const overlay = document.querySelector(overlaySel);
+        const modal = document.querySelector(contentSel);
+        if (!overlay || !modal) return;
+        overlay.classList.remove('visible');
+        document.body.classList.remove('modal-open');
+        if (overlay._modalKey) {
+          document.removeEventListener('keydown', overlay._modalKey);
+          delete overlay._modalKey;
+        }
+        modal.setAttribute('aria-hidden', 'true');
+        if (lastOpener && typeof lastOpener.focus === 'function') {
+          lastOpener.focus();
+        }
+      }
+
+      window.a11yModal = { open: openModal, close: closeModal };
+    })();
+  </script>
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -2413,21 +2481,21 @@ small {
 
       <ul class="about-values">
         <li>
-          <svg class="animated-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-6 9 6v9a3 3 0 01-3 3H6a3 3 0 01-3-3z"/></svg>
+          <svg class="animated-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-6 9 6v9a3 3 0 01-3 3H6a3 3 0 01-3-3z"/></svg>
           <div>
             <h3>Spolehlivost</h3>
             <p>Dodržujeme sjednané časy, plníme dohody a vždy přesně víte, kdo a kdy službu zajišťuje.</p>
           </div>
         </li>
         <li>
-          <svg class="animated-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <svg class="animated-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
           <div>
             <h3>Odbornost</h3>
             <p>Členové týmu procházejí pravidelným školením. Umíme řešit konfliktní situace bez zbytečného rizika.</p>
           </div>
         </li>
         <li>
-          <svg class="animated-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10a8 8 0 10-16 0c0 6 8 10 8 10z"/></svg>
+          <svg class="animated-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10a8 8 0 10-16 0c0 6 8 10 8 10z"/></svg>
           <div>
             <h3>Pojištění 5 mil. Kč</h3>
             <p>Máme sjednané pojištění odpovědnosti, aby byl krytý i neočekávaný problém.</p>
@@ -2551,7 +2619,7 @@ small {
         <div class="service-card-image-content">
           <img loading="lazy" width="600" height="400" src="https://bravion.cz/wp-content/uploads/2025/08/9270db9022017edf3e8b2a8942561aea.jpeg" alt="Zajištění bezpečnosti na veřejných akcích" class="service-card-bg">
           <div class="service-card-content">
-            <svg class="service-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+            <svg class="service-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
             <h3>Event security</h3>
             <p>Bezpečné zajištění koncertů, festivalů a firemních akcí v Brně i po celé ČR.</p>
           </div>
@@ -2570,7 +2638,7 @@ small {
         <div class="service-card-image-content">
           <img loading="lazy" width="600" height="400" src="https://bravion.cz/wp-content/uploads/2025/09/bariyer-ve-otomatik-gecis-sistemleri-5.jpeg" alt="Fyzická ostraha objektů" class="service-card-bg">
           <div class="service-card-content">
-            <svg class="service-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21M3 3h18M3 7.5h18M3 12h18m-4.5 9v-6.75a2.25 2.25 0 00-2.25-2.25h-1.5a2.25 2.25 0 00-2.25 2.25V21" /></svg>
+            <svg class="service-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21M3 3h18M3 7.5h18M3 12h18m-4.5 9v-6.75a2.25 2.25 0 00-2.25-2.25h-1.5a2.25 2.25 0 00-2.25 2.25V21" /></svg>
             <h3>Ostraha majetku</h3>
             <p>Stálý dohled nad objekty, sklady, stavbami a dalšími prostory.</p>
           </div>
@@ -2589,7 +2657,7 @@ small {
         <div class="service-card-image-content">
           <img loading="lazy" width="600" height="400" src="https://bravion.cz/wp-content/uploads/2025/05/S.Ntry500x600px8.png" alt="Diskrétní osobní ochrana" class="service-card-bg">
           <div class="service-card-content">
-            <svg class="service-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <svg class="service-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
             <h3>Osobní ochrana</h3>
             <p>Diskrétní doprovod a ochrana pro jednotlivce i rodiny, včetně řidiče-bodyguarda.</p>
           </div>
@@ -2608,7 +2676,7 @@ small {
         <div class="service-card-image-content">
           <img loading="lazy" width="600" height="400" src="https://bravion.cz/wp-content/uploads/2025/09/stahnout-1-1-scaled-e1758999228345.png" alt="Zabezpečení sportovních utkání" class="service-card-bg">
           <div class="service-card-content">
-            <svg class="service-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.324l5.584.427a.563.563 0 01.31.958l-4.232 3.873a.563.563 0 00-.182.557l1.258 5.385a.563.563 0 01-.815.61l-5.076-2.884a.563.563 0 00-.58 0L4.482 21.44a.563.563 0 01-.815-.61l1.258-5.385a.563.563 0 00-.182-.557l-4.232-3.873a.563.563 0 01.31-.958l5.584-.427a.563.563 0 00.475-.324L11.48 3.5z" /></svg>
+            <svg class="service-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.324l5.584.427a.563.563 0 01.31.958l-4.232 3.873a.563.563 0 00-.182.557l1.258 5.385a.563.563 0 01-.815.61l-5.076-2.884a.563.563 0 00-.58 0L4.482 21.44a.563.563 0 01-.815-.61l1.258-5.385a.563.563 0 00-.182-.557l-4.232-3.873a.563.563 0 01.31-.958l5.584-.427a.563.563 0 00.475-.324L11.48 3.5z" /></svg>
             <h3>Sportovní akce</h3>
             <p>Kompletní pořadatelská služba a bezpečné sektory pro fanoušky i hráče.</p>
           </div>
@@ -2627,7 +2695,7 @@ small {
         <div class="service-card-image-content">
           <img loading="lazy" width="600" height="400" src="https://bravion.cz/wp-content/uploads/2025/09/sec-800-x-800-px-700-x-800-px-600-x-800-px-800-x-200-px-200-x-200-px-200-x-200-px.png" alt="Ostraha nočních podniků" class="service-card-bg">
           <div class="service-card-content">
-            <svg class="service-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 10.5V6.75a4.5 4.5 0 00-4.5-4.5h-5.25a4.5 4.5 0 00-4.5 4.5v3.75m14.25 0v4.5a4.5 4.5 0 01-4.5-4.5h-5.25a4.5 4.5 0 01-4.5-4.5v-4.5m14.25 0h-14.25" /></svg>
+            <svg class="service-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 10.5V6.75a4.5 4.5 0 00-4.5-4.5h-5.25a4.5 4.5 0 00-4.5 4.5v3.75m14.25 0v4.5a4.5 4.5 0 01-4.5-4.5h-5.25a4.5 4.5 0 01-4.5-4.5v-4.5m14.25 0h-14.25" /></svg>
             <h3>Noční podniky</h3>
             <p>Bezpečné prostředí pro hosty i personál – prevence konfliktů a klidný provoz.</p>
           </div>
@@ -2664,24 +2732,24 @@ small {
               <p>Vyberte si oblast</p>
             </div>
             <nav id="service-nav" class="service-nav">
-              <button class="service-nav-item" data-service="object" data-bg="https://images.unsplash.com/photo-1581092446347-a8b2f1597a1d?auto=format&fit=crop&w=800&q=60">
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M54 57H10C8.89543 57 8 56.1046 8 55V15C8 13.8954 8.89543 13 10 13H54C55.1046 13 56 13.8954 56 15V55C56 56.1046 55.1046 57 54 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13V9C18 7.89543 18.8954 7 20 7H44C45.1046 7 46 7.89543 46 9V13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 23H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 33H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 43H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 23H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 33H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 43H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <button class="service-nav-item" data-service="object" data-bg="https://images.unsplash.com/photo-1581092446347-a8b2f1597a1d?auto=format&fit=crop&w=800&q=60">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M54 57H10C8.89543 57 8 56.1046 8 55V15C8 13.8954 8.89543 13 10 13H54C55.1046 13 56 13.8954 56 15V55C56 56.1046 55.1046 57 54 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13V9C18 7.89543 18.8954 7 20 7H44C45.1046 7 46 7.89543 46 9V13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 23H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 33H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 43H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 23H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 33H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 43H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Ostraha objektu</span>
               </button>
-              <button class="service-nav-item" data-service="vip" data-bg="https://images.unsplash.com/photo-1621601433342-23736822b311?auto=format&fit=crop&w=800&q=60">
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 30C37.5228 30 42 25.5228 42 20C42 14.4772 37.5228 10 32 10C26.4772 10 22 14.4772 22 20C22 25.5228 26.4772 30 32 30Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48.61 54C48.61 47.9 41.1 43 32 43C22.9 43 15.39 47.9 15.39 54" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M51 7L57 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13L13 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                 <button class="service-nav-item" data-service="vip" data-bg="https://images.unsplash.com/photo-1621601433342-23736822b311?auto=format&fit=crop&w=800&q=60">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M32 30C37.5228 30 42 25.5228 42 20C42 14.4772 37.5228 10 32 10C26.4772 10 22 14.4772 22 20C22 25.5228 26.4772 30 32 30Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48.61 54C48.61 47.9 41.1 43 32 43C22.9 43 15.39 47.9 15.39 54" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M51 7L57 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13L13 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Osobní ochrana</span>
               </button>
-              <button class="service-nav-item" data-service="event" data-bg="https://images.unsplash.com/photo-1511795409834-ef04bbd51622?auto=format&fit=crop&w=800&q=60">
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 26L32 12L50 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 32V52H46V32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 52V40C26 37.7909 27.7909 36 30 36H34C36.2091 36 38 37.7909 38 40V52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M55 42L50 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 42L14 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 30L56 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 30L8 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <button class="service-nav-item" data-service="event" data-bg="https://images.unsplash.com/photo-1511795409834-ef04bbd51622?auto=format&fit=crop&w=800&q=60">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M14 26L32 12L50 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 32V52H46V32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 52V40C26 37.7909 27.7909 36 30 36H34C36.2091 36 38 37.7909 38 40V52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M55 42L50 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 42L14 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 30L56 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 30L8 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Event security</span>
               </button>
-              <button class="service-nav-item" data-service="sport" data-bg="https://images.unsplash.com/photo-1541250848049-b9f71a6e8e88?auto=format&fit=crop&w=800&q=60">
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 57C45.8071 57 57 45.8071 57 32C57 18.1929 45.8071 7 32 7C18.1929 7 7 18.1929 7 32C7 45.8071 18.1929 57 32 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7C27.5 16.5 27.5 22.5 32 32C36.5 22.5 36.5 16.5 32 7Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M57 32C47.5 36.5 41.5 36.5 32 32C41.5 27.5 47.5 27.5 57 32Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 32H57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7V57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <button class="service-nav-item" data-service="sport" data-bg="https://images.unsplash.com/photo-1541250848049-b9f71a6e8e88?auto=format&fit=crop&w=800&q=60">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M32 57C45.8071 57 57 45.8071 57 32C57 18.1929 45.8071 7 32 7C18.1929 7 7 18.1929 7 32C7 45.8071 18.1929 57 32 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7C27.5 16.5 27.5 22.5 32 32C36.5 22.5 36.5 16.5 32 7Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M57 32C47.5 36.5 41.5 36.5 32 32C41.5 27.5 47.5 27.5 57 32Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 32H57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7V57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Sportovní utkání</span>
               </button>
-              <button class="service-nav-item" data-service="club" data-bg="https://images.unsplash.com/photo-1582220107107-590426d242c8?auto=format&fit=crop&w=800&q=60">
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 20C32 15.5817 28.4183 12 24 12C19.5817 12 16 15.5817 16 20C16 23.5 18.5 26.3 21.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48 20C48 15.5817 44.4183 12 40 12C35.5817 12 32 15.5817 32 20C32 23.5 34.5 26.3 37.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20H10C8.89543 20 8 20.8954 8 22V50C8 51.1046 8.89543 52 10 52H54C55.1046 52 56 51.1046 56 50V22C56 20.8954 55.1046 20 54 20H48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 28V38L40 43" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <button class="service-nav-item" data-service="club" data-bg="https://images.unsplash.com/photo-1582220107107-590426d242c8?auto=format&fit=crop&w=800&q=60">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M32 20C32 15.5817 28.4183 12 24 12C19.5817 12 16 15.5817 16 20C16 23.5 18.5 26.3 21.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48 20C48 15.5817 44.4183 12 40 12C35.5817 12 32 15.5817 32 20C32 23.5 34.5 26.3 37.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20H10C8.89543 20 8 20.8954 8 22V50C8 51.1046 8.89543 52 10 52H54C55.1046 52 56 51.1046 56 50V22C56 20.8954 55.1046 20 54 20H48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 28V38L40 43" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Noční podniky</span>
               </button>
             </nav>
@@ -2996,7 +3064,7 @@ small {
 
   <!-- Team Member Modal -->
   <div id="team-modal-overlay">
-      <div id="team-modal-content" role="document" aria-labelledby="modal-name" aria-describedby="modal-bio">
+      <div id="team-modal-content" role="dialog" aria-modal="true" tabindex="-1" aria-hidden="true" aria-labelledby="modal-name" aria-describedby="modal-bio">
           <button id="team-modal-close" aria-label="Zavřít detail">&times;</button>
           <div class="modal-grid">
               <img id="modal-img" src="" alt="Portrét člena týmu">
@@ -3018,10 +3086,10 @@ small {
 
   <!-- Form Success Modal -->
   <div id="form-success-overlay">
-      <div id="form-success-content" role="alertdialog" aria-labelledby="form-success-title">
+      <div id="form-success-content" role="alertdialog" aria-modal="true" tabindex="-1" aria-hidden="true" aria-labelledby="form-success-title">
           <button id="form-success-close" aria-label="Zavřít zprávu">&times;</button>
           <div class="success-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" focusable="false">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
           </div>
@@ -3035,13 +3103,17 @@ small {
     document.addEventListener('DOMContentLoaded', () => {
       const preloader = document.getElementById('preloader');
       document.body.classList.remove('loading');
+      document.documentElement.classList.remove('has-preloader');
       preloader?.classList.add('hidden');
-      // safety fallback (kdyby window.load neproběhl)
-      setTimeout(() => preloader?.classList.add('hidden'), 1500);
+      setTimeout(() => {
+        preloader?.classList.add('hidden');
+        document.documentElement.classList.remove('has-preloader');
+      }, 1500);
     });
 
     window.addEventListener('load', () => {
       gsap.registerPlugin(ScrollTrigger, TextPlugin);
+      document.documentElement.classList.remove('has-preloader');
       
       const mainContent = document.querySelector('main');
       
@@ -3097,7 +3169,10 @@ small {
       if (estimatorForm && calculatorContainer) {
         const serviceNav = document.getElementById('service-nav');
         const serviceButtons = serviceNav ? Array.from(serviceNav.querySelectorAll('.service-nav-item')) : [];
-        serviceButtons.forEach(btn => btn.setAttribute('aria-pressed', 'false'));
+        serviceButtons.forEach(btn => {
+          btn.setAttribute('aria-pressed', 'false');
+          btn.removeAttribute('aria-current');
+        });
         const btnCalculate = document.getElementById('btn-calculate');
         const steps = estimatorForm.querySelectorAll('.calculator-step');
         const fieldsContainer = document.getElementById('form-fields-container');
@@ -3126,7 +3201,7 @@ small {
           club: 'Ostraha nočních podniků'
         };
 
-        const infoIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6" opacity="0.7"/><path d="M12 16V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg>';
+      const infoIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6" opacity="0.7"/><path d="M12 16V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg>';
 
         const fieldTemplates = {
           object: `
@@ -3835,6 +3910,7 @@ small {
               serviceButtons.forEach(btn => {
                 btn.classList.remove('active');
                 btn.setAttribute('aria-pressed', 'false');
+                btn.removeAttribute('aria-current');
               });
               serviceTypeSelect.value = '';
               calculatorContainer.classList.remove('has-bg');
@@ -3863,11 +3939,17 @@ small {
               const isActive = btn === button;
               btn.classList.toggle('active', isActive);
               btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+              if (isActive) {
+                btn.setAttribute('aria-current', 'true');
+              } else {
+                btn.removeAttribute('aria-current');
+              }
             });
           } else {
             serviceButtons.forEach(btn => {
               btn.classList.remove('active');
               btn.setAttribute('aria-pressed', 'false');
+              btn.removeAttribute('aria-current');
             });
           }
           serviceTypeSelect.value = service;
@@ -3910,9 +3992,11 @@ small {
             serviceButtons.forEach(btn => {
               btn.classList.remove('active');
               btn.setAttribute('aria-pressed', 'false');
+              btn.removeAttribute('aria-current');
             });
             button.classList.add('active');
             button.setAttribute('aria-pressed', 'true');
+            button.setAttribute('aria-current', 'true');
             setService(button.dataset.service, button);
           });
           button.addEventListener('keydown', event => {
@@ -3989,7 +4073,7 @@ small {
                       document.querySelector('.cta-step--1').hidden = false;
                       document.querySelector('.cta-step--2').hidden = true;
                   }
-                  successOverlay.classList.add('visible');
+                  a11yModal.open('#form-success-overlay', '#form-success-content', submitButton);
                   submitButton.textContent = originalButtonText;
                   submitButton.disabled = false;
               } else {
@@ -4016,7 +4100,7 @@ small {
       });
 
       function closeSuccessOverlay() {
-          successOverlay.classList.remove('visible');
+          a11yModal.close('#form-success-overlay', '#form-success-content');
       }
 
       closeSuccessOverlayBtn.addEventListener('click', closeSuccessOverlay);
@@ -4050,58 +4134,87 @@ small {
       const modalCloseBtn = document.getElementById('team-modal-close');
       const modal = { img: document.getElementById('modal-img'), name: document.getElementById('modal-name'), role: document.getElementById('modal-role'), bio: document.getElementById('modal-bio'), motto: document.getElementById('modal-motto') };
 
-      document.querySelectorAll('.team-member').forEach(member => {
+      document.querySelectorAll('.team-member[role="button"]').forEach(member => {
           const openModal = () => {
               const data = teamData[member.dataset.memberId];
               modal.img.src = data.img;
-              // Use a generic alt text to protect privacy of team members
               modal.img.alt = 'Portrét člena týmu';
               modal.name.textContent = data.name;
               modal.role.textContent = data.role;
               modal.bio.textContent = data.bio;
               modal.motto.textContent = data.motto;
-              document.body.classList.add('modal-open');
-              modalOverlay.classList.add('visible');
+              a11yModal.open('#team-modal-overlay', '#team-modal-content', member);
           };
           member.addEventListener('click', openModal);
           member.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); } });
       });
 
-      const closeModal = () => {
-          document.body.classList.remove('modal-open');
-          modalOverlay.classList.remove('visible');
+      const closeTeamModal = () => {
+          a11yModal.close('#team-modal-overlay', '#team-modal-content');
       };
-      modalCloseBtn.addEventListener('click', closeModal);
-      modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-      
-      const focusSelectors='button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])';
-      modalOverlay.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
-      
-      const trapFocus=()=>{
-        const focusables=modalOverlay.querySelectorAll(focusSelectors);
-        const first=focusables[0], last=focusables[focusables.length-1];
-        modalOverlay.addEventListener('keydown',e=>{
-          if(e.key!=='Tab') return;
-          if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
-          else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
-        });
-      };
-      modalOverlay.addEventListener('transitionend',()=>{ if(modalOverlay.classList.contains('visible')){ trapFocus(); modalCloseBtn.focus(); }});
+      modalCloseBtn.addEventListener('click', closeTeamModal);
+      modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeTeamModal(); });
 
       // --- Lightbox Logic ---
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = lightbox.querySelector('img');
-      document.querySelectorAll('.gallery-item').forEach(item => {
-          item.addEventListener('click', () => {
-              lightboxImg.src = item.querySelector('img').src;
-              lightbox.classList.add('visible');
+      const lightboxItems = Array.from(document.querySelectorAll('.gallery-item img'));
+      let lightboxIndex = -1;
+      let lightboxTrigger = null;
+
+      function showLightbox(index) {
+        if (!lightboxItems.length) return;
+        lightboxIndex = (index + lightboxItems.length) % lightboxItems.length;
+        const target = lightboxItems[lightboxIndex];
+        lightboxImg.src = target.src;
+        lightboxImg.alt = target.alt || 'Zvětšený obrázek z galerie';
+        lightboxTrigger = target.closest('.gallery-item') || target;
+        lightbox.classList.add('visible');
+        lightbox.querySelector('.lightbox-close').focus();
+      }
+
+      lightboxItems.forEach((img, index) => {
+        const wrapper = img.closest('.gallery-item');
+        if (wrapper) {
+          if (!wrapper.hasAttribute('tabindex')) {
+            wrapper.setAttribute('tabindex', '0');
+          }
+          wrapper.addEventListener('click', () => showLightbox(index));
+          wrapper.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              showLightbox(index);
+            }
           });
+        } else {
+          img.addEventListener('click', () => showLightbox(index));
+        }
       });
 
-      const closeLightbox = () => lightbox.classList.remove('visible');
-      lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target.matches('.lightbox-close')) closeLightbox(); });
-      document.addEventListener('keydown', (e) => { 
-        if (e.key === 'Escape' && lightbox.classList.contains('visible')) closeLightbox();
+      const closeLightbox = () => {
+        lightbox.classList.remove('visible');
+        if (lightboxTrigger && typeof lightboxTrigger.focus === 'function') {
+          requestAnimationFrame(() => lightboxTrigger.focus());
+        }
+      };
+
+      lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox || event.target.matches('.lightbox-close')) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (!lightbox.classList.contains('visible')) return;
+        if (event.key === 'Escape') {
+          closeLightbox();
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          showLightbox(lightboxIndex + 1);
+        } else if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          showLightbox(lightboxIndex - 1);
+        }
       });
 
 
