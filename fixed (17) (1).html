@@ -1867,6 +1867,42 @@ small {
       justify-content: space-between;
     }
 
+    /* === FIX: popovery/rozbalovačky překrývá kalkulačka === */
+
+    /* 1) Interaktivním sekcím vypnout paint containment, aby nic nebylo oříznuté */
+    #calculator.section,
+    #cta.section,
+    #faq.section,
+    #services.section {
+      content-visibility: visible;
+      contain-intrinsic-size: auto;
+    }
+
+    /* 2) Kalkulačka nesmí sedět „nad vším“ */
+    #calculator,
+    #calculator .calculator-shell {
+      position: relative;
+      z-index: initial;
+    }
+
+    /* 3) Sekcím pod kalkulačkou dej vyšší prioritu, když se jejich UI rozbalí přes ni */
+    #cta { position: relative; z-index: 10; }
+    #faq { position: relative; z-index: 5; }
+
+    /* 4) Popovery uvnitř kalkulačky – jistota, že budou nad okolím a nebudou ořezané */
+    #calculator .calculator-main,
+    #calculator .calculator-steps,
+    #calculator .calculator-step,
+    #calculator .form-grid,
+    #calculator .form-group {
+      overflow: visible;
+    }
+
+    .info-small-popover,
+    .info-icon-popover {
+      z-index: 100000;
+    }
+
   </style>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
@@ -3849,6 +3885,31 @@ small {
 
       window.closeCalculatorPopovers = closeOpenPopover;
     })();
+  </script>
+  <script>
+    document.querySelectorAll('.service-toggle').forEach(btn => {
+      const id = btn.getAttribute('aria-controls');
+      const panel = document.getElementById(id);
+      if (!panel) return;
+      btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        panel.hidden = open;
+        panel.classList.toggle('is-open', !open);
+      });
+    });
+
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      const id = btn.getAttribute('aria-controls');
+      const panel = document.getElementById(id);
+      if (!panel) return;
+      btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        panel.hidden = open;
+        panel.classList.toggle('is-open', !open);
+      });
+    });
   </script>
 </body>
 </html>
