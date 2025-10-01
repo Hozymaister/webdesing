@@ -1663,11 +1663,7 @@
         z-index: -1;
         filter: blur(15px);
         opacity: 0.7;
-        animation: pulse-glow 2.5s infinite ease-in-out;
-    }
-    @keyframes pulse-glow {
-        0%, 100% { transform: scale(1); opacity: 0.7; }
-        50% { transform: scale(1.05); opacity: 1; }
+        animation: pulse-glow-cta 2.5s infinite ease-in-out;
     }
     .cta-content p { margin: 1rem auto 2rem auto; }
     
@@ -1748,6 +1744,46 @@
     /* --- General Layout & Helpers --- */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
     .section { padding: var(--section-padding) 0; position: relative; content-visibility: auto; contain-intrinsic-size: 800px; }
+
+    /* === FIX: popovery/rozbalovačky překrývá kalkulačka === */
+    #calculator.section,
+    #cta.section,
+    #faq.section,
+    #services.section {
+      content-visibility: visible;
+      contain-intrinsic-size: auto;
+    }
+
+    #calculator,
+    #calculator .calculator-shell {
+      position: relative;
+      z-index: initial;
+    }
+
+    #cta { position: relative; z-index: 10; }
+    #faq { position: relative; z-index: 5; }
+
+    #calculator .calculator-main,
+    #calculator .calculator-steps,
+    #calculator .calculator-step,
+    #calculator .form-grid,
+    #calculator .form-group {
+      overflow: visible;
+    }
+
+    .info-small-popover,
+    .info-icon-popover {
+      z-index: 100000;
+    }
+
+    /* --- ZVEDNOUT MODAL NAD PROGRESS BAR --- */
+    #team-modal-overlay { z-index: 10050; }
+
+    /* --- CTA: vlastní název animace (ať se nebije s kalkulačkou) --- */
+    @keyframes pulse-glow-cta {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.05); opacity: 1; }
+    }
     .section-transition {
       display: block;
       width: 100%;
@@ -2285,7 +2321,7 @@ small {
   </script>
 
 </head>
-<body class="loading has-preloader">
+<body class="loading">
   <a href="#main" class="skip-link">Přeskočit na hlavní obsah</a>
   <!-- Sitemap and robots.txt will be handled by the production environment. -->
   <div id="preloader">
@@ -2354,7 +2390,7 @@ small {
                 <h4>Rock for People</h4>
                 <span class="case-partner">ve spolupráci s Čechymen</span>
                 <ul>
-                 <li>Dohled nad klíčovými zónami - vstupy, stage, zázemí, pohyb návštěvníků a kordinace vozidel.</li>
+                <li>Dohled nad klíčovými zónami - vstupy, stage, zázemí, pohyb návštěvníků a koordinace vozidel.</li>
                   <li>Plánování a koordinace bezpečnostních opatření před i během akce.</li>
                   <li><strong>Výsledek:</strong> akce proběhla hladce, bez incidentů a v bezpečném prostředí.</li>
                 </ul>
@@ -2800,7 +2836,7 @@ small {
             <div class="team-grid">
                 <div class="team-member" data-member-id="1" role="button" tabindex="0" aria-label="Zobrazit detail pro Tomáš Hozák">
                     <div class="team-member-img-wrapper">
-                        <img loading="lazy" width="250" height="250" src="https://bravion.cz/wp-content/uploads/2025/08/d9fd1e7a-056d-493d-bea8-af7a2165f87a-e1758974869670.jpg" alt="Člen týmu Bravion">
+                        <img loading="lazy" width="250" height="250" src="https://bravion.cz/wp-content/uploads/2025/08/d9fd1e7a-056d-493d-bea8-af7a2165f87a-e1758974869670.jpg" alt="Tomáš Hozák – Jednatel (portrét)">
                         <div class="team-member-overlay">
                             <span>Jednatel &amp; Majitel</span>
                             <span class="plus-icon">+</span>
@@ -2811,7 +2847,7 @@ small {
                 </div>
                 <div class="team-member" data-member-id="2" role="button" tabindex="0" aria-label="Zobrazit detail pro David Hudák">
                     <div class="team-member-img-wrapper">
-                        <img loading="lazy" width="250" height="250" src="https://scontent.fprg4-1.fna.fbcdn.net/v/t1.6435-9/33806402_1642514525786041_309828400883695616_n.jpg?_nc_cat=105&amp;ccb=1-7&amp;_nc_sid=833d8c&amp;_nc_ohc=9_EABP33xyMQ7kNvwGI49gk&amp;_nc_oc=Adk81HCh0zp9qMJsIfb69kd6Ed3koBWvNngWhug9gUl6PC09BIs-HM2Nk9Q1tjK1SC0&amp;_nc_zt=23&amp;_nc_ht=scontent.fprg4-1.fna&amp;_nc_gid=Eo3UpTv6jOEPWLlPbEzAVA&amp;oh=00_AfbfhzTT0KKddfKVSJvkDcUh_j6XO7KrvX2DHjG5wlK29w&amp;oe=68FF43C1" alt="Člen týmu Bravion">
+                        <img loading="lazy" width="250" height="250" src="https://scontent.fprg4-1.fna.fbcdn.net/v/t1.6435-9/33806402_1642514525786041_309828400883695616_n.jpg?_nc_cat=105&amp;ccb=1-7&amp;_nc_sid=833d8c&amp;_nc_ohc=9_EABP33xyMQ7kNvwGI49gk&amp;_nc_oc=Adk81HCh0zp9qMJsIfb69kd6Ed3koBWvNngWhug9gUl6PC09BIs-HM2Nk9Q1tjK1SC0&amp;_nc_zt=23&amp;_nc_ht=scontent.fprg4-1.fna&amp;_nc_gid=Eo3UpTv6jOEPWLlPbEzAVA&amp;oh=00_AfbfhzTT0KKddfKVSJvkDcUh_j6XO7KrvX2DHjG5wlK29w&amp;oe=68FF43C1" alt="David Hudák – Provozní supervizor (portrét)">
                         <div class="team-member-overlay">
                             <span>Provozní Supervizor</span>
                             <span class="plus-icon">+</span>
@@ -2822,7 +2858,7 @@ small {
                 </div>
                 <div class="team-member" data-member-id="3" role="button" tabindex="0" aria-label="Zobrazit detail pro Kristýna Voksová">
                     <div class="team-member-img-wrapper">
-                        <img loading="lazy" width="250" height="250" src="https://scontent.fprg4-1.fna.fbcdn.net/v/t1.6435-9/118765242_4567164523324066_4486028877719179790_n.jpg?_nc_cat=104&amp;ccb=1-7&amp;_nc_sid=6ee11a&amp;_nc_ohc=3STTIpbQrMoQ7kNvwGmK9nV&amp;_nc_oc=AdkUySqzVJFBzKtsCLhiIVoWFPgKRyQsIYwMCB8dCSiPz4uIiPGCa0LUFYD7dKdCFBY&amp;_nc_zt=23&amp;_nc_ht=scontent.fprg4-1.fna&amp;_nc_gid=EZH7SqJhsuqIegooOSvHGg&amp;oh=00_AfYRf-YyrbXvPHrJ4AUeDIevvXhabl-1dhXTFO2cnbpZtg&amp;oe=68FF4F58" alt="Člen týmu Bravion" class="voksova-img">
+                        <img loading="lazy" width="250" height="250" src="https://scontent.fprg4-1.fna.fbcdn.net/v/t1.6435-9/118765242_4567164523324066_4486028877719179790_n.jpg?_nc_cat=104&amp;ccb=1-7&amp;_nc_sid=6ee11a&amp;_nc_ohc=3STTIpbQrMoQ7kNvwGmK9nV&amp;_nc_oc=AdkUySqzVJFBzKtsCLhiIVoWFPgKRyQsIYwMCB8dCSiPz4uIiPGCa0LUFYD7dKdCFBY&amp;_nc_zt=23&amp;_nc_ht=scontent.fprg4-1.fna&amp;_nc_gid=EZH7SqJhsuqIegooOSvHGg&amp;oh=00_AfYRf-YyrbXvPHrJ4AUeDIevvXhabl-1dhXTFO2cnbpZtg&amp;oe=68FF4F58" alt="Kristýna Voksová – HR asistentka (portrét)" class="voksova-img">
                         <div class="team-member-overlay">
                             <span>HR Asistentka</span>
                              <span class="plus-icon">+</span>
@@ -2989,1525 +3025,519 @@ small {
   </main>
 
   
-  <a href="#cta" id="sticky-cta" class="btn btn-accent" data-magnetic aria-label="Přejít na poptávkový formulář">Poptat službu</a>
-
-  <!-- Team Member Modal -->
+  <!-- Team modal -->
   <div id="team-modal-overlay" hidden>
-      <div id="team-modal-content" role="dialog" aria-modal="true" tabindex="-1" aria-hidden="true" aria-labelledby="modal-name" aria-describedby="modal-bio">
-          <button id="team-modal-close" aria-label="Zavřít detail">&times;</button>
-          <div class="modal-grid">
-              <img id="modal-img" src="" alt="Portrét člena týmu">
-              <div>
-                  <h3 id="modal-name"></h3>
-                  <p id="modal-role"></p>
-                  <p id="modal-bio"></p>
-                  <p id="modal-motto"></p>
-              </div>
-          </div>
+    <div id="team-modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name" aria-describedby="modal-bio" tabindex="-1">
+      <button id="team-modal-close" aria-label="Zavřít">×</button>
+      <div class="modal-grid">
+        <img id="modal-img" alt="Portrét člena týmu">
+        <div>
+          <h3 id="modal-name"></h3>
+          <p id="modal-role"></p>
+          <p id="modal-bio"></p>
+          <blockquote id="modal-motto"></blockquote>
+        </div>
       </div>
-  </div>
-  
-  <!-- Lightbox Container -->
-  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" hidden>
-      <button class="lightbox-close" aria-label="Zavřít galerii">&times;</button>
-      <img src="" alt="Zvětšený obrázek z galerie">
+    </div>
   </div>
 
-  <!-- Form Success Modal -->
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox-close" aria-label="Zavřít">×</button>
+    <img alt="">
+  </div>
+
+  <!-- Sticky CTA -->
+  <div id="sticky-cta" aria-hidden="true">
+    <a class="btn btn-accent" href="#cta">Nezávazně poptat</a>
+  </div>
+
+  <!-- Success overlay po odeslání formuláře -->
   <div id="form-success-overlay" hidden>
-      <div id="form-success-content" role="alertdialog" aria-modal="true" tabindex="-1" aria-hidden="true" aria-labelledby="form-success-title">
-          <button id="form-success-close" aria-label="Zavřít zprávu">&times;</button>
-          <div class="success-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" focusable="false">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-          </div>
-          <h3 id="form-success-title">Děkujeme!</h3>
-          <p>Vaše poptávka byla úspěšně odeslána. Ozveme se vám co nejdříve.</p>
-      </div>
+    <div id="form-success-content" role="alertdialog" aria-modal="true" tabindex="-1">
+      <button id="form-success-close" aria-label="Zavřít">×</button>
+      <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+      <h3>Odesláno, děkujeme!</h3>
+      <p>Ozveme se vám co nejdříve.</p>
+    </div>
   </div>
 
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const preloader = document.getElementById('preloader');
-      document.body.classList.remove('loading', 'has-preloader');
-      document.documentElement.classList.remove('has-preloader');
-      preloader?.classList.add('hidden');
-      setTimeout(() => {
-        preloader?.classList.add('hidden');
-        document.body.classList.remove('has-preloader');
-        document.documentElement.classList.remove('has-preloader');
-      }, 1500);
+/* ============ PRELOADER & BOOT ============ */
+(() => {
+  document.documentElement.classList.add('has-preloader');
+  const body = document.body;
+  const pre = document.getElementById('preloader');
+  const hide = () => {
+    pre?.classList.add('hidden');
+    body.classList.remove('loading');
+    document.documentElement.classList.remove('has-preloader');
+  };
+  window.addEventListener('load', hide);
+  setTimeout(hide, 4000);
+})();
+
+/* ============ SCROLL PROGRESS ============ */
+(() => {
+  const bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  const onScroll = () => {
+    const h = document.documentElement;
+    const sc = h.scrollTop;
+    const max = h.scrollHeight - h.clientHeight || 1;
+    const p = Math.min(1, sc / max);
+    bar.style.transform = `scaleX(${p})`;
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+/* ============ HERO – rychlá poptávka toggle ============ */
+(() => {
+  const btn = document.getElementById('quick-toggle');
+  const form = document.getElementById('quick-form');
+  if (!btn || !form) return;
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    form.classList.toggle('collapsed', open);
+  });
+})();
+
+/* ============ FAQ ACCORDION (a11y) ============ */
+(() => {
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-question');
+    const panel = item.querySelector('.faq-answer');
+    if (!q || !panel) return;
+    const close = () => { panel.classList.remove('is-open'); panel.hidden = true; q.setAttribute('aria-expanded','false'); };
+    const open  = () => { panel.hidden = false; requestAnimationFrame(() => { panel.classList.add('is-open'); }); q.setAttribute('aria-expanded','true'); };
+    close();
+    q.addEventListener('click', () => { (q.getAttribute('aria-expanded')==='true') ? close() : open(); });
+    q.addEventListener('keydown', (e) => { if (e.key==='Enter' || e.key===' ') { e.preventDefault(); q.click(); }});
+  });
+})();
+
+/* ============ SERVICES: "Co je součástí" ============ */
+(() => {
+  document.querySelectorAll('.service-toggle').forEach(btn => {
+    const id = btn.getAttribute('aria-controls');
+    const panel = document.getElementById(id);
+    if (!panel) return;
+    panel.hidden = true;
+    btn.addEventListener('click', () => {
+      const exp = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!exp));
+      panel.hidden = exp;
+      panel.classList.toggle('is-open', !exp);
+    });
+  });
+})();
+
+/* ============ GALLERY LIGHTBOX ============ */
+(() => {
+  const box = document.getElementById('lightbox');
+  if (!box) return;
+  const img = box.querySelector('img');
+  const closeBtn = box.querySelector('.lightbox-close');
+  const open = (src, alt) => {
+    img.src = src; img.alt = alt || '';
+    box.hidden = false; box.classList.add('visible');
+  };
+  const close = () => { box.classList.remove('visible'); setTimeout(()=>{ box.hidden = true; img.src=''; }, 200); };
+  document.querySelectorAll('.gallery-item img').forEach(i => {
+    i.addEventListener('click', () => open(i.src, i.alt));
+  });
+  closeBtn?.addEventListener('click', close);
+  box.addEventListener('click', (e) => { if (e.target === box) close(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && !box.hidden) close(); });
+})();
+
+/* ============ TEAM MODAL (s a11yModal utilitou) ============ */
+(() => {
+  const overlay = document.getElementById('team-modal-overlay');
+  const content = document.getElementById('team-modal-content');
+  const closeBtn = document.getElementById('team-modal-close');
+  if (!overlay || !content) return;
+
+  const members = {
+    "1": {
+      name: "Tomáš Hozák", role: "Jednatel & Majitel",
+      img: "https://bravion.cz/wp-content/uploads/2025/08/d9fd1e7a-056d-493d-bea8-af7a2165f87a-e1758974869670.jpg",
+      bio: "Zodpovědný za vedení a kvalitu služeb.", motto: "Bezpečí je o prevenci."
+    },
+    "2": { name:"David Hudák", role:"Provozní Supervizor",
+      img:"https://scontent.fprg4-1.fna.fbcdn.net/v/t1.6435-9/33806402_1642514525786041_309828400883695616_n.jpg",
+      bio:"Dohlíží na nasazení týmů a standardy.", motto:"Klidný průběh akcí je cíl."
+    },
+    "3": { name:"Kristýna Voksová", role:"HR Asistentka",
+      img:"https://scontent.fprg4-1.fna.fbcdn.net/v/t1.6435-9/118765242_4567164523324066_4486028877719179790_n.jpg",
+      bio:"Nábor, školení a podpora týmu.", motto:"Lidé dělají službu."
+    }
+  };
+
+  function fill(data){
+    document.getElementById('modal-img').src = data.img;
+    document.getElementById('modal-name').textContent = data.name;
+    document.getElementById('modal-role').textContent = data.role;
+    document.getElementById('modal-bio').textContent = data.bio;
+    document.getElementById('modal-motto').textContent = data.motto;
+  }
+
+  document.querySelectorAll('.team-member').forEach(card=>{
+    card.setAttribute('aria-haspopup','dialog');
+    card.setAttribute('aria-controls','team-modal-overlay');
+    const id = card.getAttribute('data-member-id');
+    card.addEventListener('click', ()=>{
+      if (members[id]) fill(members[id]);
+      overlay.hidden = false;
+      overlay.classList.add('visible');
+      document.body.classList.add('modal-open');
+      window.a11yModal?.open?.('#team-modal-overlay','#team-modal-content', card);
+    });
+    card.addEventListener('keydown', (e)=>{ if (e.key==='Enter' || e.key===' ') { e.preventDefault(); card.click(); }});
+  });
+
+  const close = () => {
+    window.a11yModal?.close?.('#team-modal-overlay','#team-modal-content');
+    overlay.classList.remove('visible');
+    setTimeout(()=>overlay.hidden = true, 200);
+  };
+  closeBtn?.addEventListener('click', close);
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) close(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && !overlay.hidden) close(); });
+})();
+
+/* ============ STATS – čísla na scroll ============ */
+(() => {
+  const items = document.querySelectorAll('.stat-number[data-target]');
+  if (!items.length) return;
+  const io = new IntersectionObserver((ents)=>{
+    ents.forEach(ent=>{
+      if(!ent.isIntersecting) return;
+      const el = ent.target, target = +el.dataset.target;
+      const start = performance.now(), dur = 1200;
+      const tick = (now)=>{
+        const p = Math.min(1, (now-start)/dur);
+        el.textContent = Math.round(target * (0.08 + 0.92*p));
+        if (p<1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      io.unobserve(el);
+    });
+  }, {threshold: 0.25});
+  items.forEach(i=>io.observe(i));
+})();
+
+/* ============ SERVICES NAV + KALKULAČKA skeleton ============ */
+(() => {
+  const nav = document.getElementById('service-nav');
+  const container = document.getElementById('calculator-container');
+  const step1 = document.querySelector('.calculator-step[data-step="1"]');
+  const step2 = document.querySelector('.calculator-step[data-step="2"]');
+  const step3 = document.querySelector('.calculator-step[data-step="3"]');
+  const steps = [step1, step2, step3].filter(Boolean);
+  const fill = document.querySelector('.progress-fill');
+  const marks = document.querySelectorAll('.progress-step');
+  const select = document.getElementById('service-type-select');
+  const fields = document.getElementById('form-fields-container');
+  const summary = document.getElementById('summary-panel');
+  const btnCalc = document.getElementById('btn-calculate');
+
+  function goto(n){
+    steps.forEach((s,i)=> s.classList.toggle('active', i===n-1));
+    marks.forEach((m,i)=>{
+      m.classList.toggle('is-active', i===n-1);
+      m.classList.toggle('is-complete', i<n-1);
+    });
+    if (fill && steps.length>1) fill.style.width = ( (n-1) / (steps.length-1) * 100 ) + '%';
+  }
+  goto(1);
+
+  nav?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.service-nav-item');
+    if (!btn) return;
+    nav.querySelectorAll('.service-nav-item').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+
+    const key = btn.dataset.service;
+    const bg = btn.dataset.bg;
+    if (select) select.value = key;
+    if (container && bg) {
+      container.style.setProperty('--context-bg', `url("${bg}")`);
+      container.classList.add('has-bg');
+    }
+
+    const config = {
+      object: [
+        {label:'Počet vstupů', type:'number', name:'gates', min:1, step:1, value:2, hint:'Kolik vstupních míst hlídat.'},
+        {label:'Rozsah (hod./den)', type:'number', name:'hours', min:1, step:1, value:12},
+        {label:'Rizikovost', type:'select', name:'risk', options:['Nízká','Střední','Vysoká']}
+      ],
+      event: [
+        {label:'Počet návštěvníků', type:'number', name:'visitors', min:0, step:50, value:1000},
+        {label:'Počet vstupů', type:'number', name:'gates', min:1, step:1, value:3},
+        {label:'Délka akce (h)', type:'number', name:'hours', min:1, step:1, value:8}
+      ],
+      vip: [
+        {label:'Počet osob', type:'number', name:'persons', min:1, step:1, value:1},
+        {label:'Režim', type:'select', name:'mode', options:['Doprovod','24/7 team']}
+      ],
+      sport: [
+        {label:'Kapacita stadionu', type:'number', name:'capacity', min:0, step:100, value:3000},
+        {label:'Počet sektorů', type:'number', name:'sectors', min:1, step:1, value:4}
+      ],
+      club: [
+        {label:'Kapacita klubu', type:'number', name:'cap', min:0, step:20, value:200},
+        {label:'Délka směny (h)', type:'number', name:'hours', min:1, step:1, value:10}
+      ]
+    }[key] || [];
+
+    fields.innerHTML = '';
+    config.forEach((f)=>{
+      const wrap = document.createElement('div');
+      wrap.className = 'form-group';
+      wrap.innerHTML = `
+        <div class="field-header">
+          <label class="field-label">${f.label}</label>
+          ${f.hint ? `<span class="field-note">${f.hint}</span>`:''}
+        </div>
+        ${f.type==='select'
+          ? `<select name="${f.name}">${(f.options||[]).map(o=>`<option>${o}</option>`).join('')}</select>`
+          : `<input type="${f.type}" name="${f.name}" value="${f.value??''}" ${f.min!=null?`min="${f.min}"`:''} ${f.step!=null?`step="${f.step}"`:''}>`
+        }`;
+      fields.appendChild(wrap);
     });
 
-    window.addEventListener('load', () => {
-      gsap.registerPlugin(ScrollTrigger, TextPlugin);
-      document.documentElement.classList.remove('has-preloader');
-      
-      const mainContent = document.querySelector('main');
-      
-      const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 1.2 } });
-      tl.to(mainContent, { duration: 0.5, opacity: 1 })
-        .from(".hero-content h1", { opacity: 0, y: 30 }, "-=0.3")
-        .from(".hero-subheading", { opacity: 0, y: 20 }, "-=1")
-        .from(".hero-claim", { opacity: 0, y: 20 }, "-=0.9")
-        .from(".hero-trust", { opacity: 0, y: 20 }, "-=0.9")
-        .from(".hero-quick-form", { opacity: 0, y: 20 }, "-=0.9")
-        .from(".hero-contact-quick", { opacity: 0, y: 20 }, "-=0.8");
+    summary.innerHTML = `
+      <h4>Souhrn</h4>
+      <ul>
+        <li><span class="summary-label">Služba</span><span class="summary-value">${btn.innerText.trim()}</span></li>
+        <li><span class="summary-label">Parametry</span><span class="summary-value">${config.length} položek</span></li>
+      </ul>
+      <div class="summary-highlights">
+        <span class="summary-pill">Orientační</span>
+        <span class="summary-pill">Upřesníme po kontaktu</span>
+      </div>
+    `;
 
-      if (typeof initAnimations === 'function') {
-        initAnimations();
+    if (btnCalc) {
+      btnCalc.style.display = 'inline-flex';
+      btnCalc.disabled = false;
+    }
+    goto(2);
+  });
+
+  btnCalc?.addEventListener('click', () => {
+    const form = document.getElementById('estimator-form');
+    const data = form ? Object.fromEntries(new FormData(form)) : {};
+    let people = 2;
+    if (data.visitors) people += Math.ceil(+data.visitors / 500);
+    if (data.gates) people += Math.max(0, +data.gates - 1);
+    if (data.sectors) people += Math.ceil(+data.sectors / 2);
+    if (data.cap) people += Math.ceil(+data.cap / 150);
+
+    const result = document.getElementById('result-container');
+    if (result) {
+      result.innerHTML = `
+        <div class="result-title">Orientační návrh zajištění</div>
+        <div class="result-estimate">${people} pracovníků</div>
+        <ul class="result-summary">
+          <li><span>Typ služby</span><span>${document.querySelector('.service-nav-item.active span')?.textContent || '—'}</span></li>
+          <li><span>Parametrů zadáno</span><span>${document.querySelectorAll('#form-fields-container input, #form-fields-container select').length}</span></li>
+        </ul>
+        <div class="result-insights">
+          <span class="insight-pill">Plán upřesníme</span>
+          <span class="insight-pill">Nástup do 48 h</span>
+        </div>
+        <div class="result-actions">
+          <a class="btn btn-accent" href="#cta">Nezávazně poptat</a>
+          <a class="btn btn-secondary" href="tel:+420725993462">Zavolat</a>
+        </div>
+        <p class="result-note">Výsledek je orientační. Finální návrh připravíme po krátké konzultaci.</p>
+      `;
+    }
+    goto(3);
+
+    const serviceKey = select?.value || document.querySelector('.service-nav-item.active')?.dataset.service || '';
+    const detailsJson = JSON.stringify(data);
+    if (typeof window.updateCTAFromCalculator === 'function') {
+      window.updateCTAFromCalculator(serviceKey, people, detailsJson);
+    } else {
+      const ctaEst = document.getElementById('cta-estimate-display');
+      if (ctaEst) {
+        ctaEst.textContent = `Doporučení plánovače: ~${people} pracovníků`;
+        ctaEst.removeAttribute('hidden');
       }
-
-      // --- Quick Quote Form ---
-      const qt=document.getElementById('quick-toggle'), qf=document.getElementById('quick-form');
-      if(qt && qf){ qt.addEventListener('click',()=>{ 
-        const isOpen=qf.classList.toggle('collapsed');
-        qt.setAttribute('aria-expanded', String(!isOpen));
-      });}
-
-      // --- Universal Collapsible ---
-      document.querySelectorAll('.service-toggle, .faq-question').forEach(btn=>{
-        const panel = document.getElementById(btn.getAttribute('aria-controls'));
-        if (!panel) return;
-        btn.addEventListener('click', ()=>{
-          const open = btn.getAttribute('aria-expanded') === 'true';
-          // Close all other FAQ items if it's an FAQ
-          if (btn.classList.contains('faq-question') && !open) {
-            document.querySelectorAll('.faq-question').forEach(b => {
-                const p = document.getElementById(b.getAttribute('aria-controls'));
-                b.setAttribute('aria-expanded', 'false');
-                b.classList.remove('active');
-                if (p) {
-                  p.hidden = true;
-                  p.classList.remove('is-open');
-                }
-            });
-          }
-
-          btn.setAttribute('aria-expanded', String(!open));
-          btn.classList.toggle('active', !open);
-          panel.hidden = open;
-          panel.classList.toggle('is-open', !open);
-        });
-      });
-      
-      // --- Estimator (Aurora calculator) ---
-      const estimatorForm = document.getElementById('estimator-form');
-      const calculatorContainer = document.getElementById('calculator-container');
-      if (estimatorForm && calculatorContainer) {
-        const serviceNav = document.getElementById('service-nav');
-        const serviceButtons = serviceNav ? Array.from(serviceNav.querySelectorAll('.service-nav-item')) : [];
-        serviceButtons.forEach(btn => {
-          btn.setAttribute('aria-pressed', 'false');
-          btn.removeAttribute('aria-current');
-        });
-        const btnCalculate = document.getElementById('btn-calculate');
-        const steps = estimatorForm.querySelectorAll('.calculator-step');
-        const fieldsContainer = document.getElementById('form-fields-container');
-        const summaryPanel = document.getElementById('summary-panel');
-        const resultContainer = document.getElementById('result-container');
-        const serviceTypeSelect = document.getElementById('service-type-select');
-        const step2Title = document.getElementById('step2-title');
-        const nf = new Intl.NumberFormat('cs-CZ');
-        const progress = calculatorContainer.querySelector('.calculator-progress');
-        const progressFill = progress ? progress.querySelector('.progress-fill') : null;
-        const progressSteps = progress ? Array.from(progress.querySelectorAll('.progress-step')) : [];
-        const ctaEstimateField = document.getElementById('cta-estimate');
-        const ctaDetailsField = document.getElementById('cta-details');
-        const ctaDisplay = document.getElementById('cta-estimate-display');
-        const ctaServiceSelect = document.getElementById('cta-service-select');
-
-        let currentStep = 1;
-        let lastEstimate = '';
-        updateProgress(currentStep);
-
-        const serviceLabels = {
-          object: 'Ostraha objektu',
-          vip: 'Osobní ochrana',
-          event: 'Event security',
-          sport: 'Sportovní utkání',
-          club: 'Ostraha nočních podniků'
-        };
-
-      const infoIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6" opacity="0.7"/><path d="M12 16V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/></svg>';
-
-        const fieldTemplates = {
-          object: `
-            <div class="form-group" style="animation-delay:0.1s;">
-              <div class="field-header">
-                <span class="field-label">Typ objektu</span>
-                <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak vybrat typ objektu">${infoIcon}</button>
-              </div>
-              <select name="object_type" required>
-                <option value="office">Kanceláře</option>
-                <option value="warehouse">Sklad</option>
-                <option value="construction">Stavba</option>
-                <option value="mall">Obchodní centrum</option>
-              </select>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Tip:</strong> Vyberte kategorii, která vystihuje hlavní provoz objektu. Pomůže to nastavit správný poměr stálé a mobilní ostrahy.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group slider-group" style="animation-delay:0.2s;">
-              <div class="field-header">
-                <span class="field-label">Rozloha (m²)</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak počítat rozlohu">${infoIcon}</button>
-                  <input type="number" name="area" min="50" max="50000" value="1000" required>
-                </div>
-              </div>
-              <input type="range" data-sync="area" min="50" max="50000" value="1000" step="50">
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Jak na to:</strong> Započítejte všechny střežené plochy včetně skladů, parkovišť a dočasných objektů na stavbě.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group slider-group" style="animation-delay:0.3s;">
-              <div class="field-header">
-                <span class="field-label">Počet vstupů</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak počítat vstupy">${infoIcon}</button>
-                  <input type="number" name="entrances_object" min="1" max="50" value="1" required>
-                </div>
-              </div>
-              <input type="range" data-sync="entrances_object" min="1" max="50" value="1">
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Počítejte:</strong> Každé místo, kterým prochází zaměstnanci, návštěvy nebo logistika a vyžaduje dohled (turnikety, rampy, vjezdy).</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group" style="animation-delay:0.4s;">
-              <div class="field-header">
-                <span class="field-label">Provoz</span>
-                <button type="button" class="info-chip" aria-expanded="false" aria-label="Co znamená režim provozu">${infoIcon}</button>
-              </div>
-              <select name="operation_time" required>
-                <option value="day">Denní</option>
-                <option value="247">24/7</option>
-              </select>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Vysvětlení:</strong> Denní provoz předpokládá hlídání pouze v aktivních hodinách. Volba 24/7 navyšuje směny tak, aby byl objekt pokryt i v noci.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group toggle-field" style="animation-delay:0.5s;">
-              <div class="field-header">
-                <span class="field-label">Kamerový systém</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak pracujeme s CCTV">${infoIcon}</button>
-                  <input type="checkbox" name="cctv">
-                </div>
-              </div>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Proč se ptáme:</strong> Funkční a monitorovaný CCTV umožňuje část práce delegovat na operátory, proto může výsledný počet fyzické ostrahy mírně klesnout.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-          `,
-          vip: `
-            <div class="form-group slider-group" style="animation-delay:0.1s;">
-              <div class="field-header">
-                <span class="field-label">Počet chráněných osob</span>
-                <div class="field-tools">
-                  <input type="number" name="vip_count" min="1" max="20" value="1" required>
-                </div>
-              </div>
-              <input type="range" data-sync="vip_count" min="1" max="20" value="1">
-            </div>
-            <div class="form-group" style="animation-delay:0.2s;">
-              <div class="field-header">
-                <span class="field-label">Rizikovost</span>
-                <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak posoudit rizikovost">${infoIcon}</button>
-              </div>
-              <select name="risk_vip" required>
-                <option value="1">Nízká</option>
-                <option value="1.5">Střední</option>
-                <option value="2">Vysoká</option>
-              </select>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Jak vybírat:</strong> Střední riziko znamená veřejně známou osobu nebo napjaté obchodní vztahy. Vysoké riziko zahrnuje hrozby či mediálně sledované případy.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group" style="animation-delay:0.3s;">
-              <div class="field-header">
-                <span class="field-label">Pohyb</span>
-                <button type="button" class="info-chip" aria-expanded="false" aria-label="Co znamená režim pohybu">${infoIcon}</button>
-              </div>
-              <select name="movement" required>
-                <option value="static">Pevná lokalita</option>
-                <option value="travel">Cestování</option>
-              </select>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Poznámka:</strong> Cestování zahrnuje eskortu mezi místy, nástupy a ukončení akcí. Vyžaduje záložní tým i koordinaci s řidičem.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group toggle-field" style="animation-delay:0.4s;">
-              <div class="field-header">
-                <span class="field-label">Řidič-bodyguard</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Kdy přibrat řidiče-bodyguarda">${infoIcon}</button>
-                  <input type="checkbox" name="driver">
-                </div>
-              </div>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Doporučení:</strong> Pokud klient často cestuje autem nebo potřebuje rychlou evakuaci, kombinace řidiče a ochranky šetří čas i koordinaci.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-          `,
-          event: `
-            <div class="form-group slider-group" style="animation-delay:0.1s;">
-              <div class="field-header">
-                <span class="field-label">Očekávaný počet návštěvníků</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak odhadnout návštěvníky">${infoIcon}</button>
-                  <input type="number" name="attendees_event" min="10" max="100000" value="500" required>
-                </div>
-              </div>
-              <input type="range" data-sync="attendees_event" min="10" max="100000" value="500" step="10">
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Rada:</strong> Zahrňte i staff a dodavatele. Kapacita prostoru bývá klíčová pro stanovení minimálních limitů pořadatelské služby.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group slider-group" style="animation-delay:0.2s;">
-              <div class="field-header">
-                <span class="field-label">Trvání akce (hodiny)</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak počítat délku akce">${infoIcon}</button>
-                  <input type="number" name="duration_event" min="1" max="72" value="8" required>
-                </div>
-              </div>
-              <input type="range" data-sync="duration_event" min="1" max="72" value="8">
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Včetně:</strong> nastavení, samotného programu i odchodu návštěvníků. Nad 12 hodin se počítá druhá směna.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group" style="animation-delay:0.3s;">
-              <div class="field-header">
-                <span class="field-label">Rizikovost</span>
-                <button type="button" class="info-chip" aria-expanded="false" aria-label="Co ovlivňuje rizikovost akce">${infoIcon}</button>
-              </div>
-              <select name="risk_event" required>
-                <option value="1">Nízká</option>
-                <option value="1.3">Střední</option>
-                <option value="1.6">Vysoká</option>
-              </select>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Příklady:</strong> Střední riziko jsou veřejné akce s alkoholem či VIP hosty. Vysoké riziko počítejte u festivalů, demonstrací nebo akcí s bezpečnostní historií.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group" style="animation-delay:0.4s;">
-              <div class="field-header">
-                <span class="field-label">Prostředí</span>
-                <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak volit prostředí">${infoIcon}</button>
-              </div>
-              <select name="venue_type" required>
-                <option value="indoor">Vnitřní</option>
-                <option value="outdoor">Venkovní</option>
-              </select>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Rozdíl:</strong> Venkovní akce vyžadují více personálu na perimetr, vstupy a koordinaci pohybu davu.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group toggle-field" style="animation-delay:0.5s;">
-              <div class="field-header">
-                <span class="field-label">Podává se alkohol</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak alkohol ovlivňuje ostrahu">${infoIcon}</button>
-                  <input type="checkbox" name="alcohol">
-                </div>
-              </div>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Bezpečnost:</strong> Konzumace alkoholu zvyšuje potřebu dohledu na vstupu i ve vnitřních zónách. Zahrnujeme také kontrolu ID a řešení incidentů.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-          `,
-          sport: `
-            <div class="form-group slider-group" style="animation-delay:0.1s;">
-              <div class="field-header">
-                <span class="field-label">Očekávaný počet diváků</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak odhadnout diváky">${infoIcon}</button>
-                  <input type="number" name="attendees_sport" min="10" max="80000" value="500" required>
-                </div>
-              </div>
-              <input type="range" data-sync="attendees_sport" min="10" max="80000" value="500" step="10">
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Nezapomeňte:</strong> Uveďte i očekávané fanoušky hostů a VIP sekce. Ovlivňuje to počet pořadatelů na sektory.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group slider-group" style="animation-delay:0.2s;">
-              <div class="field-header">
-                <span class="field-label">Trvání akce (hodiny)</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak dlouho trvá utkání">${infoIcon}</button>
-                  <input type="number" name="duration_sport" min="1" max="12" value="4" required>
-                </div>
-              </div>
-              <input type="range" data-sync="duration_sport" min="1" max="12" value="4">
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Poznámka:</strong> Zahrňte i předzápasový a pozápasový servis. Nad 12 hodin automaticky vytváří druhou směnu.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group" style="animation-delay:0.3s;">
-              <div class="field-header">
-                <span class="field-label">Rizikovost</span>
-                <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak stanovit riziko utkání">${infoIcon}</button>
-              </div>
-              <select name="risk_sport" required>
-                <option value="1">Běžné</option>
-                <option value="1.5">Derby</option>
-                <option value="2">Vysoké riziko</option>
-              </select>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Derby:</strong> Tradiční rivalita či riziko potyček. Vysoké riziko zahrnuje mezinárodní zápasy nebo disciplinární opatření z minulosti.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group toggle-field" style="animation-delay:0.4s;">
-              <div class="field-header">
-                <span class="field-label">Oddělený sektor hostů</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Co znamená oddělený sektor">${infoIcon}</button>
-                  <input type="checkbox" name="guest_sector">
-                </div>
-              </div>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Organizace:</strong> Oddělené sektory vyžadují samostatné vstupy, doprovod a koordinaci při přesunech fanoušků.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-          `,
-          club: `
-            <div class="form-group slider-group" style="animation-delay:0.1s;">
-              <div class="field-header">
-                <span class="field-label">Kapacita podniku</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak určit kapacitu">${infoIcon}</button>
-                  <input type="number" name="club_capacity" min="20" max="2000" value="150" required>
-                </div>
-              </div>
-              <input type="range" data-sync="club_capacity" min="20" max="2000" value="150" step="10">
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Kapacita:</strong> Vyjděte z maximálního počtu hostů dle kolaudačního rozhodnutí včetně personálu.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group slider-group" style="animation-delay:0.2s;">
-              <div class="field-header">
-                <span class="field-label">Počet vstupů</span>
-                <div class="field-tools">
-                  <button type="button" class="info-chip" aria-expanded="false" aria-label="Vstupy a kontroly">${infoIcon}</button>
-                  <input type="number" name="entrances_club" min="1" max="10" value="1" required>
-                </div>
-              </div>
-              <input type="range" data-sync="entrances_club" min="1" max="10" value="1">
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Co zahrnout:</strong> Hlavní vstup, boční vchody i VIP zóny. Každý vstup vyžaduje minimálně dva pracovníky.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-            <div class="form-group" style="animation-delay:0.3s;">
-              <div class="field-header">
-                <span class="field-label">Rizikovost lokality</span>
-                <button type="button" class="info-chip" aria-expanded="false" aria-label="Jak posoudit lokalitu">${infoIcon}</button>
-              </div>
-              <select name="risk_club" required>
-                <option value="1">Nízká</option>
-                <option value="1.3">Střední</option>
-                <option value="1.6">Vysoká</option>
-              </select>
-              <div class="info-popover" hidden role="tooltip">
-                <p><strong>Kritéria:</strong> Historie incidentů, okolní podniky a noční provoz v lokalitě. Vyšší riziko zvyšuje doporučený počet pracovníků.</p>
-                <button type="button" class="close-popover" aria-label="Zavřít">Rozumím</button>
-              </div>
-            </div>
-          `
-        };
-
-        function renderDefaultSummary() {
-          if (!summaryPanel) return;
-          summaryPanel.innerHTML = `
-            <h4>Souhrn</h4>
-            <p>Vyberte službu a doplňte parametry. Jakmile budete formulář upravovat, zobrazí se zde orientační přehled.</p>
-            <ul>
-              <li><span class="summary-label">Služba</span><span class="summary-value">—</span></li>
-              <li><span class="summary-label">Parametry</span><span class="summary-value">—</span></li>
-            </ul>
-            <div class="summary-highlights" aria-hidden="true">
-              <span class="summary-pill">Průběžně aktualizováno</span>
-            </div>
-          `;
-        }
-
-        function updateProgress(step) {
-          if (!progress || !progressSteps.length) return;
-          const total = progressSteps.length;
-          const ratio = total > 1 ? ((step - 1) / (total - 1)) * 100 : 0;
-          if (progressFill) {
-            const clamped = Math.min(100, Math.max(0, ratio));
-            progressFill.style.width = `${clamped}%`;
-          }
-          progressSteps.forEach(stepEl => {
-            const stepNumber = Number(stepEl.dataset.step);
-            stepEl.classList.toggle('is-active', stepNumber === step);
-            stepEl.classList.toggle('is-complete', stepNumber < step);
-          });
-        }
-
-        function goToStep(step) {
-          currentStep = step;
-          steps.forEach(stepEl => {
-            const matches = Number(stepEl.dataset.step) === currentStep;
-            stepEl.classList.toggle('active', matches);
-          });
-          if (btnCalculate) {
-            btnCalculate.style.display = currentStep === 2 ? 'inline-flex' : 'none';
-          }
-          updateProgress(currentStep);
-        }
-
-        function getSelectText(name) {
-          const el = fieldsContainer ? fieldsContainer.querySelector(`[name="${name}"]`) : null;
-          if (el && el instanceof HTMLSelectElement && el.selectedIndex >= 0) {
-            return el.options[el.selectedIndex].textContent.trim();
-          }
-          return '—';
-        }
-
-        function buildSummary(service, fd) {
-          const items = [];
-          switch (service) {
-            case 'object': {
-              const area = Number(fd.get('area') || 0);
-              const entrances = Number(fd.get('entrances_object') || 0);
-              items.push({ label: 'Typ objektu', value: getSelectText('object_type'), field: 'object_type' });
-              items.push({ label: 'Rozloha', value: area ? `${nf.format(area)} m²` : '—', field: 'area' });
-              items.push({ label: 'Vstupy', value: entrances ? nf.format(entrances) : '—', field: 'entrances_object' });
-              const operation = fd.get('operation_time') === '247' ? '24/7' : 'Denní';
-              items.push({ label: 'Provoz', value: operation, field: 'operation_time' });
-              items.push({ label: 'Kamerový systém', value: fd.has('cctv') ? 'Ano' : 'Ne', field: 'cctv' });
-              break;
-            }
-            case 'vip': {
-              const count = Number(fd.get('vip_count') || 0);
-              const risk = fd.get('risk_vip');
-              const riskText = risk === '2' ? 'Vysoká' : risk === '1.5' ? 'Střední' : 'Nízká';
-              items.push({ label: 'Počet osob', value: count ? nf.format(count) : '—', field: 'vip_count' });
-              items.push({ label: 'Rizikovost', value: riskText, field: 'risk_vip' });
-              items.push({ label: 'Pohyb', value: fd.get('movement') === 'travel' ? 'Cestování' : 'Pevná lokalita', field: 'movement' });
-              items.push({ label: 'Řidič-bodyguard', value: fd.has('driver') ? 'Ano' : 'Ne', field: 'driver' });
-              break;
-            }
-            case 'event': {
-              const attendees = Number(fd.get('attendees_event') || 0);
-              const duration = Number(fd.get('duration_event') || 0);
-              const risk = fd.get('risk_event');
-              const riskText = risk === '1.6' ? 'Vysoká' : risk === '1.3' ? 'Střední' : 'Nízká';
-              items.push({ label: 'Návštěvníci', value: attendees ? nf.format(attendees) : '—', field: 'attendees_event' });
-              items.push({ label: 'Délka', value: duration ? `${nf.format(duration)} h` : '—', field: 'duration_event' });
-              items.push({ label: 'Prostředí', value: fd.get('venue_type') === 'outdoor' ? 'Venkovní' : 'Vnitřní', field: 'venue_type' });
-              items.push({ label: 'Riziko', value: riskText, field: 'risk_event' });
-              items.push({ label: 'Alkohol', value: fd.has('alcohol') ? 'Ano' : 'Ne', field: 'alcohol' });
-              break;
-            }
-            case 'sport': {
-              const spectators = Number(fd.get('attendees_sport') || 0);
-              const duration = Number(fd.get('duration_sport') || 0);
-              const risk = fd.get('risk_sport');
-              const riskText = risk === '2' ? 'Vysoké' : risk === '1.5' ? 'Derby' : 'Běžné';
-              items.push({ label: 'Diváci', value: spectators ? nf.format(spectators) : '—', field: 'attendees_sport' });
-              items.push({ label: 'Délka', value: duration ? `${nf.format(duration)} h` : '—', field: 'duration_sport' });
-              items.push({ label: 'Riziko', value: riskText, field: 'risk_sport' });
-              items.push({ label: 'Oddělený sektor hostů', value: fd.has('guest_sector') ? 'Ano' : 'Ne', field: 'guest_sector' });
-              break;
-            }
-            case 'club': {
-              const capacity = Number(fd.get('club_capacity') || 0);
-              const entrances = Number(fd.get('entrances_club') || 0);
-              const risk = fd.get('risk_club');
-              const riskText = risk === '1.6' ? 'Vysoká' : risk === '1.3' ? 'Střední' : 'Nízká';
-              items.push({ label: 'Kapacita', value: capacity ? nf.format(capacity) : '—', field: 'club_capacity' });
-              items.push({ label: 'Vstupy', value: entrances ? nf.format(entrances) : '—', field: 'entrances_club' });
-              items.push({ label: 'Riziko lokality', value: riskText, field: 'risk_club' });
-              break;
-            }
-          }
-          const detail = items.map(item => `${item.label}: ${item.value}`).join(', ');
-          return { items, detail };
-        }
-
-        function deriveInsights(service, fd) {
-          const insights = [];
-          switch (service) {
-            case 'object': {
-              const area = Number(fd.get('area') || 0);
-              const entrances = Number(fd.get('entrances_object') || 0);
-              const operation = fd.get('operation_time');
-              insights.push(operation === '247' ? 'Nepřetržitý dohled 24/7' : 'Denní režim hlídání');
-              if (area > 10000) insights.push('Rozsáhlý areál – mobilní patrola');
-              if (entrances > 4) insights.push('Více vstupů – rozdělte směnu');
-              if (fd.has('cctv')) insights.push('CCTV umožní dálkový dohled');
-              break;
-            }
-            case 'vip': {
-              const count = Number(fd.get('vip_count') || 0);
-              const risk = Number(fd.get('risk_vip') || 1);
-              if (count > 3) insights.push('Více chráněných osob – koordinátor doporučen');
-              if (risk >= 2) insights.push('Vysoké riziko – seniorní tým');
-              if (fd.get('movement') === 'travel') insights.push('Plánujte doprovod na cestách');
-              if (fd.has('driver')) insights.push('Řidič-bodyguard zahrnut');
-              break;
-            }
-            case 'event': {
-              const attendees = Number(fd.get('attendees_event') || 0);
-              const duration = Number(fd.get('duration_event') || 0);
-              if (attendees > 5000) insights.push('Velká akce – bezpečnostní manažer');
-              if (duration > 12) insights.push('Více než 12 h – plánujte střídání');
-              else if (duration > 8) insights.push('Delší akce – zvažte posily');
-              if (fd.get('venue_type') === 'outdoor') insights.push('Venkovní prostředí – kontrola perimetru');
-              if (fd.has('alcohol')) insights.push('Podávání alkoholu – posilte tým');
-              break;
-            }
-            case 'sport': {
-              const spectators = Number(fd.get('attendees_sport') || 0);
-              const duration = Number(fd.get('duration_sport') || 0);
-              const risk = Number(fd.get('risk_sport') || 1);
-              if (spectators > 10000) insights.push('Vysoce navštívené utkání');
-              if (risk >= 1.5) insights.push('Zvýšené riziko – zásahová skupina');
-              if (fd.has('guest_sector')) insights.push('Oddělený sektor hostů – dedikovaný dohled');
-              if (duration > 6) insights.push('Delší než 6 h – střídání pořadatelů');
-              break;
-            }
-            case 'club': {
-              const capacity = Number(fd.get('club_capacity') || 0);
-              const entrances = Number(fd.get('entrances_club') || 0);
-              const risk = Number(fd.get('risk_club') || 1);
-              if (capacity > 400) insights.push('Vysoká kapacita – posilte frontu');
-              if (entrances > 2) insights.push('Více vstupů – rozdělte tým');
-              if (risk > 1) insights.push('Zvýšená rizikovost lokality');
-              break;
-            }
-          }
-          return insights.filter(Boolean).slice(0, 3);
-        }
-
-        function updateSummary() {
-          if (!summaryPanel) return;
-          const service = serviceTypeSelect.value;
-          if (!service || !fieldsContainer.children.length) {
-            renderDefaultSummary();
-            return;
-          }
-          const fd = new FormData(estimatorForm);
-          const { items } = buildSummary(service, fd);
-          const insights = deriveInsights(service, fd);
-          const list = items.map(item => {
-            if (item.field) {
-              return `<li><span class="summary-label">${item.label}</span><button type="button" class="summary-value summary-value-button" data-field-target="${item.field}">${item.value}</button></li>`;
-            }
-            return `<li><span class="summary-label">${item.label}</span><span class="summary-value">${item.value}</span></li>`;
-          }).join('');
-          const serviceName = serviceLabels[service] || 'Služba';
-          const highlights = insights.length ? `<div class="summary-highlights">${insights.map(text => `<span class="summary-pill">${text}</span>`).join('')}</div>` : '';
-          summaryPanel.innerHTML = `<h4>Souhrn</h4><p>Aktualizováno pro <strong>${serviceName}</strong>.</p><ul>${list}</ul>${highlights}`;
-        }
-
-        function validateField(field) {
-          if (!field) return;
-          if (field.checkValidity()) {
-            field.classList.remove('invalid');
-          } else {
-            field.classList.add('invalid');
-          }
-        }
-
-        function validateCurrentStep() {
-          if (currentStep !== 2) return true;
-          const required = fieldsContainer.querySelectorAll('[required]');
-          const isValid = Array.from(required).every(field => field.checkValidity());
-          if (btnCalculate) {
-            btnCalculate.disabled = !isValid;
-          }
-          return isValid;
-        }
-
-        function attachFieldListeners() {
-          const inputs = fieldsContainer.querySelectorAll('input, select');
-          inputs.forEach(el => {
-            el.addEventListener('input', () => {
-              if (el.type === 'range') {
-                const numberInput = fieldsContainer.querySelector(`input[name="${el.dataset.sync}"]`);
-                if (numberInput) {
-                  numberInput.value = el.value;
-                  validateField(numberInput);
-                }
-              } else if (el.type === 'number') {
-                const rangeInput = fieldsContainer.querySelector(`input[data-sync="${el.name}"]`);
-                if (rangeInput) {
-                  rangeInput.value = el.value || rangeInput.value;
-                }
-              }
-              validateField(el);
-              validateCurrentStep();
-              updateSummary();
-            });
-            el.addEventListener('change', () => {
-              validateField(el);
-              validateCurrentStep();
-              updateSummary();
-            });
-          });
-          validateCurrentStep();
-          updateSummary();
-        }
-
-        function updateCTAEstimateDisplay() {
-          if (!lastEstimate) return;
-          if (ctaEstimateField) {
-            ctaEstimateField.value = lastEstimate;
-          }
-          if (ctaDetailsField) {
-            const parts = lastEstimate.split(' – ');
-            ctaDetailsField.value = parts.slice(1).join(' – ');
-          }
-          if (ctaDisplay) {
-            ctaDisplay.textContent = lastEstimate;
-            ctaDisplay.hidden = false;
-          }
-          const selectedService = serviceTypeSelect.value;
-          if (ctaServiceSelect && serviceLabels[selectedService]) {
-            ctaServiceSelect.value = serviceLabels[selectedService];
-          }
-        }
-
-        if (summaryPanel) {
-          summaryPanel.addEventListener('click', event => {
-            const trigger = event.target.closest('[data-field-target]');
-            if (!trigger || !fieldsContainer) return;
-            const fieldName = trigger.getAttribute('data-field-target');
-            if (!fieldName) return;
-            const targetField = fieldsContainer.querySelector(`[name="${fieldName}"]`);
-            if (!targetField) return;
-            try {
-              targetField.focus({ preventScroll: true });
-            } catch (error) {
-              targetField.focus();
-            }
-            if (typeof targetField.scrollIntoView === 'function') {
-              targetField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-            targetField.classList.add('focus-pulse');
-            window.setTimeout(() => targetField.classList.remove('focus-pulse'), 1200);
-          });
-        }
-
-        function calculateEstimate() {
-          if (!validateCurrentStep()) return;
-          window.closeCalculatorPopovers?.();
-          const fd = new FormData(estimatorForm);
-          const service = serviceTypeSelect.value;
-          let estimate = 'Nespecifikováno';
-          let summaryItems = [];
-          let detail = '';
-          let insights = [];
-
-          try {
-            switch (service) {
-              case 'object': {
-                const area = Number(fd.get('area') || 0);
-                const entrances = Number(fd.get('entrances_object') || 1);
-                const operation = fd.get('operation_time');
-                let base = (area / 2000) + entrances;
-                if (fd.has('cctv')) base *= 0.8;
-                base = Math.max(1, Math.ceil(base));
-                estimate = operation === '247'
-                  ? `${base * 2}–${base * 3} pracovníci ve směnách`
-                  : `${base}–${base + 1} pracovníci na směnu`;
-                break;
-              }
-              case 'vip': {
-                const count = Number(fd.get('vip_count') || 1);
-                const risk = Number(fd.get('risk_vip') || 1);
-                let base = Math.ceil(count * risk);
-                if (fd.get('movement') === 'travel') base += 1;
-                if (fd.has('driver')) base += 1;
-                estimate = base === 1 ? '1 bodyguard' : `${base}–${base + 1} bodyguardi`;
-                break;
-              }
-              case 'event': {
-                const attendees = Number(fd.get('attendees_event') || 0);
-                const risk = Number(fd.get('risk_event') || 1);
-                const duration = Number(fd.get('duration_event') || 8);
-                let ratio;
-                if (attendees <= 1000) ratio = 100;
-                else if (attendees <= 10000) ratio = 150;
-                else ratio = 250;
-                let base = attendees / (ratio / risk);
-                if (fd.has('alcohol')) base *= 1.25;
-                if (fd.get('venue_type') === 'outdoor') base *= 1.2;
-                const guards = Math.max(1, Math.ceil(base));
-                const supervisors = Math.max(1, Math.ceil(guards / 10));
-                const shifts = Math.max(1, Math.ceil(duration / 12));
-                const totalPerShift = guards + supervisors;
-                const shiftLabel = shifts === 1 ? '1 směna' : `${shifts} směny`;
-                estimate = `${totalPerShift} osob na směnu (${shiftLabel})`;
-                break;
-              }
-              case 'sport': {
-                const spectators = Number(fd.get('attendees_sport') || 0);
-                const risk = Number(fd.get('risk_sport') || 1);
-                const duration = Number(fd.get('duration_sport') || 4);
-                let ratio;
-                if (spectators <= 5000) ratio = 100;
-                else if (spectators <= 20000) ratio = 180;
-                else ratio = 250;
-                let base = spectators / (ratio / risk);
-                if (fd.has('guest_sector')) base += Math.ceil(base * 0.15) + 5;
-                const guards = Math.max(1, Math.ceil(base));
-                const supervisors = Math.max(1, Math.ceil(guards / 12));
-                const shifts = Math.max(1, Math.ceil(duration / 12));
-                const shiftLabel = shifts === 1 ? '1 směna' : `${shifts} směny`;
-                estimate = `${guards + supervisors} pořadatelů (${shiftLabel})`;
-                break;
-              }
-              case 'club': {
-                const capacity = Number(fd.get('club_capacity') || 0);
-                const entrances = Number(fd.get('entrances_club') || 1);
-                const risk = Number(fd.get('risk_club') || 1);
-                const ratio = 75 / risk;
-                let base = capacity / ratio + entrances;
-                const guards = Math.max(1, Math.ceil(base));
-                estimate = `${guards}–${guards + 1} pracovníci`;
-                break;
-              }
-            }
-            const summaryData = buildSummary(service, fd);
-            summaryItems = summaryData.items;
-            detail = summaryData.detail;
-            insights = deriveInsights(service, fd);
-          } catch (error) {
-            console.error('Chyba výpočtu:', error);
-            estimate = 'Chyba';
-            detail = 'Při výpočtu nastala chyba.';
-          }
-
-          const summaryList = summaryItems.length
-            ? summaryItems.map(item => `<li><span>${item.label}</span><span>${item.value}</span></li>`).join('')
-            : '<li><span>Parametry</span><span>—</span></li>';
-          const insightMarkup = insights.length
-            ? `<div class="result-insights">${insights.map(text => `<span class="insight-pill">${text}</span>`).join('')}</div>`
-            : '';
-
-          resultContainer.innerHTML = `
-            <div class="result-title">Doporučený počet</div>
-            <div class="result-estimate">${estimate}</div>
-            ${insightMarkup}
-            <ul class="result-summary">${summaryList}</ul>
-            <div class="result-actions">
-              <a href="#cta" class="calc-btn calc-btn-primary" id="estimator-cta">Poptat službu</a>
-              <button type="button" class="calc-btn calc-btn-secondary" id="estimator-reset">Zpět na výběr služeb</button>
-            </div>
-            <p class="result-note">Toto je pouze orientační odhad. Pro přesnou nabídku nás prosím kontaktujte.</p>
-          `;
-
-          lastEstimate = detail ? `${estimate} – ${detail}` : estimate;
-          updateCTAEstimateDisplay();
-          goToStep(3);
-
-          const ctaBtn = resultContainer.querySelector('#estimator-cta');
-          if (ctaBtn) {
-            ctaBtn.addEventListener('click', updateCTAEstimateDisplay);
-          }
-          const resetBtn = resultContainer.querySelector('#estimator-reset');
-          if (resetBtn) {
-            resetBtn.addEventListener('click', () => {
-              window.closeCalculatorPopovers?.();
-              estimatorForm.reset();
-              fieldsContainer.innerHTML = '';
-              serviceButtons.forEach(btn => {
-                btn.classList.remove('active');
-                btn.setAttribute('aria-pressed', 'false');
-                btn.removeAttribute('aria-current');
-              });
-              serviceTypeSelect.value = '';
-              calculatorContainer.classList.remove('has-bg');
-              calculatorContainer.style.removeProperty('--context-bg');
-              renderDefaultSummary();
-              if (btnCalculate) {
-                btnCalculate.style.display = 'none';
-                btnCalculate.disabled = true;
-              }
-              if (ctaDisplay) {
-                ctaDisplay.hidden = true;
-              }
-              lastEstimate = '';
-              goToStep(1);
-            });
-          }
-        }
-
-        function setService(service, button) {
-          if (!fieldsContainer) return;
-          window.closeCalculatorPopovers?.();
-          estimatorForm.reset();
-          fieldsContainer.innerHTML = fieldTemplates[service] || '';
-          if (button) {
-            serviceButtons.forEach(btn => {
-              const isActive = btn === button;
-              btn.classList.toggle('active', isActive);
-              btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-              if (isActive) {
-                btn.setAttribute('aria-current', 'true');
-              } else {
-                btn.removeAttribute('aria-current');
-              }
-            });
-          } else {
-            serviceButtons.forEach(btn => {
-              btn.classList.remove('active');
-              btn.setAttribute('aria-pressed', 'false');
-              btn.removeAttribute('aria-current');
-            });
-          }
-          serviceTypeSelect.value = service;
-          step2Title.textContent = serviceLabels[service] || 'Specifikace služby';
-          if (button && button.dataset.bg) {
-            calculatorContainer.style.setProperty('--context-bg', `url(${button.dataset.bg})`);
-            calculatorContainer.classList.add('has-bg');
-          } else {
-            calculatorContainer.style.removeProperty('--context-bg');
-            calculatorContainer.classList.remove('has-bg');
-          }
-          attachFieldListeners();
-          const firstField = fieldsContainer.querySelector('input, select, textarea');
-          if (firstField) {
-            window.requestAnimationFrame(() => {
-              try {
-                firstField.focus({ preventScroll: true });
-              } catch (error) {
-                firstField.focus();
-              }
-              firstField.classList.add('focus-pulse');
-              window.setTimeout(() => firstField.classList.remove('focus-pulse'), 1200);
-            });
-          }
-          goToStep(2);
-          lastEstimate = '';
-          if (ctaDisplay) {
-            ctaDisplay.hidden = true;
-          }
-          if (ctaEstimateField) {
-            ctaEstimateField.value = '';
-          }
-          if (ctaDetailsField) {
-            ctaDetailsField.value = '';
-          }
-        }
-
-        serviceButtons.forEach((button, index) => {
-          button.addEventListener('click', () => {
-            serviceButtons.forEach(btn => {
-              btn.classList.remove('active');
-              btn.setAttribute('aria-pressed', 'false');
-              btn.removeAttribute('aria-current');
-            });
-            button.classList.add('active');
-            button.setAttribute('aria-pressed', 'true');
-            button.setAttribute('aria-current', 'true');
-            setService(button.dataset.service, button);
-          });
-          button.addEventListener('keydown', event => {
-            if (!serviceButtons.length) return;
-            let targetIndex = null;
-            switch (event.key) {
-              case 'ArrowRight':
-              case 'ArrowDown':
-                targetIndex = (index + 1) % serviceButtons.length;
-                break;
-              case 'ArrowLeft':
-              case 'ArrowUp':
-                targetIndex = (index - 1 + serviceButtons.length) % serviceButtons.length;
-                break;
-              case 'Home':
-                targetIndex = 0;
-                break;
-              case 'End':
-                targetIndex = serviceButtons.length - 1;
-                break;
-              case ' ':
-              case 'Enter':
-                if (!button.classList.contains('active')) {
-                  event.preventDefault();
-                  button.click();
-                }
-                return;
-              default:
-                return;
-            }
-            if (targetIndex !== null) {
-              event.preventDefault();
-              serviceButtons[targetIndex].focus();
-            }
-          });
-        });
-
-        if (btnCalculate) {
-          btnCalculate.addEventListener('click', calculateEstimate);
-        }
-
-        renderDefaultSummary();
-      }
-
-// --- AJAX Form Submission ---
-      const allForms = document.querySelectorAll('form[action*="formspree.io"]');
-      const successOverlay = document.getElementById('form-success-overlay');
-      const closeSuccessOverlayBtn = document.getElementById('form-success-close');
-
-      async function handleFormSubmit(event) {
-          event.preventDefault();
-          const form = event.target;
-          const data = new FormData(form);
-          const submitButton = form.querySelector('button[type="submit"]');
-          const originalButtonText = submitButton.textContent;
-
-          submitButton.textContent = 'Odesílám...';
-          submitButton.disabled = true;
-
-          try {
-              const response = await fetch(form.action, {
-                  method: form.method,
-                  body: data,
-                  headers: { 'Accept': 'application/json' }
-              });
-
-              if (response.ok) {
-                  form.reset();
-                  if (form.id === 'quick-form') {
-                      document.getElementById('quick-form').classList.add('collapsed');
-                      document.getElementById('quick-toggle').setAttribute('aria-expanded', 'false');
-                  }
-                  if (form.id === 'cta-form') {
-                      document.querySelector('.cta-step--1').hidden = false;
-                      document.querySelector('.cta-step--2').hidden = true;
-                  }
-                  a11yModal.open('#form-success-overlay', '#form-success-content', submitButton);
-                  submitButton.textContent = originalButtonText;
-                  submitButton.disabled = false;
-              } else {
-                  const responseData = await response.json();
-                  console.error('Form submission error:', responseData);
-                  submitButton.textContent = 'Chyba, zkuste znovu';
-                  setTimeout(() => {
-                      submitButton.textContent = originalButtonText;
-                      submitButton.disabled = false;
-                  }, 3000);
-              }
-          } catch (error) {
-              console.error('Network or other error:', error);
-              submitButton.textContent = 'Chyba sítě';
-              setTimeout(() => {
-                  submitButton.textContent = originalButtonText;
-                  submitButton.disabled = false;
-              }, 3000);
-          }
-      }
-
-      allForms.forEach(form => {
-          form.addEventListener('submit', handleFormSubmit);
-      });
-
-      function closeSuccessOverlay() {
-          a11yModal.close('#form-success-overlay', '#form-success-content');
-      }
-
-      closeSuccessOverlayBtn.addEventListener('click', closeSuccessOverlay);
-      successOverlay.addEventListener('click', (e) => {
-          if (e.target === successOverlay) {
-              closeSuccessOverlay();
-          }
-      });
-      document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && successOverlay.classList.contains('visible')) {
-              closeSuccessOverlay();
-          }
-      });
-
-
-      // --- CTA 2-step form ---
-      const next=document.getElementById('cta-next'), prev=document.getElementById('cta-prev');if(next && prev){
-        const s1=document.querySelector('.cta-step--1'), s2=document.querySelector('.cta-step--2');
-        next.addEventListener('click',()=>{ s1.hidden=true; s2.hidden=false; });
-        prev.addEventListener('click',()=>{ s2.hidden=true; s1.hidden=false; });
-      }
-
-      // --- Team Modal Logic ---
-      const teamData = {
-        '1': { name: 'Tomáš Hozák', role: 'Jednatel & Majitel', img: 'https://bravion.cz/wp-content/uploads/2025/08/d9fd1e7a-056d-493d-bea8-af7a2165f87a-e1758974869670.jpg', bio: 'Bravion vznikl, protože v bezpečnosti rozhodují detaily a odpovědnost. Chtěli jsme službu, která plánuje, vede a vyhodnocuje bez mezer – a klient přesně ví, kdo ručí za výsledek.', motto: '“Bezpečnost není produkt, je to proces. A my ho dotahujeme k dokonalosti.”' },
-        '2': { name: 'David Hudák', role: 'Provozní Supervizor', img: 'https://scontent.fprg4-1.fna.fbcdn.net/v/t1.6435-9/33806402_1642514525786041_309828400883695616_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_ohc=9_EABP33xyMQ7kNvwGI49gk&_nc_oc=Adk81HCh0zp9qMJsIfb69kd6Ed3koBWvNngWhug9gUl6PC09BIs-HM2Nk9Q1tjK1SC0&_nc_zt=23&_nc_ht=scontent.fprg4-1.fna&_nc_gid=Eo3UpTv6jOEPWLlPbEzAVA&oh=00_AfbfhzTT0KKddfKVSJvkDcUh_j6XO7KrvX2DHjG5wlK29w&oe=68FF43C1', bio: 'David je profesionální zápasník, který se naučil zvládat tlak i v těch nejnáročnějších situacích. Díky tomu je přirozeně trénovaný k deeskalaci konfliktů a dokáže udržet klid tam, kde by ostatní ztráceli nervy.', motto: '“Síla není v konfliktu, ale v jeho předcházení.”' },
-        '3': { name: 'Kristýna Voksová', role: 'HR Asistentka', img: 'https://scontent.fprg4-1.fna.fbcdn.net/v/t1.6435-9/118765242_4567164523324066_4486028877719179790_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=3STTIpbQrMoQ7kNvwGmK9nV&_nc_oc=AdkUySqzVJFBzKtsCLhiIVoWFPgKRyQsIYwMCB8dCSiPz4uIiPGCa0LUFYD7dKdCFBY&_nc_zt=23&_nc_ht=scontent.fprg4-1.fna&_nc_gid=EZH7SqJhsuqIegooOSvHGg&oh=00_AfYRf-YyrbXvPHrJ4AUeDIevvXhabl-1dhXTFO2cnbpZtg&oe=68FF4F58', bio: 'Kristýna vybírá a drží kvalitu našeho týmu. Díky ní má Bravion jistotu, že každý člen je prověřený a spolehlivý.', motto: '“Nejsilnějším článkem bezpečnosti je kvalitní a spokojený člověk.”' }
-      };
-
-      const modalOverlay = document.getElementById('team-modal-overlay');
-      const modalCloseBtn = document.getElementById('team-modal-close');
-      const modal = { img: document.getElementById('modal-img'), name: document.getElementById('modal-name'), role: document.getElementById('modal-role'), bio: document.getElementById('modal-bio'), motto: document.getElementById('modal-motto') };
-
-      document.querySelectorAll('.team-member[role="button"]').forEach(member => {
-          const openModal = () => {
-              const data = teamData[member.dataset.memberId];
-              modal.img.src = data.img;
-              modal.img.alt = 'Portrét člena týmu';
-              modal.name.textContent = data.name;
-              modal.role.textContent = data.role;
-              modal.bio.textContent = data.bio;
-              modal.motto.textContent = data.motto;
-              a11yModal.open('#team-modal-overlay', '#team-modal-content', member);
-          };
-          member.addEventListener('click', openModal);
-          member.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); } });
-      });
-
-      const closeTeamModal = () => {
-          a11yModal.close('#team-modal-overlay', '#team-modal-content');
-      };
-      modalCloseBtn.addEventListener('click', closeTeamModal);
-      modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeTeamModal(); });
-
-      // --- Lightbox Logic ---
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = lightbox.querySelector('img');
-      const lightboxItems = Array.from(document.querySelectorAll('.gallery-item img'));
-      let lightboxIndex = -1;
-      let lightboxTrigger = null;
-
-      function showLightbox(index) {
-        if (!lightboxItems.length) return;
-        lightboxIndex = (index + lightboxItems.length) % lightboxItems.length;
-        const target = lightboxItems[lightboxIndex];
-        lightboxImg.src = target.src;
-        lightboxImg.alt = target.alt || 'Zvětšený obrázek z galerie';
-        lightboxTrigger = target.closest('.gallery-item') || target;
-        lightbox.classList.add('visible');
-        lightbox.querySelector('.lightbox-close').focus();
-      }
-
-      lightboxItems.forEach((img, index) => {
-        const wrapper = img.closest('.gallery-item');
-        if (wrapper) {
-          if (!wrapper.hasAttribute('tabindex')) {
-            wrapper.setAttribute('tabindex', '0');
-          }
-          wrapper.addEventListener('click', () => showLightbox(index));
-          wrapper.addEventListener('keydown', event => {
-            if (event.key === 'Enter' || event.key === ' ') {
-              event.preventDefault();
-              showLightbox(index);
-            }
-          });
-        } else {
-          img.addEventListener('click', () => showLightbox(index));
-        }
-      });
-
-      const closeLightbox = () => {
-        lightbox.classList.remove('visible');
-        if (lightboxTrigger && typeof lightboxTrigger.focus === 'function') {
-          requestAnimationFrame(() => lightboxTrigger.focus());
-        }
-      };
-
-      lightbox.addEventListener('click', (event) => {
-        if (event.target === lightbox || event.target.matches('.lightbox-close')) {
-          closeLightbox();
-        }
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if (!lightbox.classList.contains('visible')) return;
-        if (event.key === 'Escape') {
-          closeLightbox();
-        } else if (event.key === 'ArrowRight') {
-          event.preventDefault();
-          showLightbox(lightboxIndex + 1);
-        } else if (event.key === 'ArrowLeft') {
-          event.preventDefault();
-          showLightbox(lightboxIndex - 1);
-        }
-      });
-
-
-      function initAnimations() {
-        // Respect user preference for reduced motion. If the user has requested reduced motion,
-        // skip running heavy animations entirely. This helps users who experience discomfort
-        // with excessive animations and aligns with accessibility best practices.
-        try {
-          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            return;
-          }
-        } catch (e) {
-          // If matchMedia is not supported, continue with animations.
-        }
-        
-        ScrollTrigger.create({
-            trigger: '#hero', start: 'bottom center',
-            onEnter: () => document.getElementById('sticky-cta').classList.add('visible'),
-            onLeaveBack: () => document.getElementById('sticky-cta').classList.remove('visible')
-        });
-
-        gsap.to("#scroll-progress", { scaleX: 1, ease: "none", scrollTrigger: { scrub: 0.3 } });
-
-        const aura = document.getElementById('cursor-aura');
-        window.addEventListener('mousemove', e => gsap.to(aura, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power2.out' }));
-
-        gsap.utils.toArray('[data-magnetic]').forEach(el => {
-            const xTo = gsap.quickTo(el, "x", { duration: 1, ease: "elastic.out(1, 0.3)" });
-            const yTo = gsap.quickTo(el, "y", { duration: 1, ease: "elastic.out(1, 0.3)" });
-            el.addEventListener("mousemove", e => {
-                const { clientX, clientY } = e, { height, width, left, top } = el.getBoundingClientRect();
-                xTo((clientX - (left + width / 2)) * 0.3);
-                yTo((clientY - (top + height / 2)) * 0.3);
-            });
-            el.addEventListener("mouseleave", () => { xTo(0); yTo(0); });
-        });
-        
-        const statsBg = document.querySelector('.stats-bg-animated');
-        let particles = '';
-        for(let i=0; i<30; i++) particles += `<circle cx="${Math.random()*100}%" cy="${Math.random()*100}%" r="${Math.random()*1.5+0.5}" fill="var(--brand-accent)" opacity="0.3" />`;
-        statsBg.innerHTML = particles;
-        gsap.utils.toArray('.stats-bg-animated circle').forEach(c => gsap.to(c, { y:gsap.utils.random(-20,20), x:gsap.utils.random(-20,20), duration:gsap.utils.random(3,6), ease:'sine.inOut', repeat:-1, yoyo:true, }));
-
-        const path = document.getElementById('process-line-path');
-        if (path) {
-          const len = path.getTotalLength();
-          path.style.strokeDasharray = `${len}`;
-          path.style.strokeDashoffset = `${len}`;
-          ScrollTrigger.create({
-            trigger: "#process", start: "top 200%", end: "bottom top", scrub: 1,
-            onUpdate: self => path.style.strokeDashoffset = `${(1 - self.progress) * len}`
-          });
-        }
-        
-        gsap.to('.about-image', { yPercent: -10, ease: 'none', scrollTrigger: { trigger: '.about-grid', start: 'top bottom', end: 'bottom top', scrub: true } });
-        
-        gsap.to("#hero-bg-img", { scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true }, scale: 1.2 });
-        
-        document.querySelectorAll('[data-tilt]').forEach(el => {
-          el.addEventListener('mousemove', (e) => {
-            const { left, top, width, height } = el.getBoundingClientRect();
-            gsap.to(el, { duration: 0.8, rotationY: ((e.clientX - left) / width - 0.5) * 15, rotationX: -((e.clientY - top) / height - 0.5) * 15, transformPerspective: 500, ease: "power2.out" });
-          });
-          el.addEventListener('mouseleave', () => gsap.to(el, { duration: 1.2, rotationY: 0, rotationX: 0, ease: "elastic.out(1, 0.3)" }));
-        });
-        
-        gsap.utils.toArray('[data-animate-text]').forEach(el => {
-            const split = new SplitType(el, { types: 'chars, words' });
-            gsap.from(split.chars, { y: '100%', opacity: 0, duration: 0.6, ease: 'power2.out', stagger: 0.03, scrollTrigger: { trigger: el, start: 'top 200%', toggleActions: 'play none none none' } });
-        });
-
-        gsap.utils.toArray('.section-header p, .about-text p, .about-values, .cta-content p, .section-transition').forEach(el => {
-          let props = el.classList.contains('section-transition') ? { y: -50, duration: 1.5 } : { y: 50, duration: 1.2 };
-          gsap.from(el, { scrollTrigger: { trigger: el, start: 'top 200%', toggleActions: 'play none none none' }, opacity: 0, ease: 'power3.out', ...props });
-        });
-
-        gsap.utils.toArray('.clients-grid > *, .services-grid > *, .process-steps > *, .team-grid > *, .stats-grid > *, .testimonials-grid > *, .gallery-grid > *').forEach((el, i, arr) => {
-            gsap.from(el, {
-                scrollTrigger: { trigger: el, start: 'top 200%', toggleActions: 'play none none none' },
-                opacity: 0, y: 50, duration: 1, ease: 'power3.out', delay: (i % 4) * 0.1
-            });
-        });
-
-        gsap.utils.toArray('.stat-number').forEach(el => {
-          const target = parseInt(el.dataset.target, 10);
-          ScrollTrigger.create({
-            trigger: el, start: "top 90%", once: true,
-            onEnter: () => gsap.to(el, { textContent: target, duration: 1.2, ease: "power1.inOut", snap: { textContent: 1 }})
-          });
-        });
-
-        gsap.utils.toArray('.animated-icon').forEach(icon => gsap.fromTo(icon, { rotate: -5 }, { rotate: 5, duration: 2, ease: 'sine.inOut', repeat: -1, yoyo: true }));
-      }
-    });
-  </script>
-  <script>
-    (function () {
-      const scope = document.getElementById('calculator') || document;
-      let openPopover = null;
-
-      function ensurePopoverReference(popover, button) {
-        if (!popover) return popover;
-        if (!popover.id) {
-          popover.id = `calc-popover-${Math.random().toString(36).slice(2, 9)}`;
-        }
-        if (button) {
-          if (!button.getAttribute('data-popover-id')) {
-            button.setAttribute('data-popover-id', popover.id);
-          }
-          if (!button.getAttribute('aria-controls')) {
-            button.setAttribute('aria-controls', popover.id);
-          }
-        }
-        return popover;
-      }
-
-      function findPopover(button) {
-        if (!button) return null;
-        const storedId = button.getAttribute('data-popover-id') || button.getAttribute('aria-controls');
-        if (storedId) {
-          const stored = document.getElementById(storedId);
-          if (stored) return ensurePopoverReference(stored, button);
-        }
-        const direct = button.querySelector('.info-popover, .info-small-popover, .info-icon-popover');
-        if (direct) return ensurePopoverReference(direct, button);
-        const wrapper = button.closest('.form-group, .info-icon-wrapper, .info-chip-wrapper');
-        if (wrapper) {
-          const fallback = wrapper.querySelector('.info-popover, .info-small-popover, .info-icon-popover');
-          if (fallback) return ensurePopoverReference(fallback, button);
-        }
-        return null;
-      }
-
-      function closeOpenPopover() {
-        if (!openPopover) return;
-        const { btn, pop } = openPopover;
-        if (pop) {
-          pop.classList.remove('visible');
-          pop.setAttribute('hidden', '');
-          if (typeof window.__calculatorRestorePopover === 'function') {
-            window.__calculatorRestorePopover(pop);
-          }
-        }
-        if (btn) {
-          btn.setAttribute('aria-expanded', 'false');
-        }
-        openPopover = null;
-      }
-
-      scope.addEventListener('click', event => {
-        const btn = event.target.closest('.info-chip, .info-small-icon, .info-icon-wrapper');
-        const clickedInsideOpen = openPopover && event.target.closest('.info-popover, .info-small-popover, .info-icon-popover');
-
-        if (event.target.closest('.close-popover')) {
-          event.preventDefault();
-          closeOpenPopover();
-          return;
-        }
-
-        if (!btn && !clickedInsideOpen) {
-          closeOpenPopover();
-          return;
-        }
-
-        if (btn) {
-          event.preventDefault();
-          const pop = findPopover(btn);
-          if (!pop) return;
-          const isOpen = pop.classList.contains('visible');
-          closeOpenPopover();
-          if (!isOpen) {
-            pop.classList.add('visible');
-            pop.removeAttribute('hidden');
-            btn.setAttribute('aria-expanded', 'true');
-            openPopover = { btn, pop };
-          }
-        }
-      });
-
-      document.addEventListener('keydown', event => {
-        if (event.key === 'Escape') {
-          closeOpenPopover();
-        }
-      });
-
-      window.closeCalculatorPopovers = closeOpenPopover;
-    })();
-  </script>
-  <script>
-    /* --- FIX: portál pro info bubliny, aby se nevrtaly pod kalkulačku --- */
-    (() => {
-      const OPEN_CLASS = 'visible';
-      const FLOAT_CLASS = 'floating';
-      const POP_SELECTOR = '.info-popover, .info-small-popover, .info-icon-popover';
-      const TRIGGER_SELECTOR = '.info-chip, .info-small-icon, .info-icon-wrapper, .info-icon';
-
-      const backmap = new WeakMap();
-
-      function restore(pop) {
+    }
+  });
+})();
+
+/* ============ POPOVERY (portal + flip) ============ */
+(() => {
+  const OPEN = 'visible';
+  const FLOAT = 'floating';
+  const POP = '.info-small-popover, .info-icon-popover, .info-popover';
+  const TRIG = '.info-small-icon, .info-icon, .info-icon-wrapper, .info-chip';
+
+  const back = new WeakMap();
+  let lastTrigger = null;
+
+  function place(pop, trigger){
+    pop.style.top = '0px'; pop.style.left = '0px';
+    const r = trigger.getBoundingClientRect();
+    const pr = pop.getBoundingClientRect();
+    let top = r.bottom + 8;
+    let left = r.left + (r.width - pr.width)/2;
+    const pad = 8;
+    left = Math.max(pad, Math.min(left, innerWidth - pr.width - pad));
+    if (top + pr.height + pad > innerHeight) top = Math.max(pad, r.top - pr.height - 8);
+    pop.style.top = Math.round(top) + 'px';
+    pop.style.left = Math.round(left) + 'px';
+  }
+  function openFloating(pop, trigger){
+    if (!trigger) trigger = lastTrigger;
+    if (!trigger) return;
+    if (!back.has(pop)) back.set(pop, { parent: pop.parentNode, next: pop.nextSibling, trigger });
+    else back.get(pop).trigger = trigger;
+
+    if (pop.parentNode !== document.body) document.body.appendChild(pop);
+    pop.classList.add(FLOAT);
+
+    pop.style.visibility = 'hidden';
+    pop.style.display = 'block';
+    requestAnimationFrame(()=>{ place(pop, trigger); pop.style.visibility = 'visible'; });
+  }
+  function closeFloating(pop){
+    pop.classList.remove(OPEN, FLOAT);
+    const meta = back.get(pop);
+    if (meta?.parent) meta.parent.insertBefore(pop, meta.next || null);
+  }
+
+  document.addEventListener('click', (e)=>{
+    const t = e.target.closest(TRIG);
+    if (t) lastTrigger = t;
+    if (t){
+      setTimeout(()=>{
+        const scope = t.closest('.form-group') || document;
+        let pop = scope.querySelector(`${POP}.${OPEN}`) || document.querySelector(`${POP}.${OPEN}`);
         if (!pop) return;
-        const meta = backmap.get(pop);
-        if (meta?.parent && pop.parentNode !== meta.parent) {
-          meta.parent.insertBefore(pop, meta.next || null);
-        }
-        pop.classList.remove(FLOAT_CLASS);
-        pop.style.removeProperty('top');
-        pop.style.removeProperty('left');
-        pop.style.removeProperty('display');
-        pop.style.removeProperty('visibility');
-      }
+        openFloating(pop, t);
+      },0);
+    } else {
+      const openPop = document.querySelector(`${POP}.${OPEN}.${FLOAT}`);
+      if (openPop && !e.target.closest(POP)) closeFloating(openPop);
+    }
+  }, true);
 
-      window.__calculatorRestorePopover = (pop) => {
-        if (pop && pop.classList?.contains(FLOAT_CLASS)) {
-          restore(pop);
-        }
-      };
-
-      function place(pop, trigger) {
-        if (!pop || !trigger) return;
-        pop.style.top = '0px';
-        pop.style.left = '0px';
-
-        const triggerRect = trigger.getBoundingClientRect();
-        const popRect = pop.getBoundingClientRect();
-        const padding = 8;
-
-        let top = triggerRect.bottom + padding;
-        let left = triggerRect.left + (triggerRect.width - popRect.width) / 2;
-
-        if (left + popRect.width + padding > window.innerWidth) {
-          left = window.innerWidth - popRect.width - padding;
-        }
-        if (left < padding) {
-          left = padding;
-        }
-
-        if (top + popRect.height + padding > window.innerHeight) {
-          top = triggerRect.top - popRect.height - padding;
-          if (top < padding) {
-            top = Math.min(window.innerHeight - popRect.height - padding, Math.max(padding, triggerRect.bottom + padding));
-          }
-        }
-
-        pop.style.top = `${Math.round(top)}px`;
-        pop.style.left = `${Math.round(left)}px`;
-      }
-
-      function openFloating(pop, trigger) {
-        if (!pop || !trigger) return;
-        if (!pop.classList.contains(OPEN_CLASS)) return;
-
-        const currentParent = pop.parentNode;
-        if (!backmap.has(pop)) {
-          backmap.set(pop, {
-            parent: currentParent,
-            next: pop.nextSibling,
-            trigger
-          });
-        } else {
-          const meta = backmap.get(pop);
-          meta.parent = meta.parent || currentParent;
-          meta.next = meta.next || pop.nextSibling;
-          meta.trigger = trigger;
-        }
-
-        if (pop.parentNode !== document.body) {
-          document.body.appendChild(pop);
-        }
-
-        pop.classList.add(FLOAT_CLASS);
-        pop.style.visibility = 'hidden';
-        pop.style.display = 'block';
-
-        requestAnimationFrame(() => {
-          place(pop, trigger);
-          pop.style.removeProperty('visibility');
-        });
-      }
-
-      document.addEventListener('click', (event) => {
-        const trigger = event.target.closest(TRIGGER_SELECTOR);
-        if (!trigger) return;
-
-        setTimeout(() => {
-          const storedId = trigger.getAttribute('data-popover-id') || trigger.getAttribute('aria-controls');
-          let pop = storedId ? document.getElementById(storedId) : null;
-          if (!pop) {
-            pop = trigger.querySelector(POP_SELECTOR) || trigger.closest('.form-group')?.querySelector(POP_SELECTOR);
-          }
-          if (!pop) return;
-          if (pop.classList.contains(OPEN_CLASS)) {
-            openFloating(pop, trigger);
-          }
-        }, 0);
-      }, true);
-
-      function closeAllFloating() {
-        const floatingPops = Array.from(document.querySelectorAll(`${POP_SELECTOR}.${FLOAT_CLASS}`));
-        if (!floatingPops.length) return;
-        if (typeof window.closeCalculatorPopovers === 'function') {
-          window.closeCalculatorPopovers();
-          floatingPops.forEach(restore);
-        } else {
-          floatingPops.forEach(pop => {
-            pop.classList.remove(OPEN_CLASS, FLOAT_CLASS);
-            pop.setAttribute('hidden', '');
-            restore(pop);
-          });
-        }
-      }
-
-      document.addEventListener('click', (event) => {
-        if (event.target.closest(POP_SELECTOR) || event.target.closest(TRIGGER_SELECTOR)) {
-          return;
-        }
-        if (document.querySelector(`${POP_SELECTOR}.${FLOAT_CLASS}`)) {
-          closeAllFloating();
-        }
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-          closeAllFloating();
-        }
-      });
-
-      const reflow = () => {
-        document.querySelectorAll(`${POP_SELECTOR}.${FLOAT_CLASS}`).forEach(pop => {
-          const meta = backmap.get(pop);
-          if (meta?.trigger && document.body.contains(meta.trigger)) {
-            place(pop, meta.trigger);
-          }
-        });
-      };
-
-      window.addEventListener('resize', reflow, { passive: true });
-      window.addEventListener('scroll', reflow, { passive: true });
-    })();
-  </script>
-  <script>
-    document.querySelectorAll('.service-toggle').forEach(btn => {
-      const id = btn.getAttribute('aria-controls');
-      const panel = document.getElementById(id);
-      if (!panel) return;
-      btn.addEventListener('click', () => {
-        const open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        panel.hidden = open;
-        panel.classList.toggle('is-open', !open);
-      });
+  window.addEventListener('resize', ()=> {
+    document.querySelectorAll(`${POP}.${OPEN}.${FLOAT}`).forEach(pop => {
+      const meta = back.get(pop);
+      if (meta?.trigger) place(pop, meta.trigger);
     });
-
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      const id = btn.getAttribute('aria-controls');
-      const panel = document.getElementById(id);
-      if (!panel) return;
-      btn.addEventListener('click', () => {
-        const open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        panel.hidden = open;
-        panel.classList.toggle('is-open', !open);
-      });
+  }, { passive: true });
+  window.addEventListener('scroll', ()=> {
+    document.querySelectorAll(`${POP}.${OPEN}.${FLOAT}`).forEach(pop => {
+      const meta = back.get(pop);
+      if (meta?.trigger) place(pop, meta.trigger);
     });
+  }, { passive: true });
+})();
+
+/* ============ GSAP: jemné headliny + process highlight ============ */
+(() => {
+  if (!window.gsap || !window.SplitType) return;
+  document.querySelectorAll('[data-animate-text]').forEach(el => {
+    try {
+      const split = new SplitType(el, { types: 'chars' });
+      gsap.from(split.chars, {
+        yPercent: 120, opacity: 0, duration: 0.7, stagger: 0.01,
+        ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%' }
+      });
+    } catch(e) {}
+  });
+
+  document.querySelectorAll('.process-step').forEach(step=>{
+    gsap.fromTo(step, { scale: 0.98 }, {
+      scale: 1, duration: .6, ease: 'power2.out',
+      scrollTrigger: { trigger: step, start: 'top 85%', onEnter: ()=>step.classList.add('is-active') }
+    });
+  });
+})();
+
+/* ============ Sticky CTA zobrazení po scrollu ============ */
+(() => {
+  const sticky = document.getElementById('sticky-cta');
+  if (!sticky) return;
+  let shown = false;
+  const onScroll = () => {
+    if (shown) return;
+    if (window.scrollY > 800) { sticky.classList.add('visible'); sticky.setAttribute('aria-hidden','false'); shown = true; }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+/* ============ CTA FORM STEPS ============ */
+(() => {
+  const form = document.getElementById('cta-form');
+  if (!form) return;
+  const step1 = form.querySelector('.cta-step--1');
+  const step2 = form.querySelector('.cta-step--2');
+  const next = document.getElementById('cta-next');
+  const prev = document.getElementById('cta-prev');
+  const serviceSelect = document.getElementById('cta-service-select');
+  const display = document.getElementById('cta-estimate-display');
+
+  const showStep = (step) => {
+    const isFirst = step === 1;
+    step1.hidden = !isFirst;
+    step2.hidden = isFirst;
+    if (!isFirst) {
+      step2.querySelector('input')?.focus();
+    }
+  };
+  showStep(1);
+
+  next?.addEventListener('click', () => {
+    if (!step1 || !serviceSelect) return;
+    showStep(2);
+  });
+
+  prev?.addEventListener('click', () => {
+    showStep(1);
+  });
+
+  form.addEventListener('submit', (e) => {
+    const consent = step2?.querySelector('input[type="checkbox"]');
+    if (consent && !consent.checked) {
+      consent.focus();
+      e.preventDefault();
+    }
+  });
+
+  const ctaEstimateField = document.getElementById('cta-estimate');
+  const ctaDetailsField = document.getElementById('cta-details');
+  const serviceMap = {
+    object: 'Ostraha objektu',
+    event: 'Event security',
+    vip: 'Osobní ochrana',
+    sport: 'Sportovní utkání',
+    club: 'Ostraha nočních podniků'
+  };
+
+  window.updateCTAFromCalculator = (serviceKey, people, details) => {
+    if (serviceSelect && serviceMap[serviceKey]) {
+      serviceSelect.value = serviceMap[serviceKey];
+    }
+    if (display) {
+      display.textContent = `Doporučení plánovače: ~${people} pracovníků`;
+      display.hidden = false;
+    }
+    if (ctaEstimateField) ctaEstimateField.value = display?.textContent || '';
+    if (ctaDetailsField) ctaDetailsField.value = details || '';
+  };
+})();
   </script>
 </body>
 </html>
