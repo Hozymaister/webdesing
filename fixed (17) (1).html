@@ -790,11 +790,20 @@
     /* --- Estimator Section --- */
     #calculator {
       position: relative;
+      padding: clamp(4rem, 8vw, 6rem) 0;
+      background: radial-gradient(circle at top left, rgba(212, 162, 118, 0.08), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(131, 58, 180, 0.08), transparent 60%),
+                  var(--bg-dark);
       overflow: visible;
-      background-color: var(--bg-dark);
     }
     #calculator .section-header {
-      margin-bottom: 3rem;
+      text-align: center;
+      max-width: 740px;
+      margin: 0 auto clamp(2.5rem, 5vw, 3.25rem);
+    }
+    #calculator .section-header p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
     }
     #calculator .aurora-background {
       position: absolute;
@@ -807,46 +816,50 @@
       position: absolute;
       border-radius: 50%;
       filter: blur(120px);
-      opacity: 0.18;
+      opacity: 0.16;
     }
     #calculator .aurora-shape.shape1 {
-      width: 480px;
-      height: 480px;
+      width: 460px;
+      height: 460px;
       background: var(--brand-accent);
-      top: -10%;
-      left: -5%;
-      animation: move-aurora 20s infinite alternate ease-in-out;
+      top: -8%;
+      left: 12%;
+      animation: calculator-aurora-one 24s ease-in-out infinite alternate;
     }
     #calculator .aurora-shape.shape2 {
       width: 420px;
       height: 420px;
       background: #833ab4;
-      bottom: -15%;
-      right: -10%;
-      animation: move-aurora 24s infinite alternate-reverse ease-in-out;
+      bottom: -10%;
+      right: 10%;
+      animation: calculator-aurora-two 28s ease-in-out infinite alternate-reverse;
     }
-    @keyframes move-aurora {
-      from { transform: translate(-50px, -30px) rotate(0deg) scale(1); }
-      to { transform: translate(40px, 50px) rotate(90deg) scale(1.15); }
+    @keyframes calculator-aurora-one {
+      from { transform: translate(-40px, -30px) rotate(0deg) scale(1); }
+      to   { transform: translate(45px, 40px) rotate(80deg) scale(1.15); }
+    }
+    @keyframes calculator-aurora-two {
+      from { transform: translate(35px, -20px) rotate(0deg) scale(1); }
+      to   { transform: translate(-35px, 35px) rotate(-70deg) scale(1.18); }
     }
     #calculator .calculator-shell {
       position: relative;
       z-index: 1;
+      display: flex;
+      justify-content: center;
     }
     #calculator .calculator-container {
+      width: min(100%, 1060px);
       display: grid;
-      grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
-      gap: 0;
-      width: min(100%, 1040px);
-      min-height: 60vh;
-      margin: 0 auto;
-      background: rgba(18, 18, 18, 0.8);
-      border-radius: 24px;
+      grid-template-columns: minmax(0, 270px) minmax(0, 1fr);
+      background: rgba(18, 18, 18, 0.78);
       border: 1px solid rgba(212, 162, 118, 0.28);
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      overflow: visible;
+      border-radius: 24px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      overflow: hidden;
+      position: relative;
     }
     #calculator .calculator-container::before {
       content: '';
@@ -856,12 +869,12 @@
       background-size: cover;
       background-position: center;
       opacity: 0;
-      transition: opacity 0.45s ease-in-out;
+      transition: opacity 0.45s ease;
       z-index: -1;
-      filter: blur(3px);
+      filter: blur(4px);
     }
     #calculator .calculator-container.has-bg::before {
-      opacity: 0.18;
+      opacity: 0.12;
     }
     #calculator .calculator-sidebar {
       padding: 2.25rem 1.75rem;
@@ -869,12 +882,12 @@
       display: flex;
       flex-direction: column;
       gap: 2rem;
-      background: radial-gradient(circle at top left, rgba(212, 162, 118, 0.1), transparent 55%);
+      background: radial-gradient(circle at top left, rgba(212, 162, 118, 0.12), transparent 55%);
     }
     #calculator .sidebar-header h3 {
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       color: var(--brand-accent);
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.4rem;
     }
     #calculator .sidebar-header p {
       font-size: 0.95rem;
@@ -882,483 +895,379 @@
     }
     #calculator .service-nav {
       display: grid;
-      gap: 0.75rem;
-      grid-template-columns: 1fr;
+      gap: 0.65rem;
     }
     #calculator .service-nav-item {
       display: flex;
-      gap: 1rem;
       align-items: center;
-      padding: 1rem 1.2rem;
-      border-radius: 16px;
-      border: 1px solid transparent;
-      background: rgba(255, 255, 255, 0.02);
+      gap: 0.9rem;
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(212, 162, 118, 0.22);
+      background: rgba(255, 255, 255, 0.03);
       color: var(--text-muted);
-      cursor: pointer;
-      transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease, transform 0.3s ease;
-      text-align: left;
       font-weight: 600;
-      font-size: 0.95rem;
-    }
-    #calculator .service-nav-item:focus-visible {
-      outline: 2px solid var(--brand-accent);
-      outline-offset: 4px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
     }
     #calculator .service-nav-item svg {
       width: 26px;
       height: 26px;
-      flex-shrink: 0;
+      color: var(--brand-accent-light);
     }
-    #calculator .service-nav-item:hover {
-      background: rgba(255, 255, 255, 0.06);
+    #calculator .service-nav-item:hover,
+    #calculator .service-nav-item:focus-visible {
+      outline: none;
+      border-color: rgba(212, 162, 118, 0.45);
+      background: rgba(212, 162, 118, 0.12);
       color: var(--text-light);
-      transform: translateX(3px);
     }
     #calculator .service-nav-item.active {
-      background: rgba(212, 162, 118, 0.18);
+      background: rgba(212, 162, 118, 0.16);
+      border-color: rgba(212, 162, 118, 0.6);
+      color: var(--brand-accent-light);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(212, 162, 118, 0.15);
+    }
+    #calculator .service-nav-item.active svg {
       color: var(--brand-accent);
-      border-color: rgba(212, 162, 118, 0.55);
-      box-shadow: 0 15px 35px rgba(212, 162, 118, 0.18);
     }
     #calculator .calculator-main {
-      padding: 2.75rem 3rem;
+      padding: 2.75rem clamp(1.75rem, 4vw, 3rem);
       display: flex;
       flex-direction: column;
+      gap: 2.25rem;
       position: relative;
-      gap: 2rem;
     }
-    #calculator .calculator-progress {
+    #calculator .calculator-steps {
+      position: relative;
+      flex-grow: 1;
+      min-height: 420px;
+    }
+    #calculator .calculator-step {
+      position: absolute;
+      inset: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      padding: 0.5rem 0.25rem 0;
+      gap: 2rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(24px);
+      transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
     }
-    #calculator .progress-steps {
+    #calculator .calculator-step.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    #calculator .step-header {
+      text-align: left;
+      max-width: 560px;
+    }
+    #calculator .calculator-step[data-step="1"] .step-header {
+      text-align: center;
+      margin: 0 auto;
+    }
+    #calculator .step-header h2,
+    #calculator .step-header h3 {
+      font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+    }
+    #calculator .step-header p {
+      margin-top: 0.85rem;
+      color: rgba(245, 245, 245, 0.68);
+      font-size: 1.05rem;
+    }
+    #calculator .step2-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: clamp(2rem, 4vw, 3rem);
+      align-items: flex-start;
+    }
+    #calculator .form-grid {
+      display: grid;
+      gap: clamp(1.3rem, 2.5vw, 1.8rem);
+    }
+    #calculator .form-group {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(212, 162, 118, 0.2);
+      border-radius: 18px;
+      padding: clamp(1.2rem, 2vw, 1.5rem);
+      display: grid;
+      gap: 0.9rem;
+      position: relative;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.35);
+    }
+    #calculator .field-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    #calculator .field-label {
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: var(--text-light);
+    }
+    #calculator .field-note {
+      font-size: 0.82rem;
+      color: rgba(245, 245, 245, 0.58);
+    }
+    #calculator .field-tools {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    #calculator .field-tools input[type="number"] {
+      width: 120px;
+    }
+    #calculator .form-grid input[type="number"],
+    #calculator .form-grid select {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(212, 162, 118, 0.25);
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      background: rgba(14, 14, 14, 0.9);
+      color: var(--text-light);
+      transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+    #calculator .form-grid input[type="number"]:focus,
+    #calculator .form-grid select:focus {
+      outline: none;
+      border-color: var(--brand-accent);
+      background: rgba(26, 26, 26, 0.95);
+      box-shadow: 0 0 0 3px rgba(212, 162, 118, 0.22);
+    }
+    #calculator .form-grid input.invalid,
+    #calculator .form-grid select.invalid {
+      border-color: rgba(229, 62, 62, 0.85);
+      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.25);
+    }
+    #calculator input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: rgba(212, 162, 118, 0.22);
+      border-radius: 999px;
+      cursor: pointer;
+      outline: none;
+    }
+    #calculator input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--brand-accent-light), var(--brand-accent));
+      border: 3px solid rgba(10, 10, 10, 0.9);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    #calculator input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 6px rgba(212, 162, 118, 0.18);
+    }
+    #calculator input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--brand-accent-light), var(--brand-accent));
+      border: 3px solid rgba(10, 10, 10, 0.9);
+    }
+    #calculator .toggle-field {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
     }
-    #calculator .progress-step {
-      flex: 1;
+    #calculator .toggle-field input[type="checkbox"] {
+      width: 54px;
+      height: 30px;
+      border-radius: 999px;
       position: relative;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 0.78rem;
-      color: rgba(255, 255, 255, 0.35);
-      font-weight: 700;
-      text-align: center;
-      padding-top: 0.15rem;
-      transition: color 0.3s ease;
+      appearance: none;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(212, 162, 118, 0.2);
+      cursor: pointer;
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
-    #calculator .progress-step::before {
-      content: attr(data-step);
+    #calculator .toggle-field input[type="checkbox"]::before {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(230, 230, 230, 0.75));
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+    #calculator .toggle-field input[type="checkbox"]:checked {
+      background: rgba(212, 162, 118, 0.28);
+      border-color: rgba(212, 162, 118, 0.55);
+    }
+    #calculator .toggle-field input[type="checkbox"]:checked::before {
+      transform: translateX(24px);
+      background: linear-gradient(145deg, var(--brand-accent-light), var(--brand-accent));
+    }
+    #calculator .info-chip {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      margin-bottom: 0.35rem;
-      font-size: 0.75rem;
-      color: inherit;
-      background: rgba(12, 12, 12, 0.65);
-      backdrop-filter: blur(6px);
-    }
-    #calculator .progress-step.is-active {
-      color: var(--brand-accent-light);
-    }
-    #calculator .progress-step.is-active::before {
-      border-color: var(--brand-accent-light);
-      background: rgba(212, 162, 118, 0.18);
-    }
-    #calculator .progress-step.is-complete {
-      color: var(--brand-accent);
-    }
-    #calculator .progress-step.is-complete::before {
-      border-color: var(--brand-accent);
-      background: rgba(212, 162, 118, 0.28);
-    }
-    #calculator .progress-track {
-      position: relative;
-      width: 100%;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-    }
-    #calculator .progress-fill {
-      position: absolute;
-      inset: 0;
-      width: 0%;
-      background: linear-gradient(135deg, rgba(212, 162, 118, 0.85), rgba(212, 162, 118, 0.35));
-      transition: width 0.4s ease;
-    }
-    #calculator .calculator-steps {
-      position: relative;
-      min-height: 0;
-      flex: 1;
-    }
-    #calculator .calculator-step {
-      position: static;
-      display: none;
-      opacity: 1;
-      visibility: visible;
-      transform: none;
-      transition: none;
-    }
-    #calculator .calculator-step.active {
-      display: block;
-    }
-    #calculator .step-header {
-      margin-bottom: 2.25rem;
-      text-align: left;
-      max-width: 520px;
-    }
-    #calculator .calculator-step[data-step="1"] .step-header {
-      text-align: center;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    #calculator .step-header h3 {
-      color: var(--brand-accent);
-      font-size: 1.4rem;
-      margin-bottom: 0.35rem;
-    }
-    #calculator .step2-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
-      gap: 2.4rem;
-      align-items: start;
-    }
-    #calculator .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.6rem;
-    }
-    #calculator .form-group {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      background: linear-gradient(160deg, rgba(15, 15, 15, 0.9), rgba(35, 35, 35, 0.6));
-      border-radius: 18px;
-      padding: 1.3rem 1.4rem 1.4rem;
-      border: 1px solid rgba(212, 162, 118, 0.18);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      animation: field-in 0.45s ease forwards;
-      opacity: 0;
-      transform: translateY(14px);
-    }
-    @keyframes field-in {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    #calculator .field-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    #calculator .field-label {
-      color: var(--text-light);
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-    }
-    #calculator .field-tools {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    #calculator .field-note {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-    #calculator .form-grid input[type="number"],
-    #calculator .form-grid select {
-      background: rgba(10, 10, 10, 0.75);
-      border: 1px solid rgba(212, 162, 118, 0.18);
-      border-radius: 12px;
-      padding: 0.75rem 1rem;
-      color: var(--text-light);
-      font-size: 1rem;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      width: 100%;
-    }
-    #calculator .field-tools input[type="number"] {
-      width: 120px;
-      text-align: right;
-    }
-    #calculator .form-grid input[type="number"]:focus,
-    #calculator .form-grid select:focus {
-      outline: none;
-      border-color: var(--brand-accent);
-      box-shadow: 0 0 0 3px rgba(212, 162, 118, 0.25);
-      background: rgba(15, 15, 15, 0.85);
-    }
-    #calculator .form-grid input.invalid,
-    #calculator .form-grid select.invalid {
-      border-color: #e53e3e;
-      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.2);
-    }
-    #calculator input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 6px;
-      background: rgba(212, 162, 118, 0.24);
-      border-radius: 999px;
-      outline: none;
-    }
-    #calculator input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      background: var(--brand-accent);
-      border-radius: 50%;
-      border: 3px solid rgba(12, 12, 12, 0.9);
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    #calculator input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.05);
-    }
-    #calculator input[type="range"]::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
-      background: var(--brand-accent);
-      border-radius: 50%;
-      border: 3px solid rgba(12, 12, 12, 0.9);
-      cursor: pointer;
-    }
-    #calculator .toggle-field {
-      gap: 1rem;
-      align-items: center;
-      justify-content: space-between;
-    }
-    #calculator .toggle-field .field-label {
-      flex: 1;
-    }
-    #calculator .toggle-field input[type="checkbox"] {
-      width: 52px;
-      height: 28px;
-      border-radius: 999px;
-      appearance: none;
-      background: rgba(255, 255, 255, 0.12);
-      position: relative;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    #calculator .toggle-field input[type="checkbox"]::before {
-      content: '';
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--text-light);
-      top: 3px;
-      left: 4px;
-      transition: transform 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-    }
-    #calculator .toggle-field input[type="checkbox"]:checked {
-      background: linear-gradient(145deg, var(--brand-accent-light), var(--brand-accent));
-    }
-    #calculator .toggle-field input[type="checkbox"]:checked::before {
-      transform: translateX(24px);
-    }
-    #calculator .info-chip {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 1px solid rgba(212, 162, 118, 0.35);
+      border: 1px solid rgba(212, 162, 118, 0.32);
       background: rgba(255, 255, 255, 0.05);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--brand-accent);
-      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-      flex-shrink: 0;
-    }
-    #calculator .info-chip:focus-visible {
-      outline: 2px solid var(--brand-accent);
-      outline-offset: 3px;
-    }
-    #calculator .info-chip svg {
-      width: 16px;
-      height: 16px;
+      color: var(--brand-accent-light);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
     }
     #calculator .info-chip:hover,
     #calculator .info-chip[aria-expanded="true"] {
-      background: rgba(212, 162, 118, 0.18);
-      color: var(--text-light);
-      border-color: rgba(212, 162, 118, 0.55);
+      background: rgba(212, 162, 118, 0.2);
+      color: var(--bg-dark);
       transform: translateY(-1px);
     }
-    #calculator .info-close {
-      align-self: flex-start;
+    #calculator .info-small-popover,
+    #calculator .info-icon-popover {
+      position: absolute;
+      inset: auto auto;
+      transform: translateY(12px);
+      background: rgba(8, 8, 8, 0.94);
+      border: 1px solid rgba(212, 162, 118, 0.28);
+      border-radius: 14px;
+      padding: 1rem 1.1rem 1.1rem;
+      width: min(320px, 80vw);
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.55);
+      color: var(--text-light);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 10;
+    }
+    #calculator .info-small-popover.visible,
+    #calculator .info-icon-popover.visible {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #calculator .info-small-popover .close-popover,
+    #calculator .info-icon-popover .close-popover {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.55rem;
       background: none;
       border: none;
-      color: var(--brand-accent);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      font-size: 0.75rem;
+      color: rgba(245, 245, 245, 0.7);
+      font-size: 1.1rem;
       cursor: pointer;
-      padding: 0;
     }
-    #calculator .info-close:hover {
-      color: var(--text-light);
+    #calculator .info-small-popover .close-popover:hover,
+    #calculator .info-icon-popover .close-popover:focus-visible {
+      color: var(--brand-accent);
+      outline: none;
     }
     #calculator .summary-panel {
-      background: linear-gradient(160deg, rgba(26, 26, 26, 0.85), rgba(15, 15, 15, 0.72));
+      background: rgba(8, 8, 8, 0.38);
+      border: 1px solid rgba(212, 162, 118, 0.22);
       border-radius: 20px;
-      padding: 2.2rem 2rem;
-      border: 1px solid rgba(212, 162, 118, 0.28);
-      height: fit-content;
+      padding: 1.8rem 1.6rem;
+      display: grid;
+      gap: 1.2rem;
       position: sticky;
-      top: 2rem;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      top: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+      min-height: 320px;
     }
     #calculator .summary-panel h4 {
+      margin: 0;
       font-size: 1.15rem;
       color: var(--text-light);
-      margin: 0;
     }
     #calculator .summary-panel p {
       margin: 0;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.6;
+      font-size: 0.85rem;
+      color: rgba(245, 245, 245, 0.6);
     }
     #calculator .summary-panel ul {
       list-style: none;
-      display: grid;
-      gap: 0.85rem;
-      padding: 0;
       margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.9rem;
     }
     #calculator .summary-panel li {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 0.75rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      padding-bottom: 0.65rem;
-      border-bottom: 1px solid rgba(212, 162, 118, 0.15);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.85rem;
       align-items: center;
+      font-size: 0.95rem;
+      color: rgba(245, 245, 245, 0.85);
     }
     #calculator .summary-panel li:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
+      border-top: 1px solid rgba(212, 162, 118, 0.18);
+      padding-top: 0.85rem;
     }
     #calculator .summary-label {
-      color: var(--text-muted);
+      color: rgba(245, 245, 245, 0.6);
     }
     #calculator .summary-value {
-      color: var(--text-light);
-      font-weight: 600;
-    }
-    #calculator .summary-value-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(212, 162, 118, 0.12);
-      border-radius: 999px;
-      border: 1px solid transparent;
-      color: var(--text-light);
-      font-weight: 700;
-      font-size: 0.85rem;
-      padding: 0.3rem 0.9rem;
-      cursor: pointer;
-      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-    }
-    #calculator .summary-value-button:hover,
-    #calculator .summary-value-button:focus-visible {
-      background: rgba(212, 162, 118, 0.25);
       color: var(--brand-accent-light);
-      border-color: rgba(212, 162, 118, 0.4);
-      transform: translateY(-1px);
-      outline: none;
+      font-weight: 700;
     }
     #calculator .summary-highlights {
       display: flex;
+      gap: 0.6rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
     }
     #calculator .summary-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      padding: 0.35rem 0.85rem;
+      padding: 0.45rem 0.9rem;
       border-radius: 999px;
-      font-size: 0.75rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      background: rgba(212, 162, 118, 0.12);
+      border: 1px solid rgba(212, 162, 118, 0.28);
+      background: rgba(212, 162, 118, 0.16);
       color: var(--brand-accent-light);
-      border: 1px solid rgba(212, 162, 118, 0.2);
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
     #calculator .navigation-buttons {
       display: flex;
       justify-content: flex-end;
-      align-items: center;
-      margin-top: 1.5rem;
-      padding-top: 1.75rem;
-      border-top: 1px solid rgba(212, 162, 118, 0.2);
-      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(212, 162, 118, 0.16);
     }
     #calculator .calc-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.55rem;
-      border-radius: 999px;
-      padding: 0.95rem 2.4rem;
+      gap: 0.5rem;
+      padding: 0.85rem 1.85rem;
+      border-radius: 14px;
       font-weight: 700;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
       border: none;
       cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-    }
-    #calculator .calc-btn:focus-visible {
-      outline: 2px solid var(--brand-accent);
-      outline-offset: 4px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
     }
     #calculator .calc-btn-primary {
       background: linear-gradient(145deg, var(--brand-accent-light), var(--brand-accent));
-      color: #0d0d0d;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      position: relative;
-    }
-    #calculator .calc-btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: inherit;
-      background: radial-gradient(circle, rgba(212, 162, 118, 0.6), rgba(212, 162, 118, 0));
-      filter: blur(12px);
-      opacity: 0.75;
-      z-index: -1;
-      animation: pulse-glow 3s infinite ease-in-out;
-    }
-    @keyframes pulse-glow {
-      0%, 100% { opacity: 0.7; }
-      50% { opacity: 1; }
+      color: var(--bg-dark);
+      box-shadow: 0 20px 38px rgba(212, 162, 118, 0.28);
     }
     #calculator .calc-btn-primary:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+      transform: translateY(-2px);
+      box-shadow: 0 24px 50px rgba(212, 162, 118, 0.35);
     }
     #calculator .calc-btn:disabled {
       opacity: 0.55;
@@ -1366,34 +1275,25 @@
       transform: none;
       box-shadow: none;
     }
-    #calculator .calc-btn-secondary {
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text-muted);
-      border: 1px solid rgba(212, 162, 118, 0.35);
-    }
-    #calculator .calc-btn-secondary:hover {
-      color: var(--text-light);
-      background: rgba(212, 162, 118, 0.18);
-      border-color: rgba(212, 162, 118, 0.55);
-    }
     #calculator .result-card {
-      background: linear-gradient(160deg, rgba(15, 15, 15, 0.85), rgba(35, 35, 35, 0.65));
+      background: rgba(10, 10, 10, 0.45);
       border: 1px solid rgba(212, 162, 118, 0.35);
       border-radius: 22px;
-      padding: 3rem 2.5rem;
-      text-align: center;
+      padding: clamp(2.4rem, 5vw, 3rem) clamp(1.6rem, 4vw, 2.5rem);
       display: grid;
-      gap: 1.6rem;
-      box-shadow: 0 25px 55px rgba(0, 0, 0, 0.55);
+      gap: 1.5rem;
+      text-align: center;
+      box-shadow: 0 32px 60px rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(16px);
     }
     #calculator .result-title {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      letter-spacing: 0.12em;
+      font-size: 1.05rem;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
+      color: rgba(245, 245, 245, 0.75);
     }
     #calculator .result-estimate {
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-size: clamp(2.4rem, 7vw, 3.6rem);
       font-family: var(--font-heading);
       color: var(--brand-accent);
       text-shadow: 0 0 28px rgba(212, 162, 118, 0.45);
@@ -1410,68 +1310,25 @@
       justify-content: space-between;
       gap: 0.75rem;
       font-size: 0.95rem;
-      color: var(--text-light);
       border-bottom: 1px solid rgba(212, 162, 118, 0.18);
-      padding-bottom: 0.75rem;
+      padding-bottom: 0.7rem;
     }
     #calculator .result-summary li span:first-child {
       color: var(--text-muted);
     }
     #calculator .result-summary li span:last-child {
+      color: var(--text-light);
       font-weight: 600;
-    }
-    #calculator .result-insights {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.6rem;
-      margin: 1.25rem auto 1.75rem;
-      max-width: 460px;
-    }
-    #calculator .insight-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.4rem 0.95rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      background: rgba(212, 162, 118, 0.14);
-      color: var(--brand-accent-light);
-      border: 1px solid rgba(212, 162, 118, 0.25);
     }
     #calculator .result-actions {
       display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 0.85rem;
       justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
     #calculator .result-note {
       font-size: 0.9rem;
       color: var(--text-muted);
-    }
-    #calculator .focus-pulse {
-      animation: focus-pulse 1.2s ease-out;
-    }
-    @keyframes focus-pulse {
-      0% { box-shadow: 0 0 0 0 rgba(212, 162, 118, 0.45); }
-      70% { box-shadow: 0 0 0 6px rgba(212, 162, 118, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(212, 162, 118, 0); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      #calculator .progress-fill,
-      #calculator .progress-step,
-      #calculator .calc-btn,
-      #calculator .summary-value-button,
-      #calculator .service-nav-item,
-      #calculator input[type="range"]::-webkit-slider-thumb {
-        transition: none !important;
-      }
-      #calculator .focus-pulse {
-        animation: none;
-      }
     }
     @media (max-width: 1100px) {
       #calculator .calculator-container {
@@ -1483,51 +1340,32 @@
       }
       #calculator .service-nav {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        justify-items: stretch;
-      }
-      #calculator .calculator-progress {
-        padding: 0.25rem 0;
-      }
-      #calculator .progress-step {
-        font-size: 0.72rem;
-      }
-      #calculator .progress-step::before {
-        margin-bottom: 0.25rem;
-      }
-      #calculator .calculator-main {
-        padding: 2.5rem 2rem 2.75rem;
-      }
-      #calculator .step2-layout {
-        grid-template-columns: 1fr;
-        gap: 2rem;
       }
       #calculator .summary-panel {
         position: static;
         order: 2;
       }
-    }
-    @media (max-width: 640px) {
-      #calculator .calculator-steps {
-        min-height: auto;
-      }
-      #calculator .calculator-progress {
-        gap: 0.5rem;
-      }
-      #calculator .progress-steps {
-        gap: 0.75rem;
-      }
-      #calculator .progress-step {
-        font-size: 0.68rem;
-      }
-      #calculator .progress-step::before {
-        width: 24px;
-        height: 24px;
-      }
-      #calculator .form-grid {
+      #calculator .step2-layout {
         grid-template-columns: 1fr;
       }
-      #calculator .service-nav-item {
-        width: 100%;
+    }
+    @media (max-width: 720px) {
+      #calculator .calculator-main {
+        padding: 2.2rem 1.5rem 2.5rem;
+      }
+      #calculator .calculator-steps {
+        min-height: 0;
+      }
+      #calculator .navigation-buttons {
+        justify-content: center;
+      }
+      #calculator .result-card {
+        padding: 2rem 1.5rem;
+      }
+    }
+    @media (max-width: 560px) {
+      #calculator .service-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       #calculator .field-tools {
         width: 100%;
@@ -1536,19 +1374,14 @@
       #calculator .field-tools input[type="number"] {
         width: 100px;
       }
-      #calculator .navigation-buttons {
+      #calculator .toggle-field {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-start;
       }
-      #calculator .calc-btn {
-        width: 100%;
-      }
-      #calculator .result-card {
-        padding: 2.5rem 1.75rem;
+      #calculator .toggle-field input[type="checkbox"] {
+        align-self: flex-end;
       }
     }
-
-
     /* --- FAQ Section --- */
     #faq { background-color: var(--bg-dark); }
 
@@ -2685,82 +2518,79 @@ small {
         <div class="aurora-shape shape1"></div>
         <div class="aurora-shape shape2"></div>
       </div>
-      <div class="container calculator-shell">
+      <div class="calculator-shell">
         <div class="section-header">
-          <h2 data-animate-text>Inteligentní plánovač bezpečnosti</h2>
-          <p>Tento orientační návrh vám pomůže získat představu. Přesný plán navrhneme po úvodním kontaktu a detailní analýze vašich potřeb.</p>
+          <h2 data-animate-text>Plánovač bezpečnostního zajištění</h2>
+          <p>Vyberte scénář, zadejte základní parametry a okamžitě získáte orientační doporučení počtu pracovníků včetně shrnutí pro poptávku.</p>
         </div>
         <div id="calculator-container" class="calculator-container">
           <aside class="calculator-sidebar">
             <div class="sidebar-header">
               <h3>Služby</h3>
-              <p>Vyberte si oblast</p>
+              <p>Vyberte oblast, pro kterou chcete vytvořit návrh.</p>
             </div>
             <nav id="service-nav" class="service-nav">
-                <button class="service-nav-item" data-service="object" data-bg="https://images.unsplash.com/photo-1581092446347-a8b2f1597a1d?auto=format&fit=crop&w=800&q=60">
-                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M54 57H10C8.89543 57 8 56.1046 8 55V15C8 13.8954 8.89543 13 10 13H54C55.1046 13 56 13.8954 56 15V55C56 56.1046 55.1046 57 54 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13V9C18 7.89543 18.8954 7 20 7H44C45.1046 7 46 7.89543 46 9V13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 23H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 33H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 43H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 23H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 33H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 43H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <button class="service-nav-item" data-service="object" data-bg="https://images.unsplash.com/photo-1581092446347-a8b2f1597a1d?auto=format&fit=crop&w=1200&q=80">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M54 57H10C8.895 57 8 56.105 8 55V15C8 13.895 8.895 13 10 13H54C55.105 13 56 13.895 56 15V55C56 56.105 55.105 57 54 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13V9C18 7.895 18.895 7 20 7H44C45.105 7 46 7.895 46 9V13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 23H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 33H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 43H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 23H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 33H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 43H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Ostraha objektu</span>
               </button>
-                 <button class="service-nav-item" data-service="vip" data-bg="https://images.unsplash.com/photo-1621601433342-23736822b311?auto=format&fit=crop&w=800&q=60">
-                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M32 30C37.5228 30 42 25.5228 42 20C42 14.4772 37.5228 10 32 10C26.4772 10 22 14.4772 22 20C22 25.5228 26.4772 30 32 30Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48.61 54C48.61 47.9 41.1 43 32 43C22.9 43 15.39 47.9 15.39 54" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M51 7L57 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13L13 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <button class="service-nav-item" data-service="vip" data-bg="https://images.unsplash.com/photo-1621601433342-23736822b311?auto=format&fit=crop&w=1200&q=80">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M32 30C37.523 30 42 25.523 42 20C42 14.477 37.523 10 32 10C26.477 10 22 14.477 22 20C22 25.523 26.477 30 32 30Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48.61 54C48.61 47.9 41.1 43 32 43C22.9 43 15.39 47.9 15.39 54" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M51 7L57 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13L13 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Osobní ochrana</span>
               </button>
-                <button class="service-nav-item" data-service="event" data-bg="https://images.unsplash.com/photo-1511795409834-ef04bbd51622?auto=format&fit=crop&w=800&q=60">
-                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M14 26L32 12L50 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 32V52H46V32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 52V40C26 37.7909 27.7909 36 30 36H34C36.2091 36 38 37.7909 38 40V52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M55 42L50 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 42L14 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 30L56 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 30L8 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <button class="service-nav-item" data-service="event" data-bg="https://images.unsplash.com/photo-1511795409834-ef04bbd51622?auto=format&fit=crop&w=1200&q=80">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M14 26L32 12L50 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 32V52H46V32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 52V40C26 37.791 27.791 36 30 36H34C36.209 36 38 37.791 38 40V52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M55 42L50 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 42L14 45" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 30L56 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 30L8 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Event security</span>
               </button>
-                <button class="service-nav-item" data-service="sport" data-bg="https://images.unsplash.com/photo-1541250848049-b9f71a6e8e88?auto=format&fit=crop&w=800&q=60">
-                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M32 57C45.8071 57 57 45.8071 57 32C57 18.1929 45.8071 7 32 7C18.1929 7 7 18.1929 7 32C7 45.8071 18.1929 57 32 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7C27.5 16.5 27.5 22.5 32 32C36.5 22.5 36.5 16.5 32 7Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M57 32C47.5 36.5 41.5 36.5 32 32C41.5 27.5 47.5 27.5 57 32Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 32H57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7V57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <button class="service-nav-item" data-service="sport" data-bg="https://images.unsplash.com/photo-1541250848049-b9f71a6e8e88?auto=format&fit=crop&w=1200&q=80">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M32 57C45.807 57 57 45.807 57 32C57 18.193 45.807 7 32 7C18.193 7 7 18.193 7 32C7 45.807 18.193 57 32 57Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7C27.5 16.5 27.5 22.5 32 32C36.5 22.5 36.5 16.5 32 7Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M57 32C47.5 36.5 41.5 36.5 32 32C41.5 27.5 47.5 27.5 57 32Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 32H57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 7V57" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Sportovní utkání</span>
               </button>
-                <button class="service-nav-item" data-service="club" data-bg="https://images.unsplash.com/photo-1582220107107-590426d242c8?auto=format&fit=crop&w=800&q=60">
-                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M32 20C32 15.5817 28.4183 12 24 12C19.5817 12 16 15.5817 16 20C16 23.5 18.5 26.3 21.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48 20C48 15.5817 44.4183 12 40 12C35.5817 12 32 15.5817 32 20C32 23.5 34.5 26.3 37.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20H10C8.89543 20 8 20.8954 8 22V50C8 51.1046 8.89543 52 10 52H54C55.1046 52 56 51.1046 56 50V22C56 20.8954 55.1046 20 54 20H48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 28V38L40 43" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <button class="service-nav-item" data-service="club" data-bg="https://images.unsplash.com/photo-1582220107107-590426d242c8?auto=format&fit=crop&w=1200&q=80">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M32 20C32 15.582 28.418 12 24 12C19.582 12 16 15.582 16 20C16 23.5 18.5 26.3 21.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48 20C48 15.582 44.418 12 40 12C35.582 12 32 15.582 32 20C32 23.5 34.5 26.3 37.6 27.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20H10C8.895 20 8 20.895 8 22V50C8 51.105 8.895 52 10 52H54C55.105 52 56 51.105 56 50V22C56 20.895 55.105 20 54 20H48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 28V38L40 43" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Noční podniky</span>
               </button>
             </nav>
           </aside>
           <main class="calculator-main">
             <form id="estimator-form" onsubmit="event.preventDefault();">
-              <div class="calculator-progress" aria-hidden="true">
-                <div class="progress-steps">
-                  <span class="progress-step is-active" data-step="1">Výběr služby</span>
-                  <span class="progress-step" data-step="2">Parametry</span>
-                  <span class="progress-step" data-step="3">Výsledek</span>
-                </div>
-                <div class="progress-track">
-                  <span class="progress-fill"></span>
-                </div>
-              </div>
               <div class="calculator-steps">
                 <div class="calculator-step active" data-step="1">
-                  <div class="step-header" style="margin-top: 3rem;">
-                    <h2>Plánovač bezpečnosti</h2>
-                    <p>Vyberte v levém panelu scénář, který nejlépe odpovídá vaší situaci. Po zadání parametrů získáte orientační návrh personálního zajištění.</p>
+                  <div class="step-header">
+                    <h2>Jak plánovač funguje</h2>
+                    <p>Zvolte typ služby vlevo. V dalším kroku zadáte klíčové parametry a my spočítáme doporučený počet pracovníků pro maximálně 12hodinové směny.</p>
                   </div>
                 </div>
                 <div class="calculator-step" data-step="2">
                   <div class="step-header">
                     <h3 id="step2-title">Specifikace služby</h3>
-                    <p>Zadejte parametry, které nám pomohou přesněji určit potřebný počet pracovníků.</p>
+                    <p>Vyplňte parametry pro přesnější doporučení. Hodnoty můžete kdykoli upravit.</p>
                   </div>
                   <div class="step2-layout">
                     <div id="form-fields-container" class="form-grid"></div>
-                    <aside id="summary-panel" class="summary-panel" aria-live="polite"></aside>
+                    <aside id="summary-panel" class="summary-panel">
+                      <h4>Průběžný souhrn</h4>
+                      <p>Počet pracovníků a klíčové údaje se aktualizují automaticky.</p>
+                      <ul></ul>
+                      <div class="summary-highlights">
+                        <span class="summary-pill">Orientační návrh</span>
+                        <span class="summary-pill">Max. 12 h směny</span>
+                      </div>
+                    </aside>
                   </div>
                 </div>
                 <div class="calculator-step" data-step="3">
-                  <div id="result-container" class="result-card" aria-live="polite"></div>
+                  <div id="result-container" class="result-card"></div>
                 </div>
               </div>
-
               <select name="service_type" id="service-type-select" hidden>
+                <option value=""></option>
                 <option value="object">Ostraha objektu</option>
                 <option value="vip">Osobní ochrana</option>
                 <option value="event">Event security</option>
                 <option value="sport">Sportovní utkání</option>
-                <option value="club">Ostraha nočních podniků</option>
+                <option value="club">Noční podniky</option>
               </select>
-
               <div class="navigation-buttons">
                 <button type="button" id="btn-calculate" class="calc-btn calc-btn-primary" style="display:none;">Vypočítat odhad</button>
               </div>
@@ -3230,150 +3060,531 @@ small {
   items.forEach(i=>io.observe(i));
 })();
 
-/* ============ SERVICES NAV + KALKULAČKA skeleton ============ */
+/* ============ SERVICES NAV + PLÁNOVAČ ============ */
 (() => {
-  const nav = document.getElementById('service-nav');
   const container = document.getElementById('calculator-container');
-  const step1 = document.querySelector('.calculator-step[data-step="1"]');
-  const step2 = document.querySelector('.calculator-step[data-step="2"]');
-  const step3 = document.querySelector('.calculator-step[data-step="3"]');
-  const steps = [step1, step2, step3].filter(Boolean);
-  const fill = document.querySelector('.progress-fill');
-  const marks = document.querySelectorAll('.progress-step');
-  const select = document.getElementById('service-type-select');
-  const fields = document.getElementById('form-fields-container');
-  const summary = document.getElementById('summary-panel');
+  const nav = document.getElementById('service-nav');
+  const form = document.getElementById('estimator-form');
+  const fieldsContainer = document.getElementById('form-fields-container');
+  const summaryPanel = document.getElementById('summary-panel');
+  const summaryList = summaryPanel?.querySelector('ul');
+  const resultContainer = document.getElementById('result-container');
+  const stepTitle = document.getElementById('step2-title');
   const btnCalc = document.getElementById('btn-calculate');
+  const serviceSelect = document.getElementById('service-type-select');
+  const steps = Array.from(document.querySelectorAll('.calculator-step'));
 
-  function goto(n){
-    steps.forEach((s,i)=> s.classList.toggle('active', i===n-1));
-    marks.forEach((m,i)=>{
-      m.classList.toggle('is-active', i===n-1);
-      m.classList.toggle('is-complete', i<n-1);
-    });
-    if (fill && steps.length>1) fill.style.width = ( (n-1) / (steps.length-1) * 100 ) + '%';
+  if (!container || !nav || !form || !fieldsContainer || !summaryPanel || !summaryList || !resultContainer || !btnCalc) {
+    return;
   }
-  goto(1);
 
-  nav?.addEventListener('click', (e)=>{
-    const btn = e.target.closest('.service-nav-item');
-    if (!btn) return;
-    nav.querySelectorAll('.service-nav-item').forEach(x=>x.classList.remove('active'));
-    btn.classList.add('active');
+  const serviceLabels = {
+    object: 'Ostraha objektu',
+    vip: 'Osobní ochrana',
+    event: 'Event security',
+    sport: 'Sportovní utkání',
+    club: 'Noční podniky'
+  };
 
-    const key = btn.dataset.service;
-    const bg = btn.dataset.bg;
-    if (select) select.value = key;
-    if (container && bg) {
-      container.style.setProperty('--context-bg', `url("${bg}")`);
+  const fieldTemplates = {
+    object: `
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Typ objektu</span>
+          <div class="field-tools">
+            <button type="button" class="info-chip" aria-expanded="false" aria-controls="object-type-tip" aria-label="Nápověda k typu objektu">i</button>
+          </div>
+        </div>
+        <select name="object_type" id="object_type" required>
+          <option value="Kanceláře">Kanceláře</option>
+          <option value="Sklad">Sklad</option>
+          <option value="Stavba">Stavba</option>
+          <option value="Obchodní centrum">Obchodní centrum</option>
+        </select>
+        <div id="object-type-tip" class="info-small-popover" hidden>
+          <button type="button" class="close-popover" aria-label="Zavřít">×</button>
+          Vyberte scénář, který je vašemu objektu nejblíže. Pomůže nám to přednastavit správné priority kontrolních bodů.
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Rozloha objektu (m²)</span>
+          <div class="field-tools">
+            <input type="number" name="area" min="50" max="50000" step="50" value="1200" required>
+          </div>
+        </div>
+        <input type="range" data-sync="area" min="50" max="50000" step="50" value="1200">
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Počet vstupů</span>
+          <div class="field-tools">
+            <input type="number" name="entrances_object" min="1" max="50" value="2" required>
+          </div>
+        </div>
+        <input type="range" data-sync="entrances_object" min="1" max="50" value="2">
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Provoz</span>
+        </div>
+        <select name="operation_time" required>
+          <option value="day">Denní režim</option>
+          <option value="247">24/7 provoz</option>
+        </select>
+      </div>
+      <div class="form-group toggle-field">
+        <span class="field-label">Má objekt kamerový systém?</span>
+        <input type="checkbox" name="cctv">
+      </div>
+    `,
+    vip: `
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Počet chráněných osob</span>
+          <div class="field-tools">
+            <input type="number" name="vip_count" min="1" max="20" value="1" required>
+          </div>
+        </div>
+        <input type="range" data-sync="vip_count" min="1" max="20" value="1">
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Rizikovost</span>
+        </div>
+        <select name="risk_vip" required>
+          <option value="1">Nízká</option>
+          <option value="1.5">Střední</option>
+          <option value="2">Vysoká</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Režim ochrany</span>
+        </div>
+        <select name="movement" required>
+          <option value="static">Pevná lokalita</option>
+          <option value="travel">Cestování</option>
+        </select>
+      </div>
+      <div class="form-group toggle-field">
+        <span class="field-label">Řidič-bodyguard</span>
+        <input type="checkbox" name="driver">
+      </div>
+    `,
+    event: `
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Počet návštěvníků</span>
+          <div class="field-tools">
+            <input type="number" name="attendees_event" min="10" max="100000" step="10" value="800" required>
+          </div>
+        </div>
+        <input type="range" data-sync="attendees_event" min="10" max="100000" step="10" value="800">
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Délka akce (hodiny)</span>
+          <div class="field-tools">
+            <input type="number" name="duration_event" min="1" max="72" value="8" required>
+          </div>
+        </div>
+        <input type="range" data-sync="duration_event" min="1" max="72" value="8">
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Rizikovost</span>
+        </div>
+        <select name="risk_event" required>
+          <option value="1">Nízká</option>
+          <option value="1.3">Střední</option>
+          <option value="1.6">Vysoká</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Prostředí</span>
+        </div>
+        <select name="venue_type" required>
+          <option value="indoor">Vnitřní</option>
+          <option value="outdoor">Venkovní</option>
+        </select>
+      </div>
+      <div class="form-group toggle-field">
+        <span class="field-label">Podává se alkohol?</span>
+        <input type="checkbox" name="alcohol">
+      </div>
+    `,
+    sport: `
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Počet diváků</span>
+          <div class="field-tools">
+            <input type="number" name="attendees_sport" min="10" max="80000" step="10" value="1200" required>
+          </div>
+        </div>
+        <input type="range" data-sync="attendees_sport" min="10" max="80000" step="10" value="1200">
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Délka utkání (hodiny)</span>
+          <div class="field-tools">
+            <input type="number" name="duration_sport" min="1" max="12" value="4" required>
+          </div>
+        </div>
+        <input type="range" data-sync="duration_sport" min="1" max="12" value="4">
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Rizikovost</span>
+        </div>
+        <select name="risk_sport" required>
+          <option value="1">Běžné</option>
+          <option value="1.5">Derby</option>
+          <option value="2">Vysoké riziko</option>
+        </select>
+      </div>
+      <div class="form-group toggle-field">
+        <span class="field-label">Oddělený sektor hostů</span>
+        <input type="checkbox" name="guest_sector">
+      </div>
+    `,
+    club: `
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Kapacita podniku</span>
+          <div class="field-tools">
+            <input type="number" name="club_capacity" min="20" max="2000" step="10" value="200" required>
+          </div>
+        </div>
+        <input type="range" data-sync="club_capacity" min="20" max="2000" step="10" value="200">
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Počet vstupů</span>
+          <div class="field-tools">
+            <input type="number" name="entrances_club" min="1" max="10" value="2" required>
+          </div>
+        </div>
+        <input type="range" data-sync="entrances_club" min="1" max="10" value="2">
+      </div>
+      <div class="form-group">
+        <div class="field-header">
+          <span class="field-label">Rizikovost lokality</span>
+        </div>
+        <select name="risk_club" required>
+          <option value="1">Nízká</option>
+          <option value="1.3">Střední</option>
+          <option value="1.6">Vysoká</option>
+        </select>
+      </div>
+    `
+  };
+
+  let currentService = '';
+  let lastOpenedPopover = null;
+
+  const goToStep = (target) => {
+    steps.forEach((step) => {
+      const stepNumber = Number(step.getAttribute('data-step'));
+      step.classList.toggle('active', stepNumber === target);
+    });
+    btnCalc.style.display = target === 2 ? 'inline-flex' : 'none';
+    if (target !== 2) {
+      btnCalc.disabled = false;
+    }
+  };
+
+  const toNumber = (value) => {
+    const num = Number(value);
+    return Number.isFinite(num) ? num : 0;
+  };
+
+  const readData = () => {
+    const data = {};
+    const inputs = fieldsContainer.querySelectorAll('input, select');
+    inputs.forEach((el) => {
+      if (el.type === 'checkbox') {
+        data[el.name] = el.checked;
+      } else if (el.type === 'number') {
+        data[el.name] = toNumber(el.value);
+      } else {
+        data[el.name] = el.value;
+      }
+    });
+    return data;
+  };
+
+  const estimate = (service, data) => {
+    let staff = 0;
+    let summaryRows = [];
+    let shiftHours = 12;
+    let shiftCount = 1;
+
+    switch (service) {
+      case 'object': {
+        const area = data.area || 0;
+        const entrances = data.entrances_object || 1;
+        let base = Math.max(2, Math.ceil(area / 2200) + Math.ceil(entrances / 2));
+        if (data.cctv) base = Math.max(1, Math.ceil(base * 0.85));
+        staff = base;
+        shiftCount = data.operation_time === '247' ? 2 : 1;
+        summaryRows = [
+          { label: 'Typ objektu', value: data.object_type || '—' },
+          { label: 'Rozloha', value: `${area.toLocaleString('cs-CZ')} m²` },
+          { label: 'Vstupy', value: entrances }
+        ];
+        break;
+      }
+      case 'vip': {
+        const persons = data.vip_count || 1;
+        const risk = Number(data.risk_vip || 1);
+        staff = Math.max(1, Math.ceil(persons * risk));
+        if (data.movement === 'travel') staff += 1;
+        if (data.driver) staff += 1;
+        summaryRows = [
+          { label: 'Chráněných osob', value: persons },
+          { label: 'Rizikovost', value: risk === 2 ? 'Vysoká' : risk > 1 ? 'Střední' : 'Nízká' },
+          { label: 'Režim', value: data.movement === 'travel' ? 'Mobilní' : 'Stálá lokalita' }
+        ];
+        break;
+      }
+      case 'event': {
+        const attendees = data.attendees_event || 0;
+        const risk = Number(data.risk_event || 1);
+        let ratio = attendees <= 1000 ? 110 : attendees <= 10000 ? 160 : 220;
+        let base = attendees / (ratio / risk);
+        if (data.alcohol) base *= 1.2;
+        if (data.venue_type === 'outdoor') base *= 1.15;
+        const guards = Math.ceil(base);
+        const supervisors = Math.max(1, Math.ceil(guards / 12));
+        staff = guards + supervisors;
+        shiftCount = Math.max(1, Math.ceil((data.duration_event || 8) / shiftHours));
+        summaryRows = [
+          { label: 'Návštěvníků', value: attendees.toLocaleString('cs-CZ') },
+          { label: 'Délka akce', value: `${data.duration_event || 0} h` },
+          { label: 'Prostředí', value: data.venue_type === 'outdoor' ? 'Venkovní' : 'Vnitřní' }
+        ];
+        break;
+      }
+      case 'sport': {
+        const spectators = data.attendees_sport || 0;
+        const risk = Number(data.risk_sport || 1);
+        let ratio = spectators <= 5000 ? 110 : spectators <= 20000 ? 180 : 250;
+        let base = spectators / (ratio / risk);
+        if (data.guest_sector) base += 8;
+        const guards = Math.ceil(base);
+        const supervisors = Math.max(1, Math.ceil(guards / 14));
+        staff = guards + supervisors;
+        shiftCount = Math.max(1, Math.ceil((data.duration_sport || 4) / shiftHours));
+        summaryRows = [
+          { label: 'Diváků', value: spectators.toLocaleString('cs-CZ') },
+          { label: 'Riziko', value: risk === 2 ? 'Vysoké' : risk > 1 ? 'Derby' : 'Běžné' },
+          { label: 'Délka utkání', value: `${data.duration_sport || 0} h` }
+        ];
+        break;
+      }
+      case 'club': {
+        const capacity = data.club_capacity || 0;
+        const entrances = data.entrances_club || 1;
+        const risk = Number(data.risk_club || 1);
+        let base = capacity / (80 / risk) + Math.max(1, entrances - 1);
+        staff = Math.max(2, Math.ceil(base));
+        summaryRows = [
+          { label: 'Kapacita', value: capacity.toLocaleString('cs-CZ') },
+          { label: 'Vstupy', value: entrances },
+          { label: 'Rizikovost', value: risk === 1.6 ? 'Vysoká' : risk > 1 ? 'Střední' : 'Nízká' }
+        ];
+        break;
+      }
+      default: {
+        staff = 0;
+      }
+    }
+
+    staff = Math.max(1, staff);
+    return { staff, summaryRows, shiftCount, shiftHours };
+  };
+
+  const updateSummary = () => {
+    if (!currentService) {
+      summaryList.innerHTML = '';
+      return;
+    }
+    const data = readData();
+    const { staff, summaryRows, shiftCount, shiftHours } = estimate(currentService, data);
+    summaryList.innerHTML = [
+      `<li><span class="summary-label">Služba</span><span class="summary-value">${serviceLabels[currentService]}</span></li>`,
+      ...summaryRows.map((row) => `<li><span class="summary-label">${row.label}</span><span class="summary-value">${row.value}</span></li>`),
+      `<li><span class="summary-label">Doporučený tým</span><span class="summary-value">${staff} osob</span></li>`,
+      `<li><span class="summary-label">Směny</span><span class="summary-value">${shiftCount} × max ${shiftHours} h</span></li>`
+    ].join('');
+    return { staff, summaryRows, shiftCount, shiftHours };
+  };
+
+  const validateStep = () => {
+    if (!currentService) return false;
+    const required = fieldsContainer.querySelectorAll('[required]');
+    let valid = true;
+    required.forEach((field) => {
+      if (!field.checkValidity()) {
+        field.classList.add('invalid');
+        valid = false;
+      } else {
+        field.classList.remove('invalid');
+      }
+    });
+    btnCalc.disabled = !valid;
+    return valid;
+  };
+
+  const attachFieldListeners = () => {
+    fieldsContainer.querySelectorAll('input[type="range"]').forEach((range) => {
+      const name = range.dataset.sync;
+      const number = fieldsContainer.querySelector(`input[name="${name}"]`);
+      if (number) {
+        range.addEventListener('input', () => {
+          number.value = range.value;
+          number.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+        number.addEventListener('input', () => {
+          range.value = number.value || range.value;
+        });
+      }
+    });
+
+    fieldsContainer.querySelectorAll('input, select').forEach((el) => {
+      el.addEventListener('input', () => {
+        updateSummary();
+        validateStep();
+      });
+      el.addEventListener('change', () => {
+        updateSummary();
+        validateStep();
+      });
+    });
+  };
+
+  const closePopover = (popover) => {
+    if (!popover) return;
+    popover.classList.remove('visible');
+    popover.hidden = true;
+    const trigger = fieldsContainer.querySelector(`[aria-controls="${popover.id}"]`);
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    if (lastOpenedPopover === popover) lastOpenedPopover = null;
+  };
+
+  fieldsContainer.addEventListener('click', (event) => {
+    const trigger = event.target.closest('.info-chip');
+    if (trigger) {
+      event.preventDefault();
+      const popId = trigger.getAttribute('aria-controls');
+      const pop = popId ? document.getElementById(popId) : null;
+      if (!pop) return;
+      const isOpen = pop.classList.contains('visible');
+      closePopover(lastOpenedPopover);
+      if (!isOpen) {
+        pop.hidden = false;
+        pop.classList.add('visible');
+        trigger.setAttribute('aria-expanded', 'true');
+        lastOpenedPopover = pop;
+      }
+    }
+    if (event.target.classList.contains('close-popover')) {
+      closePopover(event.target.closest('.info-small-popover'));
+    }
+  });
+
+  document.addEventListener('click', (event) => {
+    if (lastOpenedPopover && !event.target.closest('.info-small-popover') && !event.target.closest('.info-chip')) {
+      closePopover(lastOpenedPopover);
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && lastOpenedPopover) {
+      closePopover(lastOpenedPopover);
+    }
+  });
+
+  nav.addEventListener('click', (event) => {
+    const button = event.target.closest('.service-nav-item');
+    if (!button) return;
+    const service = button.dataset.service;
+    currentService = service;
+
+    nav.querySelectorAll('.service-nav-item').forEach((btn) => btn.classList.remove('active'));
+    button.classList.add('active');
+
+    if (serviceSelect) serviceSelect.value = service;
+    if (stepTitle) stepTitle.textContent = serviceLabels[service] || 'Specifikace služby';
+
+    if (container && button.dataset.bg) {
+      container.style.setProperty('--context-bg', `url("${button.dataset.bg}")`);
       container.classList.add('has-bg');
     }
 
-    const config = {
-      object: [
-        {label:'Počet vstupů', type:'number', name:'gates', min:1, step:1, value:2, hint:'Kolik vstupních míst hlídat.'},
-        {label:'Rozsah (hod./den)', type:'number', name:'hours', min:1, step:1, value:12},
-        {label:'Rizikovost', type:'select', name:'risk', options:['Nízká','Střední','Vysoká']}
-      ],
-      event: [
-        {label:'Počet návštěvníků', type:'number', name:'visitors', min:0, step:50, value:1000},
-        {label:'Počet vstupů', type:'number', name:'gates', min:1, step:1, value:3},
-        {label:'Délka akce (h)', type:'number', name:'hours', min:1, step:1, value:8}
-      ],
-      vip: [
-        {label:'Počet osob', type:'number', name:'persons', min:1, step:1, value:1},
-        {label:'Režim', type:'select', name:'mode', options:['Doprovod','24/7 team']}
-      ],
-      sport: [
-        {label:'Kapacita stadionu', type:'number', name:'capacity', min:0, step:100, value:3000},
-        {label:'Počet sektorů', type:'number', name:'sectors', min:1, step:1, value:4}
-      ],
-      club: [
-        {label:'Kapacita klubu', type:'number', name:'cap', min:0, step:20, value:200},
-        {label:'Délka směny (h)', type:'number', name:'hours', min:1, step:1, value:10}
-      ]
-    }[key] || [];
+    closePopover(lastOpenedPopover);
+    fieldsContainer.innerHTML = fieldTemplates[service] || '';
+    attachFieldListeners();
+    updateSummary();
+    validateStep();
+    goToStep(2);
+  });
 
-    fields.innerHTML = '';
-    config.forEach((f)=>{
-      const wrap = document.createElement('div');
-      wrap.className = 'form-group';
-      wrap.innerHTML = `
-        <div class="field-header">
-          <label class="field-label">${f.label}</label>
-          ${f.hint ? `<span class="field-note">${f.hint}</span>`:''}
-        </div>
-        ${f.type==='select'
-          ? `<select name="${f.name}">${(f.options||[]).map(o=>`<option>${o}</option>`).join('')}</select>`
-          : `<input type="${f.type}" name="${f.name}" value="${f.value??''}" ${f.min!=null?`min="${f.min}"`:''} ${f.step!=null?`step="${f.step}"`:''}>`
-        }`;
-      fields.appendChild(wrap);
-    });
+  btnCalc.addEventListener('click', () => {
+    if (!validateStep()) return;
+    const data = readData();
+    const { staff, summaryRows, shiftCount, shiftHours } = updateSummary() || estimate(currentService, data);
+    const serviceName = serviceLabels[currentService] || '';
 
-    summary.innerHTML = `
-      <h4>Souhrn</h4>
-      <ul>
-        <li><span class="summary-label">Služba</span><span class="summary-value">${btn.innerText.trim()}</span></li>
-        <li><span class="summary-label">Parametry</span><span class="summary-value">${config.length} položek</span></li>
-      </ul>
-      <div class="summary-highlights">
-        <span class="summary-pill">Orientační</span>
-        <span class="summary-pill">Upřesníme po kontaktu</span>
+    resultContainer.innerHTML = `
+      <div class="result-title">Doporučený počet</div>
+      <div class="result-estimate">${staff} osob</div>
+      <div class="result-details">
+        <h4>Souhrn zadání</h4>
+        <ul class="result-summary">
+          ${summaryRows.map((row) => `<li><span>${row.label}</span><span>${row.value}</span></li>`).join('')}
+          <li><span>Směny</span><span>${shiftCount} × max ${shiftHours} h</span></li>
+        </ul>
       </div>
+      <p class="result-note">Výsledek je orientační. Pro finální návrh navážeme na detailní konzultaci.</p>
+      <button type="button" class="btn btn-secondary btn-restart">Zpět na výběr služby</button>
     `;
 
-    if (btnCalc) {
-      btnCalc.style.display = 'inline-flex';
+    const restartBtn = resultContainer.querySelector('.btn-restart');
+    restartBtn?.addEventListener('click', () => {
+      nav.querySelectorAll('.service-nav-item').forEach((btn) => btn.classList.remove('active'));
+      fieldsContainer.innerHTML = '';
+      summaryList.innerHTML = '';
+      if (serviceSelect) serviceSelect.value = '';
+      currentService = '';
+      container.classList.remove('has-bg');
+      container.style.removeProperty('--context-bg');
+      goToStep(1);
+      btnCalc.style.display = 'none';
       btnCalc.disabled = false;
-    }
-    goto(2);
-  });
+    });
 
-  btnCalc?.addEventListener('click', () => {
-    const form = document.getElementById('estimator-form');
-    const data = form ? Object.fromEntries(new FormData(form)) : {};
-    let people = 2;
-    if (data.visitors) people += Math.ceil(+data.visitors / 500);
-    if (data.gates) people += Math.max(0, +data.gates - 1);
-    if (data.sectors) people += Math.ceil(+data.sectors / 2);
-    if (data.cap) people += Math.ceil(+data.cap / 150);
-
-    const result = document.getElementById('result-container');
-    if (result) {
-      result.innerHTML = `
-        <div class="result-title">Orientační návrh zajištění</div>
-        <div class="result-estimate">${people} pracovníků</div>
-        <ul class="result-summary">
-          <li><span>Typ služby</span><span>${document.querySelector('.service-nav-item.active span')?.textContent || '—'}</span></li>
-          <li><span>Parametrů zadáno</span><span>${document.querySelectorAll('#form-fields-container input, #form-fields-container select').length}</span></li>
-        </ul>
-        <div class="result-insights">
-          <span class="insight-pill">Plán upřesníme</span>
-          <span class="insight-pill">Nástup do 48 h</span>
-        </div>
-        <div class="result-actions">
-          <a class="btn btn-accent" href="#cta">Nezávazně poptat</a>
-          <a class="btn btn-secondary" href="tel:+420725993462">Zavolat</a>
-        </div>
-        <p class="result-note">Výsledek je orientační. Finální návrh připravíme po krátké konzultaci.</p>
-      `;
-    }
-    goto(3);
-
-    const serviceKey = select?.value || document.querySelector('.service-nav-item.active')?.dataset.service || '';
     const detailsJson = JSON.stringify(data);
     if (typeof window.updateCTAFromCalculator === 'function') {
-      window.updateCTAFromCalculator(serviceKey, people, detailsJson);
+      window.updateCTAFromCalculator(currentService, staff, detailsJson);
     } else {
-      const ctaEst = document.getElementById('cta-estimate-display');
-      if (ctaEst) {
-        ctaEst.textContent = `Doporučení plánovače: ~${people} pracovníků`;
-        ctaEst.removeAttribute('hidden');
+      const ctaDisplay = document.getElementById('cta-estimate-display');
+      const ctaEstimate = document.getElementById('cta-estimate');
+      const ctaDetails = document.getElementById('cta-details');
+      const summaryText = `Doporučení plánovače: ${staff} osob – ${serviceName}`;
+      if (ctaDisplay) {
+        ctaDisplay.hidden = false;
+        ctaDisplay.textContent = summaryText;
       }
+      if (ctaEstimate) ctaEstimate.value = summaryText;
+      if (ctaDetails) ctaDetails.value = detailsJson;
     }
+
+    goToStep(3);
   });
 })();
-
 /* ============ POPOVERY (portal + flip) ============ */
 (() => {
   const OPEN = 'visible';
